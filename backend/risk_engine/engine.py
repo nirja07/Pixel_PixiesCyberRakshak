@@ -4,9 +4,6 @@ import pickle
 import numpy as np
 from urllib.parse import urlparse
 
-
-
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, "../model/spam_model.pkl")
 VECTORIZER_PATH = os.path.join(BASE_DIR, "../model/vectorizer.pkl")
