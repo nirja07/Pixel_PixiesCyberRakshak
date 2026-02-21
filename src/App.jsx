@@ -8,7 +8,7 @@ import { Shield, Activity, AlertTriangle, FileText, Users, Zap, Globe, Lock, Cpu
 function App() {
   return (
     <div>
-      <Lawbot />
+      <RiskAnalyzer/>
     </div>
   );
 }

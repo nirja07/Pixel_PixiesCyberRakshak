@@ -1,22 +1,25 @@
+# utils/qr_decoder.py
 import cv2
+import numpy as np
+from PIL import Image
+import logging
 
-def decode_qr(image_path):
-    """
-    Decodes QR code using OpenCV.
-    Returns decoded string if found, else None.
-    """
+logging.basicConfig(level=logging.INFO)
 
+def decode_qr(file) -> str:
+    """
+    Decodes QR code from a file (FileStorage from Flask)
+    Uses OpenCV QRCodeDetector, works on Windows without external DLLs.
+    """
     try:
-        img = cv2.imread(image_path)
-
+        image = np.array(Image.open(file).convert("RGB"))
         detector = cv2.QRCodeDetector()
-        data, bbox, _ = detector.detectAndDecode(img)
-
-        if bbox is not None and data:
-            return data
-        else:
+        data, points, _ = detector.detectAndDecode(image)
+        if not data:
+            logging.warning("No QR code detected")
             return None
-
+        logging.info(f"Decoded QR content: {data}")
+        return data
     except Exception as e:
-        print("QR Decode Error:", e)
+        logging.exception("QR decoding failed")
         return None
