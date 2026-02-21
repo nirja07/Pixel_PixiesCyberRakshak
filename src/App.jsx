@@ -1,9 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import HomePage from './pages/Homepage';
 import LawBot from './pages/LawBot';
 import ComplaintGen from './pages/ComplaintGen';
-import Community from './pages/Community';   // ✅ ADD THIS
+import Community from './pages/Community';
+import RiskAnalyzer from './components/RiskAnalyzer';   // ✅ ADDED
 
 function App() {
   return (
@@ -11,10 +13,10 @@ function App() {
       <div className="App">
         <Routes>
 
-          {/* Home/CyberGuard Dashboard */}
+          {/* Home / Dashboard */}
           <Route path="/" element={<HomePage />} />
           
-          {/* Cyber Rakshak Chatbot - Main legal assistant */}
+          {/* Cyber Rakshak Chatbot */}
           <Route path="/chat" element={<LawBot />} />
           <Route path="/legalbot" element={<LawBot />} />
           <Route path="/assistant" element={<LawBot />} />
@@ -23,13 +25,16 @@ function App() {
           <Route path="/complaint" element={<ComplaintGen />} />
           <Route path="/complaintgen" element={<ComplaintGen />} />
 
-          {/* ✅ Community Scam Reporting */}
+          {/* Community Scam Reporting */}
           <Route path="/community" element={<Community />} />
 
-          {/* Redirect any /analyze to chat */}
+          {/* ✅ Risk Analyzer Page */}
+          <Route path="/riskanalyzer" element={<RiskAnalyzer />} />
+
+          {/* Redirect /analyze to chat */}
           <Route path="/analyze" element={<LawBot />} />
           
-          {/* 404 - Not Found Route */}
+          {/* 404 Page */}
           <Route
             path="*"
             element={
