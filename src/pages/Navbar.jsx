@@ -41,7 +41,7 @@ function Navbar() {
             </div>
             <div className="flex flex-col">
               <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-                CyberLex AI
+                CyberRakshak
               </span>
               <span className="text-xs text-gray-500 tracking-wider">
                 Indian Cyber Law Assistant
