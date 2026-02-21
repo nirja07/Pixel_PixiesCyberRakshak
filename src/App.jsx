@@ -6,6 +6,7 @@ import LawBot from './pages/LawBot';
 import ComplaintGen from './pages/ComplaintGen';
 import CyberQuest from './pages/CyberQuest';
 import NewsPage from './pages/NewsPage';
+import Community from './pages/Community';
 function App() {
   return (
     <Router>
@@ -31,6 +32,7 @@ function App() {
           <Route path="/analyze" element={<LawBot />} />
           <Route path="/awareness" element={<CyberQuest/>}/>
           <Route path="/community" element={<Community />} />
+          <Route path="/news" element={<NewsPage />} />
          
           <Route path="*" element={
             <div className="min-h-screen bg-black flex items-center justify-center">
