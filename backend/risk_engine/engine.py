@@ -44,15 +44,34 @@ def check_phishing_database(urls):
 
 SUSPICIOUS_PATTERNS = [
     r"verify.*account",
+    r"verify.*identity",
     r"verify.*device",
     r"update.*kyc",
+    r"update.*details",
+    r"update.*payment",
     r"account.*suspended",
+    r"account.*blocked",
+    r"account.*locked",
     r"click.*link",
     r"urgent.*action",
+    r"immediate.*action",
     r"confirm.*details",
+    r"confirm.*identity",
     r"bank.*alert",
+    r"security.*alert",
+    r"unusual.*activity",
+    r"suspicious.*activity",
     r"otp.*share",
-    r"login.*immediately"
+    r"otp.*required",
+    r"login.*immediately",
+    r"reset.*password",
+    r"re-?activate.*account",
+    r"limited.*time",
+    r"last.*warning",
+    r"final.*notice",
+    r"your.*account.*will.*be.*closed",
+    r"failure.*to.*comply",
+    r"avoid.*penalty"
 ]
 
 SCAM_KEYWORDS = [
@@ -65,18 +84,68 @@ SCAM_KEYWORDS = [
     "selected",
     "randomly picked",
     "$1000",
+    "$500",
     "claim now",
-    "free reward"
+    "free reward",
+    "free gift",
+    "free money",
+    "guaranteed",
+    "act now",
+    "exclusive deal",
+    "limited offer",
+    "cash prize",
+    "lottery",
+    "jackpot",
+    "bonus",
+    "earn money fast",
+    "work from home",
+    "investment opportunity",
+    "double your money",
+    "crypto giveaway",
+    "airdrop",
+    "urgent response",
+    "immediate response",
+    "confidential",
+    "private message"
 ]
 
-SHORTENERS = ["bit.ly", "goo.gl", "tinyurl.com", "t.co", "rb.gy"]
+SHORTENERS = [
+    "bit.ly",
+    "goo.gl",
+    "tinyurl.com",
+    "t.co",
+    "rb.gy",
+    "cutt.ly",
+    "is.gd",
+    "soo.gd",
+    "s2r.co",
+    "ow.ly",
+    "shorturl.at",
+    "rebrand.ly",
+    "shorte.st",
+    "adf.ly"
+]
 
 SUSPICIOUS_TLDS = [
     ".xyz", ".top", ".tk", ".ru", ".cn",
-    ".work", ".info", ".pw", ".click"
+    ".work", ".info", ".pw", ".click",
+    ".gq", ".ml", ".cf", ".ga",
+    ".rest", ".support", ".live",
+    ".buzz", ".vip", ".country",
+    ".stream", ".download", ".review"
 ]
 
-BRANDS = ["google", "sbi", "hdfc", "icici", "paytm", "amazon", "flipkart"]
+BRANDS = [
+    "google", "gmail", "youtube",
+    "sbi", "hdfc", "icici", "axis", "kotak",
+    "paytm", "phonepe", "gpay",
+    "amazon", "flipkart", "myntra",
+    "netflix", "instagram", "facebook",
+    "whatsapp", "telegram",
+    "apple", "microsoft",
+    "irctc", "uidai", "aadhaar",
+    "rbi", "epfo"
+]
 
 URL_REGEX = r"https?://[^\s]+"
 
@@ -84,12 +153,18 @@ URL_REGEX = r"https?://[^\s]+"
 # ==============================
 # Helper Functions
 # ==============================
+
 def check_scam_keywords(text):
+    
     score = 0
     flags = []
-
+    if text.isupper():
+        score += 10
     text_lower = text.lower()
-
+    if text.count("!") > 3:
+        score += 5
+    if sum(c.isdigit() for c in text) > 10:
+        score += 5
     for word in SCAM_KEYWORDS:
         if word in text_lower:
             score += 8
@@ -162,7 +237,36 @@ def get_risk_level(score):
     else:
         return "High"
 
+def generate_recommendations(risk_level, matched_rules, urls):
+    recommendations = []
 
+    if risk_level == "High":
+        recommendations.append("⚠️ Do NOT click any links in this message.")
+        recommendations.append("Avoid sharing OTP, passwords, or personal details.")
+        recommendations.append("Report this message to your bank or cyber crime portal.")
+    
+    elif risk_level == "Medium":
+        recommendations.append("Be cautious before clicking links.")
+        recommendations.append("Verify the sender through official channels.")
+        recommendations.append("Check URL carefully before entering credentials.")
+    
+    else:
+        recommendations.append("Message appears safe, but always stay cautious online.")
+
+    # Specific flag-based suggestions
+    if "known_phishing_url" in matched_rules:
+        recommendations.append("This URL is found in phishing database.")
+
+    if "shortened_url" in matched_rules:
+        recommendations.append("Shortened URLs can hide malicious destinations.")
+
+    if any("mismatch" in rule for rule in matched_rules):
+        recommendations.append("Brand name does not match website domain.")
+
+    if urls:
+        recommendations.append("Always manually type official website instead of clicking links.")
+
+    return recommendations
 # ==============================
 # Main Risk Engine
 # ==============================
@@ -196,18 +300,26 @@ def analyze_text(text):
 
     db_score, db_flags = check_phishing_database(urls)
 
+    scam_score, scam_flags = check_scam_keywords(text)
+
     # ---------- Final Weighted Score ----------
-    final_score = ml_score + pattern_score + url_score + brand_score + db_score
+    final_score = ml_score + pattern_score + url_score + brand_score + db_score + scam_score
 
     # Cap score at 100
     final_score = min(100, final_score)
 
     risk_level = get_risk_level(final_score)
 
+
+    recommendations = generate_recommendations(risk_level, 
+                                           pattern_matches + url_flags + brand_flags + db_flags + scam_flags,
+                                           urls)
+    print("RECOMMENDATIONS:", recommendations)
     return {
-        "risk_score": round(float(final_score), 2),
-        "risk_level": risk_level,
-        "ml_probability": round(float(ml_prob), 4),
-        "matched_rules": pattern_matches + url_flags + brand_flags + db_flags,
-        "detected_urls": urls
+    "risk_score": round(float(final_score), 2),
+    "risk_level": risk_level,
+    "ml_probability": round(float(ml_prob), 4),
+    "matched_rules": pattern_matches + url_flags + brand_flags + db_flags + scam_flags,
+    "detected_urls": urls,
+    "recommendations": recommendations
     }
