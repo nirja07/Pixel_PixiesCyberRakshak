@@ -1,9 +1,6 @@
 import React from 'react';
 import RiskAnalyzer from './components/RiskAnalyzer';
 import Lawbot from './pages/Lawbot';
-import { motion, useMotionValue, useSpring, useTransform, animate } from 'framer-motion';
-import { Shield, Activity, AlertTriangle, FileText, Users, Zap, Globe, Lock, Cpu, Eye, Radio, ScanLine } from 'lucide-react';
-
 
 function App() {
   return (
