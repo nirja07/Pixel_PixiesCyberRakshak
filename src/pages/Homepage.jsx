@@ -1,5 +1,32 @@
 import React, { useState, useEffect, useRef } from "react";
 import Navbar from "./Navbar";
+import { 
+  Scale, 
+  FileText, 
+  Globe, 
+  BarChart3, 
+  BookOpen, 
+  FileCheck, 
+  Gavel, 
+  Shield,
+  AlertTriangle,
+  TrendingUp,
+  TrendingDown,
+  Minus,
+  Zap,
+  Target,
+  Clock,
+  ChevronRight,
+  MapPin,
+  Activity,
+  CheckCircle,
+  ArrowRight,
+  Users,
+  Download,
+  Search,
+  Bell,
+  Award
+} from "lucide-react";
 
 function HomePage() {
   const [selectedState, setSelectedState] = useState(null);
@@ -55,7 +82,7 @@ function HomePage() {
   // Action cards
   const actionCards = [
     {
-      icon: "⚖️",
+      icon: Scale,
       title: "LegalBot",
       description: "AI-powered legal assistant for instant cyber law guidance",
       link: "/legalbot",
@@ -64,7 +91,7 @@ function HomePage() {
       features: ["IT Act 2000", "IPC Sections", "Case References"]
     },
     {
-      icon: "📄",
+      icon: FileText,
       title: "ComplaintGen",
       description: "Generate formatted cyber complaints for police and cyber cells",
       link: "/complaintgen",
@@ -73,7 +100,7 @@ function HomePage() {
       features: ["Auto-formatting", "Legal Language", "PDF Export"]
     },
     {
-      icon: "🌐",
+      icon: Globe,
       title: "Community Intel",
       description: "Real-time threat intelligence from community reports",
       link: "/community-intel",
@@ -82,7 +109,7 @@ function HomePage() {
       features: ["Trend Analysis", "Heat Maps", "Alerts"]
     },
     {
-      icon: "📊",
+      icon: BarChart3,
       title: "Risk Engine",
       description: "Advanced risk assessment for organizations and individuals",
       link: "/risk-engine",
@@ -97,28 +124,28 @@ function HomePage() {
     {
       title: "IT Act 2000 Complete Guide",
       description: "Comprehensive guide to Information Technology Act with amendments",
-      icon: "📚",
+      icon: BookOpen,
       readTime: "15 min",
       category: "Legal"
     },
     {
       title: "Cyber Crime Reporting Handbook",
       description: "Step-by-step guide to filing cyber complaints effectively",
-      icon: "📝",
+      icon: FileCheck,
       readTime: "10 min",
       category: "Guide"
     },
     {
       title: "Latest Cyber Law Judgments",
       description: "Important Supreme Court and High Court judgments on cyber crimes",
-      icon: "⚖️",
+      icon: Gavel,
       readTime: "20 min",
       category: "Case Law"
     },
     {
       title: "Data Protection Guidelines",
       description: "Best practices for data protection under Indian laws",
-      icon: "🔒",
+      icon: Shield,
       readTime: "12 min",
       category: "Compliance"
     }
@@ -181,9 +208,7 @@ function HomePage() {
                 >
                   <span className="relative z-10 flex items-center">
                     Get Started
-                    <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
+                    <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </span>
                   <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
                 </a>
@@ -201,7 +226,7 @@ function HomePage() {
                 <div className="flex -space-x-3">
                   {[1,2,3,4].map((i) => (
                     <div key={i} className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 border-2 border-white shadow-lg flex items-center justify-center text-white text-sm font-bold animate-pulse-slow" style={{ animationDelay: `${i * 200}ms` }}>
-                      {i}
+                      <Users className="w-4 h-4" />
                     </div>
                   ))}
                 </div>
@@ -232,7 +257,7 @@ function HomePage() {
                       <div className="text-2xl font-bold text-slate-900">247</div>
                     </div>
                     <div className="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center">
-                      <span className="text-2xl">⚠️</span>
+                      <AlertTriangle className="w-6 h-6 text-blue-600" />
                     </div>
                   </div>
 
@@ -240,12 +265,18 @@ function HomePage() {
                     <div className="p-4 bg-slate-50 rounded-xl">
                       <span className="text-sm text-slate-500">Cases Today</span>
                       <div className="text-xl font-bold text-slate-900">1,892</div>
-                      <span className="text-xs text-green-600">+12%</span>
+                      <span className="text-xs text-green-600 flex items-center">
+                        <TrendingUp className="w-3 h-3 mr-1" />
+                        +12%
+                      </span>
                     </div>
                     <div className="p-4 bg-slate-50 rounded-xl">
                       <span className="text-sm text-slate-500">Resolved</span>
                       <div className="text-xl font-bold text-slate-900">156</div>
-                      <span className="text-xs text-blue-600">Today</span>
+                      <span className="text-xs text-blue-600 flex items-center">
+                        <CheckCircle className="w-3 h-3 mr-1" />
+                        Today
+                      </span>
                     </div>
                   </div>
 
@@ -253,7 +284,10 @@ function HomePage() {
                   <div className="mt-4 p-4 bg-slate-50 rounded-xl">
                     <div className="flex justify-between items-center mb-3">
                       <span className="text-sm font-medium text-slate-700">Live Threat Map</span>
-                      <span className="text-xs text-blue-600">Updated now</span>
+                      <span className="text-xs text-blue-600 flex items-center">
+                        <Activity className="w-3 h-3 mr-1" />
+                        Updated now
+                      </span>
                     </div>
                     <div className="grid grid-cols-4 gap-2">
                       {['Mumbai', 'Delhi', 'Bangalore', 'Chennai'].map((city, i) => (
@@ -289,60 +323,59 @@ function HomePage() {
 
           {/* Feature cards grid */}
           <div className="grid lg:grid-cols-2 gap-8">
-            {actionCards.map((card, index) => (
-              <a
-                key={index}
-                href={card.link}
-                className="group relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden animate-fadeInUp"
-                style={{ animationDelay: `${index * 150}ms` }}
-              >
-                {/* Gradient background on hover */}
-                <div className={`absolute inset-0 bg-gradient-to-r ${card.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
-                
-                {/* Content */}
-                <div className="relative p-8">
-                  <div className="flex items-start justify-between mb-6">
-                    <div className={`w-16 h-16 bg-gradient-to-r ${card.color} rounded-2xl flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                      {card.icon}
-                    </div>
-                    <span className="px-4 py-2 bg-slate-100 text-slate-600 rounded-full text-sm font-medium">
-                      {card.stats}
-                    </span>
-                  </div>
-
-                  <h3 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
-                    {card.title}
-                  </h3>
+            {actionCards.map((card, index) => {
+              const IconComponent = card.icon;
+              return (
+                <a
+                  key={index}
+                  href={card.link}
+                  className="group relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden animate-fadeInUp"
+                  style={{ animationDelay: `${index * 150}ms` }}
+                >
+                  {/* Gradient background on hover */}
+                  <div className={`absolute inset-0 bg-gradient-to-r ${card.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
                   
-                  <p className="text-slate-600 mb-6 leading-relaxed">
-                    {card.description}
-                  </p>
-
-                  {/* Features list */}
-                  <div className="space-y-2 mb-6">
-                    {card.features.map((feature, i) => (
-                      <div key={i} className="flex items-center text-sm text-slate-500">
-                        <svg className="w-4 h-4 text-blue-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        {feature}
+                  {/* Content */}
+                  <div className="relative p-8">
+                    <div className="flex items-start justify-between mb-6">
+                      <div className={`w-16 h-16 bg-gradient-to-r ${card.color} rounded-2xl flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                        <IconComponent className="w-8 h-8 text-white" />
                       </div>
-                    ))}
+                      <span className="px-4 py-2 bg-slate-100 text-slate-600 rounded-full text-sm font-medium">
+                        {card.stats}
+                      </span>
+                    </div>
+
+                    <h3 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
+                      {card.title}
+                    </h3>
+                    
+                    <p className="text-slate-600 mb-6 leading-relaxed">
+                      {card.description}
+                    </p>
+
+                    {/* Features list */}
+                    <div className="space-y-2 mb-6">
+                      {card.features.map((feature, i) => (
+                        <div key={i} className="flex items-center text-sm text-slate-500">
+                          <CheckCircle className="w-4 h-4 text-blue-500 mr-2" />
+                          {feature}
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Arrow link */}
+                    <div className="flex items-center text-blue-600 font-medium">
+                      <span>Access Tool</span>
+                      <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" />
+                    </div>
                   </div>
 
-                  {/* Arrow link */}
-                  <div className="flex items-center text-blue-600 font-medium">
-                    <span>Access Tool</span>
-                    <svg className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </div>
-                </div>
-
-                {/* Decorative element */}
-                <div className={`absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-r ${card.color} opacity-10 rounded-tl-full group-hover:scale-150 transition-transform duration-500`}></div>
-              </a>
-            ))}
+                  {/* Decorative element */}
+                  <div className={`absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-r ${card.color} opacity-10 rounded-tl-full group-hover:scale-150 transition-transform duration-500`}></div>
+                </a>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -400,11 +433,17 @@ function HomePage() {
                   
                   <div className="flex items-center justify-between text-sm">
                     <span>Growth: {selectedState.growth}</span>
-                    <span className={`px-3 py-1 rounded-full ${
+                    <span className={`px-3 py-1 rounded-full flex items-center ${
                       selectedState.trend === 'up' ? 'bg-red-400/30' :
                       selectedState.trend === 'down' ? 'bg-green-400/30' : 'bg-yellow-400/30'
                     }`}>
-                      {selectedState.trend === 'up' ? '↑ Rising' : selectedState.trend === 'down' ? '↓ Falling' : '→ Stable'}
+                      {selectedState.trend === 'up' ? (
+                        <><TrendingUp className="w-3 h-3 mr-1" /> Rising</>
+                      ) : selectedState.trend === 'down' ? (
+                        <><TrendingDown className="w-3 h-3 mr-1" /> Falling</>
+                      ) : (
+                        <><Minus className="w-3 h-3 mr-1" /> Stable</>
+                      )}
                     </span>
                   </div>
                 </div>
@@ -520,44 +559,48 @@ function HomePage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {resources.map((resource, index) => (
-              <a
-                key={index}
-                href="#"
-                className="group relative bg-gradient-to-br from-slate-50 to-white rounded-2xl p-6 border border-slate-200 hover:border-blue-200 hover:shadow-xl transition-all duration-500 animate-fadeInUp"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-500 opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity"></div>
-                
-                <div className="relative">
-                  <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">
-                    {resource.icon}
+            {resources.map((resource, index) => {
+              const IconComponent = resource.icon;
+              return (
+                <a
+                  key={index}
+                  href="#"
+                  className="group relative bg-gradient-to-br from-slate-50 to-white rounded-2xl p-6 border border-slate-200 hover:border-blue-200 hover:shadow-xl transition-all duration-500 animate-fadeInUp"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-500 opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity"></div>
+                  
+                  <div className="relative">
+                    <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">
+                      <IconComponent className="w-10 h-10 text-blue-600" />
+                    </div>
+                    
+                    <div className="flex items-center space-x-2 mb-3">
+                      <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded-full">
+                        {resource.category}
+                      </span>
+                      <span className="text-xs text-slate-400 flex items-center">
+                        <Clock className="w-3 h-3 mr-1" />
+                        {resource.readTime}
+                      </span>
+                    </div>
+                    
+                    <h3 className="text-lg font-semibold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">
+                      {resource.title}
+                    </h3>
+                    
+                    <p className="text-sm text-slate-600 mb-4">
+                      {resource.description}
+                    </p>
+                    
+                    <div className="flex items-center text-blue-600 text-sm font-medium">
+                      Read More
+                      <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                    </div>
                   </div>
-                  
-                  <div className="flex items-center space-x-2 mb-3">
-                    <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded-full">
-                      {resource.category}
-                    </span>
-                    <span className="text-xs text-slate-400">{resource.readTime}</span>
-                  </div>
-                  
-                  <h3 className="text-lg font-semibold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">
-                    {resource.title}
-                  </h3>
-                  
-                  <p className="text-sm text-slate-600 mb-4">
-                    {resource.description}
-                  </p>
-                  
-                  <div className="flex items-center text-blue-600 text-sm font-medium">
-                    Read More
-                    <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                  </div>
-                </div>
-              </a>
-            ))}
+                </a>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -567,24 +610,27 @@ function HomePage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { number: "50K+", label: "Cases Analyzed", icon: "📊", suffix: "" },
-              { number: "24/7", label: "Availability", icon: "⚡", suffix: "" },
-              { number: "15+", label: "Cyber Laws", icon: "⚖️", suffix: "" },
-              { number: "98", label: "Accuracy Rate", icon: "🎯", suffix: "%" }
-            ].map((stat, index) => (
-              <div key={index} className="text-center text-white">
-                <div className="text-4xl mb-3 animate-bounce-slow" style={{ animationDelay: `${index * 200}ms` }}>
-                  {stat.icon}
+              { number: "50K+", label: "Cases Analyzed", icon: BarChart3, suffix: "" },
+              { number: "24/7", label: "Availability", icon: Zap, suffix: "" },
+              { number: "15+", label: "Cyber Laws", icon: Gavel, suffix: "" },
+              { number: "98", label: "Accuracy Rate", icon: Target, suffix: "%" }
+            ].map((stat, index) => {
+              const IconComponent = stat.icon;
+              return (
+                <div key={index} className="text-center text-white">
+                  <div className="flex justify-center mb-3 animate-bounce-slow" style={{ animationDelay: `${index * 200}ms` }}>
+                    <IconComponent className="w-8 h-8" />
+                  </div>
+                  <div className="text-3xl lg:text-4xl font-bold mb-2">
+                    {animatedStats ? stat.number : "0"}
+                    {stat.suffix}
+                  </div>
+                  <div className="text-white/80 text-sm uppercase tracking-wider">
+                    {stat.label}
+                  </div>
                 </div>
-                <div className="text-3xl lg:text-4xl font-bold mb-2">
-                  {animatedStats ? stat.number : "0"}
-                  {stat.suffix}
-                </div>
-                <div className="text-white/80 text-sm uppercase tracking-wider">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -611,9 +657,7 @@ function HomePage() {
                 >
                   <span className="flex items-center">
                     Start Free Analysis
-                    <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
+                    <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </a>
                 

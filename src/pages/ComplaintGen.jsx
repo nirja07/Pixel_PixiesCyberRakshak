@@ -1,6 +1,32 @@
 import React, { useState, useRef } from "react";
 import Navbar from "./Navbar";
 import jsPDF from "jspdf";
+import {
+  FileText,
+  User,
+  AlertTriangle,
+  DollarSign,
+  Search,
+  Download,
+  File,
+  ExternalLink,
+  Paperclip,
+  Check,
+  X,
+  Upload,
+  Clock,
+  Calendar,
+  MapPin,
+  Mail,
+  Phone,
+  Home,
+  Building,
+  Hash,
+  CreditCard,
+  Image,
+  Shield,
+  Eye
+} from "lucide-react";
 
 function ComplaintGen() {
   const [formData, setFormData] = useState({
@@ -270,10 +296,10 @@ Action Initiated: _______________________
   };
 
   const sections = [
-    { id: "personal", name: "Personal Details", icon: "👤" },
-    { id: "incident", name: "Incident Details", icon: "⚠️" },
-    { id: "financial", name: "Financial Info", icon: "💰" },
-    { id: "suspect", name: "Suspect & Evidence", icon: "🔍" }
+    { id: "personal", name: "Personal Details", icon: User },
+    { id: "incident", name: "Incident Details", icon: AlertTriangle },
+    { id: "financial", name: "Financial Info", icon: DollarSign },
+    { id: "suspect", name: "Suspect & Evidence", icon: Search }
   ];
 
   return (
@@ -285,7 +311,7 @@ Action Initiated: _______________________
           {/* Header */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-2xl mb-6 shadow-lg shadow-blue-200">
-              <span className="text-4xl">📄</span>
+              <FileText className="w-10 h-10 text-white" />
             </div>
             <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
               Cyber Crime Complaint Generator
@@ -301,22 +327,25 @@ Action Initiated: _______________________
             <div className="bg-white rounded-3xl shadow-xl p-6 border border-gray-200 h-[800px] overflow-y-auto">
               {/* Section Navigation */}
               <div className="flex space-x-2 mb-6 sticky top-0 bg-white pt-2 pb-4 z-10">
-                {sections.map((section) => (
-                  <button
-                    key={section.id}
-                    onClick={() => setActiveSection(section.id)}
-                    className={`flex-1 py-3 px-2 rounded-xl font-medium text-sm transition-all ${
-                      activeSection === section.id
-                        ? "bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg"
-                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                    }`}
-                  >
-                    <div className="flex flex-col items-center">
-                      <span className="text-lg mb-1">{section.icon}</span>
-                      <span className="text-xs">{section.name}</span>
-                    </div>
-                  </button>
-                ))}
+                {sections.map((section) => {
+                  const IconComponent = section.icon;
+                  return (
+                    <button
+                      key={section.id}
+                      onClick={() => setActiveSection(section.id)}
+                      className={`flex-1 py-3 px-2 rounded-xl font-medium text-sm transition-all ${
+                        activeSection === section.id
+                          ? "bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg"
+                          : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                      }`}
+                    >
+                      <div className="flex flex-col items-center">
+                        <IconComponent className="w-5 h-5 mb-1" />
+                        <span className="text-xs">{section.name}</span>
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
 
               {/* Personal Details Section */}
@@ -850,7 +879,7 @@ Action Initiated: _______________________
                           id="evidence-upload"
                         />
                         <label htmlFor="evidence-upload" className="cursor-pointer">
-                          <div className="text-3xl mb-2">📎</div>
+                          <Paperclip className="w-8 h-8 mx-auto mb-2 text-gray-400" />
                           <p className="text-gray-600 mb-1">Click to upload evidence</p>
                           <p className="text-xs text-gray-500">Screenshots, documents, images</p>
                         </label>
@@ -863,14 +892,14 @@ Action Initiated: _______________________
                             {formData.evidenceUrls.map((file, index) => (
                               <li key={index} className="flex items-center justify-between text-sm bg-gray-50 p-2 rounded">
                                 <span className="flex items-center">
-                                  <span className="text-green-500 mr-2">✓</span>
+                                  <File className="w-4 h-4 text-green-500 mr-2" />
                                   {file}
                                 </span>
                                 <button
                                   onClick={() => removeFile(index)}
                                   className="text-red-500 hover:text-red-700"
                                 >
-                                  ✕
+                                  <X className="w-4 h-4" />
                                 </button>
                               </li>
                             ))}
@@ -951,7 +980,7 @@ Action Initiated: _______________________
               <div className="p-4 border-b border-gray-200 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-t-3xl">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <span className="text-lg">📋</span>
+                    <FileText className="w-5 h-5" />
                     <h2 className="font-semibold">Live Preview</h2>
                   </div>
                   <div className="flex space-x-2">
@@ -964,7 +993,7 @@ Action Initiated: _______________________
                           : "bg-white/50 text-white/50 cursor-not-allowed"
                       }`}
                     >
-                      <span className="mr-1">📄</span>
+                      <File className="w-4 h-4 mr-1" />
                       PDF
                     </button>
                     <button
@@ -976,14 +1005,14 @@ Action Initiated: _______________________
                           : "bg-white/50 text-white/50 cursor-not-allowed"
                       }`}
                     >
-                      <span className="mr-1">📝</span>
+                      <FileText className="w-4 h-4 mr-1" />
                       Text
                     </button>
                     <button
                       onClick={redirectToCyberPortal}
                       className="px-3 py-1.5 bg-green-500 text-white rounded-lg text-sm font-medium hover:bg-green-600 flex items-center"
                     >
-                      <span className="mr-1">🚔</span>
+                      <ExternalLink className="w-4 h-4 mr-1" />
                       Portal
                     </button>
                   </div>
