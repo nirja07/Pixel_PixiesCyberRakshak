@@ -5,6 +5,7 @@ import HomePage from './pages/Homepage';
 import LawBot from './pages/LawBot';
 import ComplaintGen from './pages/ComplaintGen';
 import CyberQuest from './pages/CyberQuest';
+import NewsPage from './pages/NewsPage';
 function App() {
   return (
     <Router>
@@ -25,6 +26,7 @@ function App() {
           {/* Redirect any /analyze to chat (for backward compatibility) */}
           <Route path="/analyze" element={<LawBot />} />
           <Route path="/awareness" element={<CyberQuest/>}/>
+          <Route path="/news" element={<NewsPage/>}/>
           {/* 404 - Not Found Route */}
           <Route path="*" element={
             <div className="min-h-screen bg-black flex items-center justify-center">
