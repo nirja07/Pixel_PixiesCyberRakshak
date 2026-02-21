@@ -69,7 +69,10 @@ function Navbar() {
               Risk Engine
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
             </a>
-            
+            <a href="/awareness" className="px-4 py-2 text-gray-700 hover:text-blue-600 transition-colors font-medium relative group">
+    Awareness
+    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
+  </a>
             <a 
               href="/analyze" 
               className="ml-2 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-full hover:shadow-lg hover:shadow-blue-200 transition-all hover:scale-105 font-medium flex items-center space-x-2"
@@ -144,7 +147,7 @@ function Navbar() {
                 <span>Risk Engine</span>
                 <span className="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">Analysis</span>
               </a>
-              
+              <a href="/awareness" className="px-4 py-3 text-gray-700 hover:bg-blue-50 rounded-lg transition-colors font-medium">Awareness</a>
               <div className="pt-2 mt-2 border-t border-gray-100">
                 <a 
                   href="/analyze" 
