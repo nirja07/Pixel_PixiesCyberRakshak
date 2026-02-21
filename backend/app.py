@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime, timezone
 import whois
 import dns.resolver
-import google.generativeai as genai
+from google import genai
 
 # Load .env
 load_dotenv()
@@ -30,8 +30,7 @@ CORS(app)
 # ─────────────────────────────────────────────
 # Gemini client (reads GEMINI_API_KEY from .env)
 # ─────────────────────────────────────────────
-genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
-gemini_model = genai.GenerativeModel("gemini-2.5-flash")
+gemini_client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
 
 # ════════════════════════════════════════════════════════════
@@ -256,9 +255,9 @@ def get_whois_info(domain: str) -> dict:
         def first_date(val):
             return val[0] if isinstance(val, list) else val
 
-        creation = first_date(w.creation_date)
+        creation   = first_date(w.creation_date)
         expiration = first_date(w.expiration_date)
-        updated = first_date(w.updated_date)
+        updated    = first_date(w.updated_date)
 
         if creation:
             info["creation_date"] = str(creation)
@@ -314,7 +313,7 @@ def get_dns_info(domain: str) -> dict:
 
 
 def assess_risk_with_ai(url_features: dict, scrape_data: dict, whois_data: dict, dns_data: dict) -> dict:
-    """Send all gathered intel to Claude for holistic risk scoring."""
+    """Send all gathered intel to Gemini for holistic risk scoring."""
     url = url_features.get("domain", "")
 
     prompt = f"""
@@ -354,31 +353,34 @@ MX Records: {dns_data.get('mx_records')}
 
 Respond ONLY with a valid JSON object (no markdown, no text outside it):
 {{
-  "risk_level": "High" | "Medium" | "Low",
-  "risk_score": <integer 0-100>,
-  "summary": "<2-3 sentence plain-English summary>",
-  "threat_indicators": ["<indicator 1>", ...],
+  "risk_level": "High or Medium or Low",
+  "risk_score": 0,
+  "summary": "2-3 sentence plain-English summary",
+  "threat_indicators": [],
   "registrar_info": {{
-    "registrar": "<name or Unknown>",
-    "org": "<org or Unknown>",
-    "country": "<country or Unknown>",
-    "creation_date": "<date or Unknown>",
-    "expiration_date": "<date or Unknown>",
-    "domain_age_days": <number or null>,
-    "name_servers": [...]
+    "registrar": "name or Unknown",
+    "org": "org or Unknown",
+    "country": "country or Unknown",
+    "creation_date": "date or Unknown",
+    "expiration_date": "date or Unknown",
+    "domain_age_days": null,
+    "name_servers": []
   }},
   "dns_info": {{
-    "ip_address": "<ip or null>",
-    "a_records": [...],
-    "mx_records": [...]
+    "ip_address": null,
+    "a_records": [],
+    "mx_records": []
   }},
-  "recommendations": ["<action 1>", ...],
+  "recommendations": [],
   "detected_urls": ["{url}"]
 }}
 """
 
     try:
-        response = gemini_model.generate_content(prompt)
+        response = gemini_client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt,
+        )
         raw = response.text.strip()
 
         # Strip markdown fences if Gemini adds them
@@ -428,15 +430,13 @@ def analyze_url_api():
 
         result = assess_risk_with_ai(url_features, scrape_data, whois_data, dns_data)
 
-        # Add risk_color consistent with other endpoints
         level = result.get("risk_level", "Unknown")
         result["risk_color"] = {
-            "Low":  "green",
+            "Low":    "green",
             "Medium": "orange",
-            "High": "red",
+            "High":   "red",
         }.get(level, "black")
 
-        # Attach raw technical data for frontend use
         result["raw"] = {
             "url_features": url_features,
             "scrape": {
