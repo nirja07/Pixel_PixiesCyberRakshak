@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/Homepage';
 import LawBot from './pages/LawBot';
 import ComplaintGen from './pages/ComplaintGen';
-import Community from './pages/Community';   // ✅ ADD THIS
+import Community from './pages/Community'; 
+import Awareness from './pages/Awareness';
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
 
           {/* ✅ Community Scam Reporting */}
           <Route path="/community" element={<Community />} />
-
+          <Route path="/awareness" element={<Awareness />} />
           {/* Redirect any /analyze to chat */}
           <Route path="/analyze" element={<LawBot />} />
           
