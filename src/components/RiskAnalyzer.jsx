@@ -28,7 +28,7 @@ import {
   FileWarning,
   FileSearch
 } from "lucide-react";
-
+import Navbar from "../pages/Navbar";
 function RiskAnalyzer() {
   const [message, setMessage] = useState("");
   const [file, setFile] = useState(null);
@@ -187,6 +187,9 @@ function RiskAnalyzer() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-white relative overflow-hidden">
       {/* Animated Background Particles */}
+      <Navbar />
+      
+    <div className="pt-24 pb-16">
       <div className="absolute inset-0 pointer-events-none">
         {particles.map((particle, i) => (
           <motion.div
@@ -776,6 +779,7 @@ function RiskAnalyzer() {
                     </motion.div>
                   </div>
                 </div>
+                
               </motion.div>
             )}
           </AnimatePresence>
@@ -815,6 +819,7 @@ function RiskAnalyzer() {
           </motion.div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

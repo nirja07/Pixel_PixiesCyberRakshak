@@ -1,15 +1,12 @@
 import React from 'react';
+import RiskAnalyzer from './components/RiskAnalyzer';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/Homepage';
 import LawBot from './pages/LawBot';
 import ComplaintGen from './pages/ComplaintGen';
-import RiskAnalyzer from './components/RiskAnalyzer';
-
+import CyberQuest from './pages/CyberQuest';
 function App() {
   return (
-    <div className="App">
-      <RiskAnalyzer />
-    </div>
     <Router>
       <div className="App">
         <Routes>
@@ -20,14 +17,14 @@ function App() {
           <Route path="/chat" element={<LawBot />} />
           <Route path="/legalbot" element={<LawBot />} />
           <Route path="/assistant" element={<LawBot />} />
-          
+          <Route path="/riskengine" element={<RiskAnalyzer/>} />
           {/* Complaint Generator */}
           <Route path="/complaint" element={<ComplaintGen />} />
           <Route path="/complaintgen" element={<ComplaintGen />} />
           
           {/* Redirect any /analyze to chat (for backward compatibility) */}
           <Route path="/analyze" element={<LawBot />} />
-          
+          <Route path="/awareness" element={<CyberQuest/>}/>
           {/* 404 - Not Found Route */}
           <Route path="*" element={
             <div className="min-h-screen bg-black flex items-center justify-center">
