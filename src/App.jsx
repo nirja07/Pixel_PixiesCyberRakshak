@@ -5,6 +5,7 @@ import HomePage from './pages/Homepage';
 import LawBot from './pages/LawBot';
 import ComplaintGen from './pages/ComplaintGen';
 import CyberQuest from './pages/CyberQuest';
+import NewsPage from './pages/NewsPage';
 function App() {
   return (
     <Router>
