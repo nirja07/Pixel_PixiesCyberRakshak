@@ -1,0 +1,1114 @@
+{
+  "metadata": {
+    "project": "Indian Cyber Law AI Bot",
+    "version": "1-0 Comprehensive Legal Intelligence",
+    "country_scope": "India",
+    "primary_acts": [
+      "Information Technology Act, 2000",
+      "Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021",
+      "Bharatiya Nyaya Sanhita, 2023",
+      "Digital Personal Data Protection Act, 2023",
+      "CERT-In Directions 2022"
+    ],
+    "description": "Complete structured explainable dataset for core Indian cyber laws with prevention and legal mapping intelligence.",
+    "disclaimer": "For legal awareness only. Not a substitute for professional legal advice."
+  },
+
+  "laws_master": [
+
+    {
+      "law_id": "IT_43",
+      "act_name": "Information Technology Act, 2000",
+      "section_number": "43",
+      "section_title": "Penalty for Unauthorized Access & Damage to Computer System",
+      "full_description": "If any person without permission of the owner or person in charge of a computer, accesses, downloads, introduces virus, disrupts, denies access, or damages any computer system, he shall be liable to pay damages.",
+      "legal_ingredients": [
+        "Access to computer/system/network without permission",
+        "Download/copy data without permission",
+        "Introduce virus or contaminant",
+        "Cause disruption/denial of access",
+        "Damage computer system or data"
+      ],
+      "punishment": {
+        "type": "Compensation",
+        "details": "Liable to pay damages by way of compensation not exceeding ₹1 crore to the affected person."
+      },
+      "severity_weight": 7,
+      "preventive_measures": [
+        "Install firewall and endpoint protection",
+        "Enable intrusion detection/prevention systems",
+        "Restrict administrative privileges",
+        "Implement principle of least privilege",
+        "Perform regular security audits and VAPT",
+        "Maintain access logs and monitor them"
+      ],
+      "evidence_required": [
+        "Server logs with IP address",
+        "Access audit trails",
+        "System integrity reports",
+        "Antivirus/IDS alerts",
+        "Witness statements"
+      ]
+    },
+
+    {
+      "law_id": "IT_43A",
+      "act_name": "Information Technology Act, 2000",
+      "section_number": "43A",
+      "section_title": "Compensation for Failure to Protect Data",
+      "full_description": "Body corporate possessing, dealing or handling sensitive personal data is liable to compensate affected persons for negligence in implementing reasonable security practices causing wrongful loss or wrongful gain.",
+      "legal_ingredients": [
+        "Body corporate handling sensitive personal data",
+        "Negligence in maintaining security practices",
+        "Wrongful loss or wrongful gain to any person"
+      ],
+      "punishment": {
+        "type": "Compensation",
+        "details": "Liable to pay damages by way of compensation to the affected person."
+      },
+      "severity_weight": 8,
+      "preventive_measures": [
+        "Implement ISO 27001 or equivalent security standards",
+        "Conduct regular security audits",
+        "Appoint a data protection officer",
+        "Create a data breach response plan",
+        "Provide employee training on data handling",
+        "Encrypt sensitive personal data"
+      ],
+      "evidence_required": [
+        "Security audit reports",
+        "Data breach logs",
+        "Information security policy documents",
+        "Consent records from data principals"
+      ]
+    },
+
+    {
+      "law_id": "IT_65",
+      "act_name": "Information Technology Act, 2000",
+      "section_number": "65",
+      "section_title": "Tampering with Computer Source Documents",
+      "full_description": "Whoever knowingly or intentionally conceals, destroys or alters any computer source code used for computer, computer programme, computer system or computer network when source code is required to be kept or maintained by law.",
+      "legal_ingredients": [
+        "Knowingly or intentionally conceals/destroys/alters",
+        "Computer source code/document involved",
+        "Source code is required to be kept or maintained by law"
+      ],
+      "punishment": {
+        "imprisonment": "Up to 3 years",
+        "fine": "Up to ₹2,00,000",
+        "alternative": "Or with both"
+      },
+      "severity_weight": 8,
+      "preventive_measures": [
+        "Implement version control systems (e.g., Git)",
+        "Restrict source code access based on roles",
+        "Maintain secure, encrypted backups of source code",
+        "Use code repositories with detailed access logs",
+        "Conduct regular code audits",
+        "Execute employee confidentiality agreements"
+      ],
+      "evidence_required": [
+        "Original and altered source code versions",
+        "Access logs from repository",
+        "Version control history/commit logs",
+        "Developer activity logs"
+      ]
+    },
+
+    {
+      "law_id": "IT_66",
+      "act_name": "Information Technology Act, 2000",
+      "section_number": "66",
+      "section_title": "Computer Related Offences",
+      "full_description": "If any person dishonestly or fraudulently does any act referred to in Section 43, he shall be punishable with imprisonment for a term up to three years or with fine up to ₹5,00,000 or with both. [citation:4]",
+      "legal_ingredients": [
+        "Dishonest or fraudulent intent",
+        "Commission of acts under Section 43 (unauthorized access, data download, etc.)",
+        "Use of computer resource"
+      ],
+      "punishment": {
+        "imprisonment": "Up to 3 years",
+        "fine": "Up to ₹5,00,000",
+        "alternative": "Or with both"
+      },
+      "severity_weight": 8,
+      "preventive_measures": [
+        "Implement strong access controls (MFA)",
+        "Deploy intrusion detection and prevention systems",
+        "Apply regular security patches and updates",
+        "Conduct employee background verification",
+        "Use activity monitoring software",
+        "Provide security awareness training"
+      ],
+      "evidence_required": [
+        "System and access logs",
+        "Forensic analysis reports",
+        "Evidence of fraud or dishonest conduct",
+        "Digital evidence of unauthorized activity"
+      ]
+    },
+
+    {
+      "law_id": "IT_66B",
+      "act_name": "Information Technology Act, 2000",
+      "section_number": "66B",
+      "section_title": "Dishonestly Receiving Stolen Computer Resource",
+      "full_description": "Whoever dishonestly receives or retains any stolen computer resource or communication device knowing or having reason to believe the same to be stolen computer resource or communication device. [citation:4]",
+      "legal_ingredients": [
+        "Dishonest receipt or retention",
+        "Stolen computer resource or communication device",
+        "Knowledge or reason to believe it is stolen"
+      ],
+      "punishment": {
+        "imprisonment": "Up to 3 years",
+        "fine": "Up to ₹1,00,000",
+        "alternative": "Or with both"
+      },
+      "severity_weight": 7,
+      "preventive_measures": [
+        "Verify device provenance and IMEI before purchase",
+        "Check IMEI/Serial numbers against stolen databases (CEIR)",
+        "Maintain original purchase receipts and invoices",
+        "Register devices with manufacturer",
+        "Use device tracking software",
+        "Report stolen devices immediately to police and portal"
+      ],
+      "evidence_required": [
+        "Device IMEI or serial number",
+        "Purchase records and invoices",
+        "Stolen device database records",
+        "Communication logs regarding the device"
+      ]
+    },
+
+    {
+      "law_id": "IT_66C",
+      "act_name": "Information Technology Act, 2000",
+      "section_number": "66C",
+      "section_title": "Identity Theft",
+      "full_description": "Fraudulent or dishonest use of electronic signature, password, OTP or any other unique identification feature of another person. [citation:1][citation:4]",
+      "legal_ingredients": [
+        "Fraudulent or dishonest intent",
+        "Use of another person's digital identity feature",
+        "Without the person's authorization"
+      ],
+      "punishment": {
+        "imprisonment": "Up to 3 years",
+        "fine": "Up to ₹1 lakh"
+      },
+      "severity_weight": 9,
+      "preventive_measures": [
+        "Enable two-factor or multi-factor authentication",
+        "Never share OTP, passwords, or CVV",
+        "Secure SIM card with a PIN lock",
+        "Monitor login alerts and account activity",
+        "Use strong, unique passwords for each account"
+      ],
+      "evidence_required": [
+        "OTP SMS/email logs",
+        "Bank account statements showing fraudulent transactions",
+        "Login history from service provider",
+        "IP address details of the perpetrator"
+      ]
+    },
+
+    {
+      "law_id": "IT_66D",
+      "act_name": "Information Technology Act, 2000",
+      "section_number": "66D",
+      "section_title": "Cheating by Personation Using Computer Resource",
+      "full_description": "Cheating someone by pretending to be another person using any computer resource or communication device. [citation:1][citation:4]",
+      "legal_ingredients": [
+        "Impersonation of another person",
+        "Dishonest inducement to deliver property or consent",
+        "Use of computer resource or communication device"
+      ],
+      "punishment": {
+        "imprisonment": "Up to 3 years",
+        "fine": "Up to ₹1 lakh"
+      },
+      "severity_weight": 9,
+      "preventive_measures": [
+        "Avoid scanning unknown QR codes for payments",
+        "Verify payment requests through independent channels",
+        "Cross-check official contact numbers from verified sources",
+        "Be wary of urgent requests for money/favors",
+        "Do not share personal details on unsolicited calls"
+      ],
+      "evidence_required": [
+        "Transaction ID and bank statement",
+        "Screenshots of chat or communication",
+        "UPI ID or bank account details of scammer",
+        "Call recordings and phone numbers"
+      ]
+    },
+
+    {
+      "law_id": "IT_66E",
+      "act_name": "Information Technology Act, 2000",
+      "section_number": "66E",
+      "section_title": "Violation of Privacy",
+      "full_description": "Capturing, publishing or transmitting private images of any person in mass or personal space without their consent. [citation:1]",
+      "legal_ingredients": [
+        "Private area of a person captured",
+        "Without the person's consent",
+        "Transmission or publication electronically"
+      ],
+      "punishment": {
+        "imprisonment": "Up to 3 years",
+        "fine": "Up to ₹2 lakh"
+      },
+      "severity_weight": 9,
+      "preventive_measures": [
+        "Do not share intimate content with anyone",
+        "Use secure cloud storage with strong passwords",
+        "Be cautious of apps requesting camera/gallery permissions",
+        "Disable camera access for suspicious apps",
+        "Regularly review app permissions on devices"
+      ],
+      "evidence_required": [
+        "Screenshots of the content being shared",
+        "Metadata logs (time, date, location) of the image",
+        "URLs where the image was published",
+        "Device IMEI from where it was captured/uploaded"
+      ]
+    },
+
+    {
+      "law_id": "IT_66F",
+      "act_name": "Information Technology Act, 2000",
+      "section_number": "66F",
+      "section_title": "Cyber Terrorism",
+      "full_description": "Acts using computer resources that threaten the sovereignty, unity and integrity, or security of India, or to strike terror in the people. [citation:4]",
+      "legal_ingredients": [
+        "Intent to threaten national security or strike terror",
+        "Use of computer systems to cause harm",
+        "Denial of access to critical information systems"
+      ],
+      "punishment": {
+        "imprisonment": "Life imprisonment"
+      },
+      "severity_weight": 10,
+      "preventive_measures": [
+        "Monitor critical information infrastructure",
+        "Implement air-gapping for sensitive systems",
+        "Conduct regular security drills and audits",
+        "Report any suspicious cyber threats to CERT-In/law enforcement",
+        "Employ stringent access controls for protected systems"
+      ],
+      "evidence_required": [
+        "Forensic reports of the attack",
+        "System attack logs and network traffic data",
+        "Evidence linking the act to national security threat"
+      ]
+    },
+
+    {
+      "law_id": "IT_67",
+      "act_name": "Information Technology Act, 2000",
+      "section_number": "67",
+      "section_title": "Publishing Obscene Material in Electronic Form",
+      "full_description": "Whoever publishes or transmits or causes to be published in electronic form any material which is lascivious or appeals to prurient interest or tends to deprave and corrupt persons. [citation:1]",
+      "legal_ingredients": [
+        "Publication or transmission electronically",
+        "Material is obscene or lascivious",
+        "Tends to deprave and corrupt persons"
+      ],
+      "punishment": {
+        "imprisonment_first": "Up to 3 years",
+        "fine_first": "Up to ₹5,00,000",
+        "imprisonment_second": "Up to 5 years",
+        "fine_second": "Up to ₹10,00,000"
+      },
+      "severity_weight": 8,
+      "preventive_measures": [
+        "Implement robust content moderation policies",
+        "Use AI-based content filtering tools",
+        "Establish clear terms of service prohibiting obscene content",
+        "Provide easy user reporting mechanisms",
+        "Conduct regular platform audits"
+      ],
+      "evidence_required": [
+        "URL of the offending content",
+        "Screenshots with clear timestamps",
+        "Uploader's IP address and account information",
+        "Server logs showing the content hosted"
+      ]
+    },
+
+    {
+      "law_id": "IT_67A",
+      "act_name": "Information Technology Act, 2000",
+      "section_number": "67A",
+      "section_title": "Publishing Sexually Explicit Material",
+      "full_description": "Whoever publishes or transmits or causes to be published any material containing sexually explicit act or conduct in electronic form. [citation:1]",
+      "legal_ingredients": [
+        "Publication or transmission electronically",
+        "Material contains sexually explicit act or conduct",
+        "Absence of lawful exception or defense"
+      ],
+      "punishment": {
+        "imprisonment_first": "Up to 5 years",
+        "fine_first": "Up to ₹10,00,000",
+        "imprisonment_second": "Up to 7 years",
+        "fine_second": "Up to ₹10,00,000"
+      },
+      "severity_weight": 9,
+      "preventive_measures": [
+        "Strict content moderation with human review",
+        "Implement robust age verification systems",
+        "Utilize photo-DNA/hashing to block known illegal content",
+        "Provide clear 'report abuse' mechanisms",
+        "Maintain immediate takedown procedures"
+      ],
+      "evidence_required": [
+        "Detailed screenshots or video recordings of content",
+        "Upload metadata (time, date, IP address)",
+        "User account details",
+        "Platform server logs"
+      ]
+    },
+
+    {
+      "law_id": "IT_67B",
+      "act_name": "Information Technology Act, 2000",
+      "section_number": "67B",
+      "section_title": "Child Pornography",
+      "full_description": "Publishing, browsing, downloading or transmitting material depicting children in sexually explicit act in electronic form. [citation:1]",
+      "legal_ingredients": [
+        "Material depicts children in sexually explicit act",
+        "Publishing/transmitting/browsing/downloading such material",
+        "In electronic form"
+      ],
+      "punishment": {
+        "imprisonment_first": "Up to 5 years",
+        "fine_first": "Up to ₹10,00,000",
+        "imprisonment_second": "Up to 7 years",
+        "fine_second": "Up to ₹10,00,000"
+      },
+      "severity_weight": 10,
+      "preventive_measures": [
+        "Do not forward, save, or share such content under any circumstance",
+        "Immediately report to law enforcement and platforms",
+        "Use parental control software to protect children",
+        "Educate children on online safety and risks",
+        "Implement and use photo-DNA/hashing to detect illegal content"
+      ],
+      "evidence_required": [
+        "Content hash values (e.g., MD5, SHA)",
+        "Source URLs",
+        "Download logs from device",
+        "IP addresses involved in transmission",
+        "Forensic analysis of device"
+      ]
+    },
+
+    {
+      "law_id": "IT_67C",
+      "act_name": "Information Technology Act, 2000",
+      "section_number": "67C",
+      "section_title": "Preservation and Retention of Information by Intermediaries",
+      "full_description": "Intermediaries shall preserve and retain such information as may be prescribed for such duration and in such manner and format as the Central Government may prescribe. [citation:4]",
+      "legal_ingredients": [
+        "Entity is an 'intermediary'",
+        "Failure to preserve/retain information",
+        "Information was required to be preserved by rules"
+      ],
+      "punishment": {
+        "imprisonment": "Up to 3 years",
+        "fine": "Applicable",
+        "note": "For non-compliance with lawful directions"
+      },
+      "severity_weight": 7,
+      "preventive_measures": [
+        "Comply with CERT-In directions for log retention (180 days)",
+        "Maintain secure, immutable storage for logs",
+        "Implement centralized log collection and monitoring (SIEM)",
+        "Establish a clear data retention and disposal policy",
+        "Ensure logs are time-synchronized (NTP)"
+      ],
+      "evidence_required": [
+        "Log retention policy documents",
+        "Evidence of log storage location and duration",
+        "Access logs to the log repository",
+        "Proof of compliance with CERT-In directions"
+      ]
+    },
+
+    {
+      "law_id": "IT_69",
+      "act_name": "Information Technology Act, 2000",
+      "section_number": "69",
+      "section_title": "Powers to Issue Directions for Interception/Monitoring",
+      "full_description": "Central/State Government may issue directions to intercept, monitor or decrypt any information through computer resource in the interest of sovereignty, security, public order or for investigation of any offence.",
+      "legal_ingredients": [
+        "Government direction issued",
+        "Interception/monitoring/decryption of information",
+        "Grounds: sovereignty/security/public order/investigation",
+        "Non-compliance by intermediary"
+      ],
+      "punishment": {
+        "imprisonment": "Up to 7 years",
+        "fine": "Applicable",
+        "note": "For non-compliance with lawful directions"
+      },
+      "severity_weight": 9,
+      "preventive_measures": [
+        "Maintain proper records of all government directions",
+        "Designate a nodal compliance officer",
+        "Implement technical capabilities for lawful interception (within law)",
+        "Ensure secure and confidential handling of requests",
+        "Provide regular compliance training to staff"
+      ],
+      "evidence_required": [
+        "Government direction in writing",
+        "Compliance records and acknowledgments",
+        "Interception logs (if applicable and lawful)",
+        "Authorization documents from competent authority"
+      ]
+    },
+
+    {
+      "law_id": "IT_69A",
+      "act_name": "Information Technology Act, 2000",
+      "section_number": "69A",
+      "section_title": "Power to Issue Directions for Blocking Public Access",
+      "full_description": "Central Government may issue directions to block public access to any information through any computer resource in the interest of sovereignty, security, public order or to prevent incitement to an offence. [citation:1]",
+      "legal_ingredients": [
+        "Government direction to block information",
+        "Grounds: sovereignty/security/public order/incitement",
+        "Non-compliance by intermediary"
+      ],
+      "punishment": {
+        "imprisonment": "Up to 7 years",
+        "fine": "Applicable",
+        "note": "For non-compliance with blocking orders"
+      },
+      "severity_weight": 9,
+      "preventive_measures": [
+        "Establish a clear procedure for responding to government blocking orders",
+        "Implement technical ability to block specific URLs/content",
+        "Maintain a confidential record of actions taken",
+        "Designate a point of contact for government agencies"
+      ],
+      "evidence_required": [
+        "Blocking order from authorized government body",
+        "Records of compliance (e.g., date and time of blocking)",
+        "List of URLs/information that was blocked"
+      ]
+    },
+
+    {
+      "law_id": "IT_70",
+      "act_name": "Information Technology Act, 2000",
+      "section_number": "70",
+      "section_title": "Protected System",
+      "full_description": "Whoever secures access or attempts to secure access to a protected system notified by the Central Government shall be punished. [citation:4]",
+      "legal_ingredients": [
+        "Computer system is notified as 'protected'",
+        "Unauthorized access or attempt to access",
+        "Notification by Central Government exists"
+      ],
+      "punishment": {
+        "imprisonment": "Up to 10 years",
+        "fine": "Applicable"
+      },
+      "severity_weight": 10,
+      "preventive_measures": [
+        "Implement multi-layer security architecture",
+        "Enforce strict access controls with biometric/MFA",
+        "Provide 24/7 security monitoring through a SOC",
+        "Conduct regular penetration testing and security audits",
+        "Maintain air-gapped systems where appropriate"
+      ],
+      "evidence_required": [
+        "Access logs showing unauthorized attempt",
+        "Security breach and incident reports",
+        "Official notification declaring system as 'protected'",
+        "Digital forensic evidence"
+      ]
+    },
+
+    {
+      "law_id": "IT_70B",
+      "act_name": "Information Technology Act, 2000",
+      "section_number": "70B",
+      "section_title": "Indian Computer Emergency Response Team (CERT-In)",
+      "full_description": "CERT-In serves as the national agency for cyber incident response. Mandatory reporting of cybersecurity incidents within 6 hours of noticing. [citation:1]",
+      "legal_ingredients": [
+        "Cyber security incident has occurred",
+        "Obligation to report to CERT-In",
+        "Incident not reported within 6 hours",
+        "Non-compliance with CERT-In directions"
+      ],
+      "punishment": {
+        "imprisonment": "Up to 1 year",
+        "fine": "Up to ₹1,00,00,000",
+        "note": "For non-compliance with CERT-In directions"
+      },
+      "severity_weight": 9,
+      "preventive_measures": [
+        "Designate a 24x7 incident reporting coordinator",
+        "Maintain an incident response Standard Operating Procedure (SOP)",
+        "Retain all ICT system logs for 180 days within India",
+        "Synchronize all system clocks with NTP servers (NIC/NPL)",
+        "Develop an incident classification matrix for quick reporting"
+      ],
+      "evidence_required": [
+        "Timestamp of when the incident was first detected",
+        "Copy of the initial notification sent to CERT-In",
+        "Updated and final incident reports",
+        "Security logs covering 180 days",
+        "Documentation of containment actions taken"
+      ]
+    },
+
+    {
+      "law_id": "IT_72",
+      "act_name": "Information Technology Act, 2000",
+      "section_number": "72",
+      "section_title": "Breach of Confidentiality and Privacy",
+      "full_description": "Disclosure of any electronic record, book, register, information or material without consent in pursuance of any powers conferred under the IT Act.",
+      "legal_ingredients": [
+        "Access to information under powers conferred by IT Act",
+        "Disclosure of such information without consent",
+        "Electronic record or document involved"
+      ],
+      "punishment": {
+        "imprisonment": "Up to 2 years",
+        "fine": "Up to ₹1,00,000",
+        "alternative": "Or with both"
+      },
+      "severity_weight": 7,
+      "preventive_measures": [
+        "Have employees sign strict confidentiality agreements",
+        "Apply 'need-to-know' principle for data access",
+        "Establish clear data classification policies",
+        "Provide regular training on non-disclosure obligations",
+        "Maintain audit trails for all data access",
+        "Enforce penalties for unauthorized disclosure"
+      ],
+      "evidence_required": [
+        "Records showing who accessed the data",
+        "Proof of disclosure (e.g., copy of leaked information)",
+        "Consent records (or proof of absence of consent)",
+        "Employment contracts or service agreements"
+      ]
+    },
+
+    {
+      "law_id": "IT_72A",
+      "act_name": "Information Technology Act, 2000",
+      "section_number": "72A",
+      "section_title": "Disclosure of Personal Information in Breach of Contract",
+      "full_description": "Disclosure of personal information about another person without consent in breach of a lawful contract with knowledge that disclosure will cause wrongful loss or gain. [citation:4]",
+      "legal_ingredients": [
+        "Personal information of another person",
+        "Disclosure without consent",
+        "Breach of a lawful contract",
+        "Knowledge that disclosure will cause wrongful loss or gain"
+      ],
+      "punishment": {
+        "imprisonment": "Up to 3 years",
+        "fine": "Up to ₹5,00,000",
+        "alternative": "Or with both"
+      },
+      "severity_weight": 8,
+      "preventive_measures": [
+        "Include strong data protection clauses in all contracts",
+        "Provide employee training on data privacy",
+        "Enforce strict access controls to personal data",
+        "Implement Data Leak Prevention (DLP) systems",
+        "Conduct regular privacy audits",
+        "Perform thorough due diligence on vendors"
+      ],
+      "evidence_required": [
+        "Contract showing confidentiality and data protection obligations",
+        "Proof of disclosure (e.g., email, data log)",
+        "Details of the personal information involved",
+        "Evidence suggesting knowledge of potential loss/gain"
+      ]
+    },
+
+    {
+      "law_id": "IT_74",
+      "act_name": "Information Technology Act, 2000",
+      "section_number": "74",
+      "section_title": "Publication for Fraudulent Purpose",
+      "full_description": "Whoever knowingly creates, publishes or otherwise makes available a Digital Signature Certificate for any fraudulent or unlawful purpose. [citation:4]",
+      "legal_ingredients": [
+        "Digital Signature Certificate",
+        "Knowingly created, published, or made available",
+        "For a fraudulent or unlawful purpose"
+      ],
+      "punishment": {
+        "imprisonment": "Up to 2 years",
+        "fine": "Up to ₹1,00,000",
+        "alternative": "Or with both"
+      },
+      "severity_weight": 7,
+      "preventive_measures": [
+        "Verify identity thoroughly before issuing a DSC",
+        "Maintain detailed logs of all certificates issued",
+        "Establish a clear certificate revocation procedure",
+        "Conduct regular audits of issued certificates",
+        "Report any suspicious or fraudulent certificates to authorities",
+        "Ensure secure storage of private keys by subscribers"
+      ],
+      "evidence_required": [
+        "The fraudulent Digital Signature Certificate",
+        "Issuance records from the Certifying Authority",
+        "Evidence demonstrating the fraudulent or unlawful purpose",
+        "Communication showing the intent to defraud"
+      ]
+    },
+
+    {
+      "law_id": "IT_RULES_3",
+      "act_name": "IT (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021",
+      "section_number": "Rule 3",
+      "section_title": "Due Diligence by Intermediaries",
+      "full_description": "Intermediaries (social media platforms, apps, etc.) must exercise due diligence. They must inform users not to host unlawful content including obscene material, defamation, hate speech, deepfakes, and content that invades privacy. [citation:1]",
+      "legal_ingredients": [
+        "Entity qualifies as an 'intermediary'",
+        "Failure to exercise due diligence",
+        "Hosting or transmitting prohibited content",
+        "Lack of proper user agreement and notice"
+      ],
+      "punishment": {
+        "type": "Liability",
+        "details": "Loss of safe harbour protection under Section 79 of IT Act. Can be liable for content."
+      },
+      "severity_weight": 8,
+      "preventive_measures": [
+        "Publish clear terms of service and user agreements",
+        "Appoint a Grievance Officer (name and contact details)",
+        "Remove unlawful content within 36 hours of complaint (24 hours for privacy/impersonation)",
+        "Implement automated tools to detect and remove prohibited content",
+        "Inform users about rules and consequences of violation",
+        "Comply with government advisories on deepfakes and misinformation"
+      ],
+      "evidence_required": [
+        "Terms of service and privacy policy documents",
+        "Grievance redressal mechanism records",
+        "Action taken reports on user complaints",
+        "Content moderation logs",
+        "Compliance reports"
+      ]
+    },
+
+    {
+      "law_id": "BNS_303",
+      "act_name": "Bharatiya Nyaya Sanhita, 2023",
+      "section_number": "303",
+      "section_title": "Theft",
+      "full_description": "Whoever intending to take dishonestly any movable property out of the possession of any person without consent, moves that property. In the cyber context, digital data is considered movable property if it can be transferred, copied, or moved. [citation:4]",
+      "legal_ingredients": [
+        "Dishonest intention",
+        "Taking movable property (including digital data) out of possession",
+        "Without the person's consent",
+        "Movement of the property (e.g., copying/transferring data)"
+      ],
+      "punishment": {
+        "imprisonment": "Up to 3 years",
+        "fine": "Applicable",
+        "alternative": "Or with both"
+      },
+      "severity_weight": 8,
+      "preventive_measures": [
+        "Implement data encryption at rest and in transit",
+        "Enforce strict access controls",
+        "Maintain regular backups in secure locations",
+        "Deploy Data Loss Prevention (DLP) software",
+        "Establish clear employee exit protocols to revoke access",
+        "Monitor and audit all large data transfers"
+      ],
+      "evidence_required": [
+        "Access logs showing unauthorized access or data movement",
+        "Data transfer records with timestamps and volume",
+        "Forensic evidence of data exfiltration",
+        "Witness statements from system administrators"
+      ]
+    },
+
+    {
+      "law_id": "BNS_314",
+      "act_name": "Bharatiya Nyaya Sanhita, 2023",
+      "section_number": "314",
+      "section_title": "Dishonest Misappropriation of Property",
+      "full_description": "Whoever dishonestly misappropriates or converts to his own use any movable property (including digital data) shall be punished. [citation:4]",
+      "legal_ingredients": [
+        "Dishonest misappropriation",
+        "Conversion of property for own use",
+        "Movable property, including digital data"
+      ],
+      "punishment": {
+        "imprisonment_min": "6 months",
+        "imprisonment_max": "2 years",
+        "fine": "Applicable"
+      },
+      "severity_weight": 7,
+      "preventive_measures": [
+        "Establish clear data ownership and usage policies",
+        "Implement role-based access restrictions",
+        "Classify data based on sensitivity",
+        "Provide employee training on proper data handling",
+        "Maintain a detailed asset inventory",
+        "Conduct regular audits of data access and usage"
+      ],
+      "evidence_required": [
+        "Evidence of misappropriation (e.g., unauthorized copying)",
+        "Data ownership and classification records",
+        "Access logs showing the accused accessed the data",
+        "Witness statements"
+      ]
+    },
+
+    {
+      "law_id": "BNS_318",
+      "act_name": "Bharatiya Nyaya Sanhita, 2023",
+      "section_number": "318",
+      "section_title": "Cheating",
+      "full_description": "Whoever by deceiving any person fraudulently or dishonestly induces that person to deliver any property, or to consent that any person shall retain any property, or intentionally induces the person to do or omit anything which causes damage or harm. [citation:4]",
+      "legal_ingredients": [
+        "Deception of a person",
+        "Fraudulent or dishonest inducement",
+        "Delivery of property or consent to retain property",
+        "Act or omission causing damage or harm"
+      ],
+      "punishment": {
+        "imprisonment": "Up to 7 years",
+        "fine": "Applicable"
+      },
+      "severity_weight": 9,
+      "preventive_measures": [
+        "Verify online offers and deals from independent sources",
+        "Check website authenticity and look for secure payment gateways",
+        "Never make advance payments to unknown individuals",
+        "Read terms and conditions carefully",
+        "Be vigilant against phishing emails and messages",
+        "Do not click on suspicious links"
+      ],
+      "evidence_required": [
+        "Bank transaction records and statements",
+        "Screenshots of communication (emails, chats)",
+        "Website URLs involved in the fraud",
+        "Email headers to trace origin",
+        "Any agreement or document provided by the deceiver"
+      ]
+    },
+
+    {
+      "law_id": "BNS_319",
+      "act_name": "Bharatiya Nyaya Sanhita, 2023",
+      "section_number": "319",
+      "section_title": "Cheating by Personation",
+      "full_description": "Cheating by pretending to be another person, knowingly substituting one person for another, or representing that any person is a person other than such person is. [citation:4]",
+      "legal_ingredients": [
+        "Pretending to be another person",
+        "Knowingly substituting one person for another",
+        "Cheating committed through such personation"
+      ],
+      "punishment": {
+        "imprisonment": "Up to 5 years",
+        "fine": "Applicable",
+        "alternative": "Or with both"
+      },
+      "severity_weight": 9,
+      "preventive_measures": [
+        "Enable two-factor authentication on all accounts",
+        "Never share OTPs, passwords, or banking details",
+        "Verify the caller's identity independently through official channels",
+        "Be extremely cautious of urgent or threatening requests",
+        "Use only official contact numbers from verified websites",
+        "Report suspicious calls and messages immediately"
+      ],
+      "evidence_required": [
+        "Call recordings of the conversation",
+        "Chat transcripts (SMS, WhatsApp, etc.)",
+        "Transaction IDs and bank statements",
+        "Phone numbers used by the impersonator",
+        "Email addresses used in the fraud"
+      ]
+    },
+
+    {
+      "law_id": "BNS_324",
+      "act_name": "Bharatiya Nyaya Sanhita, 2023",
+      "section_number": "324",
+      "section_title": "Mischief",
+      "full_description": "Whoever with intent to cause or knowing likely to cause wrongful loss or damage to the public or any person, causes the destruction of any property, or any such change in any property or the situation thereof, diminishing its value or utility. [citation:4]",
+      "legal_ingredients": [
+        "Intent to cause wrongful loss or damage",
+        "Destruction or change in property",
+        "Diminishes the value or utility of property",
+        "Applicable to digital networks, servers, and online services"
+      ],
+      "punishment": {
+        "imprisonment": "Up to 5 years",
+        "fine": "Applicable",
+        "alternative": "Or with both"
+      },
+      "severity_weight": 8,
+      "preventive_measures": [
+        "Subscribe to DDoS protection services",
+        "Implement continuous network and system monitoring",
+        "Build redundant infrastructure to ensure service availability",
+        "Create and rehearse a comprehensive incident response plan",
+        "Conduct regular security testing, including stress tests",
+        "Implement traffic filtering and rate limiting"
+      ],
+      "evidence_required": [
+        "Network logs showing traffic patterns and anomalies",
+        "DDoS attack analysis reports",
+        "Server access and error logs",
+        "Records of service downtime and impact assessment",
+        "Witness statements from technical staff"
+      ]
+    },
+
+    {
+      "law_id": "DPDP_CORE",
+      "act_name": "Digital Personal Data Protection Act, 2023",
+      "section_number": "Sections 5-9",
+      "section_title": "Data Protection Duties and Rights",
+      "full_description": "Mandates lawful processing of personal data based on consent or legitimate uses. Requires clear notice, security safeguards, and breach reporting. Gives individuals rights to access, correction, and erasure. [citation:3][citation:6]",
+      "legal_ingredients": [
+        "Processing of digital personal data",
+        "Consent requirement or legitimate use ground",
+        "Failure to implement reasonable security safeguards",
+        "Failure to notify breach to Board and affected individuals"
+      ],
+      "punishment": {
+        "type": "Monetary penalty",
+        "details": "Penalties up to ₹250 crore depending on severity and type of violation."
+      },
+      "severity_weight": 9,
+      "preventive_measures": [
+        "Implement data encryption (at rest and in transit)",
+        "Appoint a Data Protection Officer (DPO) if required",
+        "Maintain a clear and published data breach response policy",
+        "Obtain clear, affirmative consent for data processing",
+        "Provide easy mechanisms for users to withdraw consent",
+        "Conduct regular Data Protection Impact Assessments (DPIA) for high-risk processing"
+      ],
+      "evidence_required": [
+        "Consent records with timestamps and user acknowledgment",
+        "Privacy policy and notice versions",
+        "Data breach notification report to Data Protection Board",
+        "Records of data principal requests and responses"
+      ]
+    },
+
+    {
+      "law_id": "DPDP_SEC8",
+      "act_name": "Digital Personal Data Protection Act, 2023",
+      "section_number": "Section 8",
+      "section_title": "Security Safeguards",
+      "full_description": "Data Fiduciary must implement appropriate technical and organizational measures to protect personal data in its possession from breach, unauthorized access, disclosure or damage. [citation:3]",
+      "legal_ingredients": [
+        "Personal data in possession of Data Fiduciary",
+        "Duty to protect data with reasonable safeguards",
+        "Failure leads to personal data breach",
+        "Negligence in maintaining safeguards"
+      ],
+      "punishment": {
+        "type": "Monetary penalty",
+        "details": "Penalties up to ₹250 crore for breach due to failure to maintain safeguards."
+      },
+      "severity_weight": 9,
+      "preventive_measures": [
+        "Encrypt personal data at rest and in transit",
+        "Implement role-based access controls and strong authentication",
+        "Conduct regular security audits and vulnerability assessments",
+        "Perform penetration testing periodically",
+        "Maintain a tested security incident response plan",
+        "Ensure regular data backup and secure recovery procedures",
+        "Provide comprehensive employee security training"
+      ],
+      "evidence_required": [
+        "Security audit and VAPT reports",
+        "Access control logs",
+        "Encryption implementation certificates",
+        "Incident response and drill records",
+        "Information security policy documents"
+      ]
+    },
+
+    {
+      "law_id": "DPDP_SEC9",
+      "act_name": "Digital Personal Data Protection Act, 2023",
+      "section_number": "Section 9",
+      "section_title": "Data Breach Notification",
+      "full_description": "Data Fiduciary must notify affected Data Principals and the Data Protection Board of a personal data breach without delay. A detailed report must follow within 72 hours. [citation:3][citation:6]",
+      "legal_ingredients": [
+        "Personal data breach has occurred",
+        "Notification to affected Data Principals is required",
+        "Notification to Data Protection Board is required",
+        "Notification must be timely (immediate, with 72-hour follow-up)"
+      ],
+      "punishment": {
+        "type": "Monetary penalty",
+        "details": "Penalties up to ₹200 crore for failure to notify the Board or affected individuals of a breach."
+      },
+      "severity_weight": 9,
+      "preventive_measures": [
+        "Implement automated breach detection systems",
+        "Maintain a dedicated incident response team",
+        "Create pre-approved breach notification templates",
+        "Establish clear internal and external communication protocols",
+        "Maintain forensic investigation capability",
+        "Conduct regular tabletop exercises for breach scenarios",
+        "Keep an updated list of stakeholder contacts (Board, affected users)"
+      ],
+      "evidence_required": [
+        "Timestamp and method of breach detection",
+        "Initial notification sent to the Board",
+        "Follow-up detailed report (within 72 hours)",
+        "Forensic investigation report",
+        "Details of affected data and individuals",
+        "Documentation of remediation actions taken"
+      ]
+    },
+
+    {
+      "law_id": "DPDP_SDF",
+      "act_name": "Digital Personal Data Protection Act, 2023",
+      "section_number": "Section 10",
+      "section_title": "Significant Data Fiduciary (SDF) Obligations",
+      "full_description": "Additional obligations for notified Significant Data Fiduciaries (entities processing large volumes of sensitive data or posing significant risk) including appointment of a DPO, independent data auditor, and conducting Data Protection Impact Assessments. [citation:3][citation:6]",
+      "legal_ingredients": [
+        "Notified as a Significant Data Fiduciary",
+        "Failure to appoint a DPO",
+        "Failure to appoint an independent data auditor",
+        "Failure to conduct Data Protection Impact Assessment (DPIA)",
+        "Failure to conduct periodic compliance audits"
+      ],
+      "punishment": {
+        "type": "Monetary penalty",
+        "details": "Enhanced penalties for non-compliance, as determined by the Data Protection Board."
+      },
+      "severity_weight": 9,
+      "preventive_measures": [
+        "Appoint a qualified Data Protection Officer (DPO) based in India",
+        "Engage an independent data auditor for annual audits",
+        "Conduct DPIAs for all high-risk processing activities",
+        "Maintain comprehensive compliance documentation",
+        "Establish board-level privacy oversight",
+        "Implement algorithmic due diligence to ensure fairness",
+        "Prepare for potential data localization requirements"
+      ],
+      "evidence_required": [
+        "DPO appointment letter and contact details",
+        "Independent auditor engagement and audit reports",
+        "DPIA reports with risk assessments",
+        "Compliance audit records and remediation plans"
+      ]
+    },
+
+    {
+      "law_id": "CERT_IN_REPORTING",
+      "act_name": "CERT-In Directions 2022",
+      "section_number": "Incident Reporting",
+      "section_title": "Mandatory Cyber Incident Reporting",
+      "full_description": "Mandatory reporting of cybersecurity incidents including data breaches, intrusions, malware attacks, denial of service, and ransomware to CERT-In within 6 hours of noticing. [citation:4]",
+      "legal_ingredients": [
+        "Cybersecurity incident has occurred",
+        "Incident falls within categories mandatorily reportable",
+        "Mandatory reporting requirement to CERT-In",
+        "Failure to report within 6 hours of noticing"
+      ],
+      "punishment": {
+        "imprisonment": "Up to 1 year",
+        "fine": "Up to ₹1,00,00,000",
+        "note": "For non-compliance with CERT-In directions"
+      },
+      "severity_weight": 9,
+      "preventive_measures": [
+        "Establish 24x7 incident monitoring capability (SOC)",
+        "Develop an incident classification matrix to identify reportable events",
+        "Prepare pre-drafted reporting templates for quick use",
+        "Designate and train a reporting coordinator",
+        "Conduct regular incident response drills",
+        "Integrate all systems with a centralized SIEM for real-time alerting"
+      ],
+      "evidence_required": [
+        "Timestamp and method of incident detection",
+        "Copy of initial CERT-In notification (sent within 6 hours)",
+        "All updated and final incident investigation reports",
+        "Documentation of containment, eradication, and recovery actions",
+        "Forensic analysis of affected systems"
+      ]
+    },
+
+    {
+      "law_id": "CERT_IN_LOG_RET",
+      "act_name": "CERT-In Directions 2022",
+      "section_number": "Log Retention",
+      "section_title": "Mandatory Log Retention",
+      "full_description": "All intermediaries, data centers, VPS providers, and cloud providers must retain all ICT system logs for 180 days within India for investigation purposes. [citation:4]",
+      "legal_ingredients": [
+        "Entity is an intermediary/data center/VPS/cloud provider",
+        "ICT system logs exist",
+        "Logs must be retained for 180 days",
+        "Logs must be stored within India",
+        "Failure to comply"
+      ],
+      "punishment": {
+        "imprisonment": "Up to 1 year",
+        "fine": "Up to ₹1,00,00,000",
+        "note": "For non-compliance with CERT-In directions"
+      },
+      "severity_weight": 8,
+      "preventive_measures": [
+        "Implement centralized log collection",
+        "Use immutable or Write-Once-Read-Many (WORM) storage for logs",
+        "Conduct regular log integrity checks (checksum/hash verification)",
+        "Implement automated log rotation and archival",
+        "Maintain secure, encrypted backups of all logs",
+        "Enforce strict access controls to log repositories",
+        "Document and maintain the log retention policy"
+      ],
+      "evidence_required": [
+        "Log retention policy document",
+        "Proof of log storage location (Indian data center)",
+        "Log integrity verification reports (hash matches)",
+        "Access control lists and access logs for the log repository"
+      ]
+    },
+
+    {
+      "law_id": "CERT_IN_NTP",
+      "act_name": "CERT-In Directions 2022",
+      "section_number": "Time Synchronization",
+      "section_title": "System Clock Synchronization",
+      "full_description": "All ICT systems must synchronize their clocks with trusted time sources (NIC/NPL) to ensure accurate timestamps for investigation and forensics. [citation:4]",
+      "legal_ingredients": [
+        "ICT systems are in scope",
+        "Time synchronization requirement",
+        "Must use trusted NTP sources (NIC/NPL)",
+        "Failure to maintain accurate timestamps"
+      ],
+      "punishment": {
+        "imprisonment": "Up to 1 year",
+        "fine": "Up to ₹1,00,00,000",
+        "note": "For non-compliance with CERT-In directions"
+      },
+      "severity_weight": 7,
+      "preventive_measures": [
+        "Establish a central NTP server hierarchy within the organization",
+        "Create and enforce configuration baselines for all ICT assets",
+        "Implement automated drift monitoring and alerting",
+        "Configure alerts for NTP synchronization failure",
+        "Conduct regular audits of system time settings",
+        "Document all trusted NTP sources used"
+      ],
+      "evidence_required": [
+        "NTP configuration records from servers, network devices, endpoints",
+        "Time synchronization logs showing drift and sync status",
+        "Drift monitoring reports and alerts"
+      ]
+    }
+  ]
+}
