@@ -11,20 +11,45 @@ import {
   BarChart3,
   Zap,
   BookOpen,
-  Newspaper
+  Newspaper,
+  LogOut,
+  User
 } from "lucide-react";
+import { auth } from "../firebase";
+import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    // Listen to auth state changes
+    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      unsubscribe();
+    };
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/login");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
 
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${
@@ -109,6 +134,40 @@ function Navbar() {
               <span>Analyze Now</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </a>
+
+            {/* User Menu - Desktop */}
+            {user ? (
+              <div className="flex items-center ml-2 pl-2 border-l border-gray-200">
+                <div className="flex items-center mr-2">
+                  <User className="w-4 h-4 text-gray-500 mr-1" />
+                  <span className="text-xs text-gray-600 max-w-[100px] truncate">
+                    {user.email}
+                  </span>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center px-3 py-1.5 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all font-medium"
+                >
+                  <LogOut className="w-4 h-4 mr-1" />
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center ml-2 space-x-2">
+                <a
+                  href="/login"
+                  className="px-4 py-1.5 text-sm text-blue-600 hover:text-blue-700 font-medium"
+                >
+                  Login
+                </a>
+                <a
+                  href="/signup"
+                  className="px-4 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all text-sm font-medium"
+                >
+                  Sign Up
+                </a>
+              </div>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -129,6 +188,16 @@ function Navbar() {
         {mobileMenuOpen && (
           <div className="md:hidden mt-3 py-2 border-t border-gray-200 animate-fadeIn">
             <div className="flex flex-col space-y-1">
+              {/* User Info - Mobile */}
+              {user && (
+                <div className="px-3 py-2 bg-blue-50 rounded-lg mb-2">
+                  <div className="flex items-center text-sm text-gray-700">
+                    <User className="w-4 h-4 mr-2 text-blue-600" />
+                    <span className="font-medium truncate">{user.email}</span>
+                  </div>
+                </div>
+              )}
+
               <a 
                 href="/" 
                 className="px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 rounded-lg transition-colors font-medium flex items-center"
@@ -218,6 +287,37 @@ function Navbar() {
                   Analyze Now
                 </a>
               </div>
+
+              {/* Auth Links - Mobile */}
+              {user ? (
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="mt-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors font-medium flex items-center border-t border-gray-100 pt-3"
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Logout
+                </button>
+              ) : (
+                <div className="flex flex-col space-y-2 mt-2 pt-2 border-t border-gray-100">
+                  <a
+                    href="/login"
+                    className="px-3 py-2 text-sm text-blue-600 hover:bg-blue-50 rounded-lg transition-colors font-medium text-center"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Login
+                  </a>
+                  <a
+                    href="/signup"
+                    className="px-3 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium text-center hover:bg-blue-700 transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Sign Up
+                  </a>
+                </div>
+              )}
             </div>
           </div>
         )}

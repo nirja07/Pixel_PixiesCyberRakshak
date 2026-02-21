@@ -9,6 +9,7 @@ import NewsPage from './pages/NewsPage';
 import Login from './pages/LogIn';
 import Signup from './pages/SignUp';
 import ProtectedRoute from './components/ProtectedRoute';
+import Community from './pages/Community';
 
 function App() {
   return (
@@ -81,6 +82,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <ComplaintGen />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/community"
+            element={
+              <ProtectedRoute>
+                <Community />
               </ProtectedRoute>
             }
           />
