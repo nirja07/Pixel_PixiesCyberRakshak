@@ -28,8 +28,7 @@ import {
   FileWarning,
   FileSearch
 } from "lucide-react";
-
-
+import Navbar from "../pages/Navbar";
 function RiskAnalyzer() {
   const [message, setMessage] = useState("");
   const [file, setFile] = useState(null);
@@ -39,9 +38,6 @@ function RiskAnalyzer() {
   const [progress, setProgress] = useState(0);
   const [hoveredCard, setHoveredCard] = useState(null);
   const [particles, setParticles] = useState([]);
-
-  // NEW: URL input state
-  const [urlInput, setUrlInput] = useState("");
 
   // Sophisticated particle animation for background
   useEffect(() => {
@@ -119,27 +115,6 @@ function RiskAnalyzer() {
     }
   };
 
-  // NEW: URL analysis handler
-  const analyzeURL = async () => {
-    if (!urlInput.trim()) return;
-    setLoading(true);
-    setResult(null);
-
-    try {
-      const response = await fetch("http://127.0.0.1:5000/analyze-url", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: urlInput }),
-      });
-      const data = await response.json();
-      setResult(data);
-    } catch (error) {
-      console.error("URL analysis error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const getRiskIcon = (level) => {
     switch(level?.toLowerCase()) {
       case 'high': return <AlertTriangle className="w-8 h-8" />;
@@ -212,6 +187,9 @@ function RiskAnalyzer() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-white relative overflow-hidden">
       {/* Animated Background Particles */}
+      <Navbar />
+      
+    <div className="pt-24 pb-16">
       <div className="absolute inset-0 pointer-events-none">
         {particles.map((particle, i) => (
           <motion.div
@@ -275,7 +253,7 @@ function RiskAnalyzer() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
             >
-              Advanced AI-powered analysis for messages, URLs, and QR codes
+              Advanced AI-powered analysis for messages and QR codes
             </motion.p>
           </motion.div>
 
@@ -306,13 +284,6 @@ function RiskAnalyzer() {
                     icon: ScanLine, 
                     label: "QR Analysis", 
                     desc: "Scan and analyze QR codes" 
-                  },
-                  // NEW: URL tab
-                  {
-                    id: "url",
-                    icon: LinkIcon,
-                    label: "URL Analysis",
-                    desc: "Scan websites for phishing"
                   }
                 ].map((tab) => (
                   <motion.button
@@ -363,7 +334,7 @@ function RiskAnalyzer() {
               {/* Content Area with Elegant Transitions */}
               <div className="p-8">
                 <AnimatePresence mode="wait">
-                  {activeTab === "text" && (
+                  {activeTab === "text" ? (
                     <motion.div
                       key="text"
                       initial={{ opacity: 0, x: -20 }}
@@ -419,9 +390,7 @@ function RiskAnalyzer() {
                         </span>
                       </motion.button>
                     </motion.div>
-                  )}
-
-                  {activeTab === "qr" && (
+                  ) : (
                     <motion.div
                       key="qr"
                       initial={{ opacity: 0, x: 20 }}
@@ -515,59 +484,6 @@ function RiskAnalyzer() {
                         <span className="relative flex items-center justify-center space-x-2">
                           <ScanLine className="w-5 h-5" />
                           <span>{loading ? "Analyzing QR..." : "Analyze QR Code"}</span>
-                          {!loading && <ArrowRight className="w-4 h-4 opacity-70" />}
-                        </span>
-                      </motion.button>
-                    </motion.div>
-                  )}
-
-                  {/* NEW: URL tab content */}
-                  {activeTab === "url" && (
-                    <motion.div
-                      key="url"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      transition={{ duration: 0.3 }}
-                      className="space-y-6"
-                    >
-                      <div className="relative">
-                        <motion.label 
-                          className="block text-sm font-medium text-gray-600 mb-2 ml-1 flex items-center space-x-2"
-                          animate={{ x: urlInput ? 5 : 0 }}
-                        >
-                          <LinkIcon className="w-4 h-4" />
-                          <span>Website URL</span>
-                        </motion.label>
-                        <div className="relative">
-                          <input
-                            type="text"
-                            placeholder="https://example.com/suspicious-page"
-                            value={urlInput}
-                            onChange={(e) => setUrlInput(e.target.value)}
-                            className="w-full px-5 py-4 rounded-2xl border border-slate-200 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all text-gray-700 placeholder-gray-400"
-                          />
-                        </div>
-                      </div>
-
-                      <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={analyzeURL}
-                        disabled={!urlInput.trim() || loading}
-                        className={`relative w-full py-5 rounded-2xl font-semibold text-white overflow-hidden group ${
-                          urlInput.trim() && !loading
-                            ? "cursor-pointer"
-                            : "cursor-not-allowed opacity-50"
-                        }`}
-                      >
-                        <div className={`absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-600 ${
-                          urlInput.trim() && !loading ? "group-hover:scale-105" : ""
-                        } transition-transform duration-300`}></div>
-                        <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-cyan-400/20 blur-xl group-hover:opacity-100 opacity-0 transition-opacity"></div>
-                        <span className="relative flex items-center justify-center space-x-2">
-                          <LinkIcon className="w-5 h-5" />
-                          <span>{loading ? "Analyzing URL..." : "Analyze Website"}</span>
                           {!loading && <ArrowRight className="w-4 h-4 opacity-70" />}
                         </span>
                       </motion.button>
@@ -854,7 +770,6 @@ function RiskAnalyzer() {
                           setResult(null);
                           setMessage("");
                           setFile(null);
-                          setUrlInput("");
                         }}
                         className="px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-2xl font-medium shadow-lg shadow-blue-200 hover:shadow-xl transition-all inline-flex items-center space-x-2"
                       >
@@ -864,6 +779,7 @@ function RiskAnalyzer() {
                     </motion.div>
                   </div>
                 </div>
+                
               </motion.div>
             )}
           </AnimatePresence>
@@ -903,6 +819,7 @@ function RiskAnalyzer() {
           </motion.div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

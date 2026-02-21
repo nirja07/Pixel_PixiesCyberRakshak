@@ -33,7 +33,7 @@ import {
   Cpu
 } from 'lucide-react';
 import ScenarioHub from './ScenarioHub';
-
+import Navbar from './Navbar';
 const CyberQuest = () => {
   const [player, setPlayer] = useState({
     level: 1,
@@ -100,6 +100,8 @@ const CyberQuest = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
       {/* Clean Background Pattern */}
+      <Navbar/>
+      <div className="pt-24 pb-16">
       <div className="fixed inset-0 opacity-[0.02] pointer-events-none">
         <div className="absolute inset-0" style={{
           backgroundImage: 'radial-gradient(circle at 20px 20px, #3b82f6 1px, transparent 0)',
@@ -107,28 +109,37 @@ const CyberQuest = () => {
         }} />
       </div>
 
-      {/* Header */}
-      <div className="relative z-10 bg-white/90 backdrop-blur-sm border-b border-blue-100 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <div className="absolute inset-0 bg-blue-400 rounded-lg blur-md opacity-50"></div>
-                <div className="relative bg-gradient-to-br from-blue-400 to-blue-600 p-2 rounded-lg">
-                  <Shield className="w-6 h-6 text-white" />
-                </div>
-              </div>
-              <div>
-                <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
-                  CYBERQUEST
-                </h1>
-                <p className="text-xs text-blue-500">Security Training Simulator</p>
-              </div>
-            </div>
+     
 
-            {/* Player Stats */}
-            <div className="flex items-center gap-6">
+      {/* Main Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Mode Selection Pills */}
+        <div className="flex flex-wrap gap-2 mb-8">
+          {[
+            { id: 'hub', label: 'Dashboard', icon: Home },
+            { id: 'modules', label: 'Training Modules', icon: BookOpen },
+            { id: 'stats', label: 'Analytics', icon: TrendingIcon },
+            { id: 'badges', label: 'Achievements', icon: Award }
+          ].map(mode => {
+            const Icon = mode.icon;
+            return (
+              <motion.button
+                key={mode.id}
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setSelectedMode(mode.id)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
+                  selectedMode === mode.id
+                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-200'
+                    : 'bg-white text-gray-600 hover:bg-blue-50 hover:text-blue-600 border border-gray-200'
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                {mode.label}
+              </motion.button>
+            );
+          })}
+          <div className="flex items-center gap-6">
               {/* Level Badge */}
               <div className="flex items-center gap-2">
                 <div className="bg-blue-100 p-1.5 rounded-lg">
@@ -167,40 +178,8 @@ const CyberQuest = () => {
                 </motion.div>
               )}
             </div>
-          </div>
         </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Mode Selection Pills */}
-        <div className="flex flex-wrap gap-2 mb-8">
-          {[
-            { id: 'hub', label: 'Dashboard', icon: Home },
-            { id: 'modules', label: 'Training Modules', icon: BookOpen },
-            { id: 'stats', label: 'Analytics', icon: TrendingIcon },
-            { id: 'badges', label: 'Achievements', icon: Award }
-          ].map(mode => {
-            const Icon = mode.icon;
-            return (
-              <motion.button
-                key={mode.id}
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setSelectedMode(mode.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
-                  selectedMode === mode.id
-                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-200'
-                    : 'bg-white text-gray-600 hover:bg-blue-50 hover:text-blue-600 border border-gray-200'
-                }`}
-              >
-                <Icon className="w-4 h-4" />
-                {mode.label}
-              </motion.button>
-            );
-          })}
-        </div>
-
+          
         {/* Content Area */}
         <AnimatePresence mode="wait">
           {selectedMode === 'hub' && (
@@ -564,6 +543,7 @@ const CyberQuest = () => {
             </motion.div>
           ))}
         </AnimatePresence>
+      </div>
       </div>
     </div>
   );
