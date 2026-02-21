@@ -5,6 +5,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import smtplib
 from email.mime.text import MIMEText
+from twilio.rest import Client
 
 app = FastAPI()
 
@@ -21,6 +22,26 @@ cred = credentials.Certificate("firebase_key.json")
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()
+
+# ------------------------
+# Twilio Setup
+# ------------------------
+
+account_sid = "AC707231945a4ca563dbe770dec1a5341c"
+auth_token = "fc2bb9c7cdc6f1d7799ac0ed5c6e3cdf"
+
+twilio_client = Client(account_sid, auth_token)
+
+def send_whatsapp_alert(title):
+    try:
+        message = twilio_client.messages.create(
+            from_='whatsapp:+14155238886',  # Twilio sandbox number
+            to='whatsapp:+919324892042',   # Your number
+            body=f"⚠ Scam Alert!\n\n{title} has been reported 3 times."
+        )
+        print("WhatsApp sent:", message.sid)
+    except Exception as e:
+        print("WhatsApp failed:", e)
 
 # ------------------------
 # Email Function
@@ -83,6 +104,11 @@ def report_scam(report: ScamReport):
                     send_email_alert(scam["title"])
                 except Exception as e:
                     print("Email failed:", e)
+
+                try:
+                    send_whatsapp_alert(scam["title"])
+                except Exception as e:
+                    print("WhatsApp failed:", e)
 
             return {"message": "Reported successfully"}
 
