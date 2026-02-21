@@ -1,22 +1,15 @@
-# train_model.py
-
 import pandas as pd
 import os
 import pickle
-
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report
 
-
 DATA_PATH = "../data/spam_ham_india.csv"
-
 df = pd.read_csv(DATA_PATH)
-
 print("Dataset loaded successfully.")
 print(df.head())
-
 
 df.columns = df.columns.str.strip()
 

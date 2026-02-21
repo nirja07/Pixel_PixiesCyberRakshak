@@ -1,11 +1,4 @@
-# url_checker.py
-
 import re
-
-
-# =========================
-# 1. Suspicious Indicators
-# =========================
 
 SUSPICIOUS_TLDS = [
     ".xyz", ".top", ".click", ".online", ".site",
@@ -17,10 +10,6 @@ URL_SHORTENERS = [
     "t.co", "is.gd", "buff.ly"
 ]
 
-
-# =========================
-# 2. Extract URLs
-# =========================
 
 def extract_urls(text):
     """
