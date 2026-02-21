@@ -10,25 +10,26 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          {/* Home/CyberGuard Dashboard */}
+   
           <Route path="/" element={<HomePage />} />
 
           {/* Risk Analyzer */}
           <Route path="/analyze-risk" element={<RiskAnalyzer />} />
 
           {/* Cyber Rakshak Chatbot - Main legal assistant */}
+          
           <Route path="/chat" element={<LawBot />} />
           <Route path="/legalbot" element={<LawBot />} />
           <Route path="/assistant" element={<LawBot />} />
           <Route path="/riskengine" element={<RiskAnalyzer/>} />
-          {/* Complaint Generator */}
+    
           <Route path="/complaint" element={<ComplaintGen />} />
           <Route path="/complaintgen" element={<ComplaintGen />} />
-
+          
           {/* Redirect any /analyze to chat (for backward compatibility) */}
           <Route path="/analyze" element={<LawBot />} />
           <Route path="/awareness" element={<CyberQuest/>}/>
-          {/* 404 - Not Found Route */}
+         
           <Route path="*" element={
             <div className="min-h-screen bg-black flex items-center justify-center">
               <div className="text-center">

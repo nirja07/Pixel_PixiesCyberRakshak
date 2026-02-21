@@ -26,9 +26,8 @@ function Navbar() {
   }, []);
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-      scrolled ? 'bg-white/95 backdrop-blur-md shadow-lg py-3' : 'bg-white/80 backdrop-blur-sm py-5'
-    }`}>
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-lg py-3' : 'bg-white/80 backdrop-blur-sm py-5'
+      }`}>
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between">
           {/* Logo and Brand */}
@@ -41,7 +40,7 @@ function Navbar() {
             </div>
             <div className="flex flex-col">
               <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-                CyberLex AI
+                CyberRakshak
               </span>
               <span className="text-xs text-gray-500 tracking-wider">
                 Indian Cyber Law Assistant
@@ -51,26 +50,23 @@ function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
-            <a 
-              href="/legalbot" 
+            <a
+              href="/legalbot"
               className="px-4 py-2 text-gray-700 hover:text-blue-600 transition-colors font-medium relative group"
             >
               LegalBot
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
             </a>
-            
-            <a 
-              href="/complaintgen" 
+
+            <a
+              href="/complaintgen"
               className="px-4 py-2 text-gray-700 hover:text-blue-600 transition-colors font-medium relative group"
             >
               ComplaintGen
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
             </a>
-            
-            <a 
-              href="/community-intel" 
-              className="px-4 py-2 text-gray-700 hover:text-blue-600 transition-colors font-medium relative group"
-            >
+
+            <a href="/community" className="px-4 py-2 text-gray-700 hover:text-blue-600 transition-colors font-medium relative group">
               Community Intel
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
             </a>
@@ -101,7 +97,7 @@ function Navbar() {
           </div>
 
           {/* Mobile Menu Button */}
-          <button 
+          <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
             aria-label="Toggle menu"
@@ -126,9 +122,9 @@ function Navbar() {
                 <Home className="w-4 h-4 mr-3 text-blue-600" />
                 Home
               </a>
-              
-              <a 
-                href="/legalbot" 
+
+              <a
+                href="/legalbot"
                 className="px-4 py-3 text-gray-700 hover:bg-blue-50 rounded-lg transition-colors font-medium flex items-center justify-between"
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -138,9 +134,9 @@ function Navbar() {
                 </div>
                 <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">AI Legal</span>
               </a>
-              
-              <a 
-                href="/complaintgen" 
+
+              <a
+                href="/complaintgen"
                 className="px-4 py-3 text-gray-700 hover:bg-blue-50 rounded-lg transition-colors font-medium flex items-center justify-between"
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -150,9 +146,9 @@ function Navbar() {
                 </div>
                 <span className="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full">Generator</span>
               </a>
-              
-              <a 
-                href="/community-intel" 
+
+              <a
+                href="/community"
                 className="px-4 py-3 text-gray-700 hover:bg-blue-50 rounded-lg transition-colors font-medium flex items-center justify-between"
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -162,9 +158,9 @@ function Navbar() {
                 </div>
                 <span className="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full">Insights</span>
               </a>
-              
-              <a 
-                href="/risk-engine" 
+
+              <a
+                href="/risk-engine"
                 className="px-4 py-3 text-gray-700 hover:bg-blue-50 rounded-lg transition-colors font-medium flex items-center justify-between"
                 onClick={() => setMobileMenuOpen(false)}
               >
