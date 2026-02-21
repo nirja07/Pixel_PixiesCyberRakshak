@@ -4,9 +4,8 @@ import pickle
 import numpy as np
 from urllib.parse import urlparse
 
-# ==============================
-# Load ML Model + Vectorizer
-# ==============================
+
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, "../model/spam_model.pkl")
@@ -21,6 +20,27 @@ with open(VECTORIZER_PATH, "rb") as f:
 # ==============================
 # Configuration
 # ==============================
+
+PHISHING_DB_PATH = os.path.join(BASE_DIR, "../data/phishing_urls.txt")
+
+def load_phishing_db():
+    if not os.path.exists(PHISHING_DB_PATH):
+        return set()
+
+    with open(PHISHING_DB_PATH, "r", encoding="utf-8") as f:
+        return set(line.strip().lower() for line in f if line.strip())
+PHISHING_URLS = load_phishing_db()
+def check_phishing_database(urls):
+    score = 0
+    flags = []
+
+    for url in urls:
+        if url.lower() in PHISHING_URLS:
+            score += 60
+            flags.append("known_phishing_url")
+
+    return score, flags
+
 
 SUSPICIOUS_PATTERNS = [
     r"verify.*account",
@@ -174,8 +194,10 @@ def analyze_text(text):
 
     brand_score, brand_flags = check_brand_mismatch(text, urls)
 
+    db_score, db_flags = check_phishing_database(urls)
+
     # ---------- Final Weighted Score ----------
-    final_score = ml_score + pattern_score + url_score + brand_score
+    final_score = ml_score + pattern_score + url_score + brand_score + db_score
 
     # Cap score at 100
     final_score = min(100, final_score)
@@ -186,6 +208,6 @@ def analyze_text(text):
         "risk_score": round(float(final_score), 2),
         "risk_level": risk_level,
         "ml_probability": round(float(ml_prob), 4),
-        "matched_rules": pattern_matches + url_flags + brand_flags,
+        "matched_rules": pattern_matches + url_flags + brand_flags + db_flags,
         "detected_urls": urls
     }
