@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime, timezone
 import whois
 import dns.resolver
-import anthropic
+import google.generativeai as genai
 
 # Load .env
 load_dotenv()
@@ -28,9 +28,10 @@ app = Flask(__name__)
 CORS(app)
 
 # ─────────────────────────────────────────────
-# Anthropic client
+# Gemini client (reads GEMINI_API_KEY from .env)
 # ─────────────────────────────────────────────
-client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
+gemini_model = genai.GenerativeModel("gemini-2.5-flash")
 
 
 # ════════════════════════════════════════════════════════════
@@ -377,18 +378,16 @@ Respond ONLY with a valid JSON object (no markdown, no text outside it):
 """
 
     try:
-        message = client.messages.create(
-            model="claude-opus-4-5",
-            max_tokens=1024,
-            messages=[{"role": "user", "content": prompt}],
-        )
-        raw = message.content[0].text.strip()
+        response = gemini_model.generate_content(prompt)
+        raw = response.text.strip()
+
+        # Strip markdown fences if Gemini adds them
         raw = re.sub(r"^```[a-z]*\n?", "", raw)
         raw = re.sub(r"\n?```$", "", raw)
         return json.loads(raw)
 
     except Exception as e:
-        logger.error(f"AI risk assessment error: {e}")
+        logger.error(f"Gemini risk assessment error: {e}")
         return {
             "risk_level": "Unknown",
             "risk_score": 0,
