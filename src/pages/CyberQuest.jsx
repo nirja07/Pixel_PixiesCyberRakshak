@@ -46,6 +46,35 @@ import {
 } from 'lucide-react';
 import ScenarioHub from './ScenarioHub';
 import Navbar from './Navbar';
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { auth, db } from "../firebase"; // make sure path is correct
+
+// Save player stats to Firestore
+const savePlayerStats = async (playerData) => {
+  if (!auth.currentUser) return;
+  try {
+    await setDoc(doc(db, "players", auth.currentUser.uid), playerData);
+    console.log("Player stats saved!");
+  } catch (error) {
+    console.error("Error saving stats:", error);
+  }
+};
+
+// Load player stats from Firestore
+const loadPlayerStats = async () => {
+  if (!auth.currentUser) return null;
+  try {
+    const docRef = doc(db, "players", auth.currentUser.uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data();
+    }
+    return null;
+  } catch (error) {
+    console.error("Error loading stats:", error);
+    return null;
+  }
+};
 
 const CyberQuest = () => {
   const [player, setPlayer] = useState({
@@ -57,6 +86,34 @@ const CyberQuest = () => {
     totalQuestions: 0,
     correctAnswers: 0
   });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPlayer = async () => {
+      setLoading(true);
+      const data = await loadPlayerStats();
+      if (data) {
+        setPlayer(data);
+      }
+      setLoading(false);
+    };
+    
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        fetchPlayer();
+      } else {
+        setLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    if (auth.currentUser && !loading) {
+      savePlayerStats(player);
+    }
+  }, [player, loading]);
   
   const [selectedMode, setSelectedMode] = useState('hub');
   const [notifications, setNotifications] = useState([]);
@@ -84,13 +141,13 @@ const CyberQuest = () => {
     : 0;
 
   const modules = [
-    { id: 1, name: 'Phishing Attacks', icon: Mail, color: 'blue', desc: 'Spot and avoid email scams', questions: 15 },
-    { id: 2, name: 'Password Security', icon: Key, color: 'indigo', desc: 'Create strong, unique passwords', questions: 12 },
-    { id: 3, name: 'Social Engineering', icon: Users, color: 'purple', desc: 'Recognize manipulation tactics', questions: 12 },
-    { id: 4, name: 'Public WiFi Safety', icon: Wifi, color: 'cyan', desc: 'Stay safe on public networks', questions: 10 },
-    { id: 5, name: 'Physical Security', icon: DoorOpen, color: 'orange', desc: 'Protect devices and data', questions: 10 },
-    { id: 6, name: 'Multi-Factor Authentication', icon: Smartphone, color: 'emerald', desc: 'Enable 2FA everywhere', questions: 10 },
-    { id: 7, name: 'Cyberbullying', icon: Heart, color: 'pink', desc: 'Identify and report bullying', questions: 15 }
+    { id: 'phishing', name: 'Phishing Attacks', icon: Mail, color: 'blue', desc: 'Spot and avoid email scams', questions: 15 },
+    { id: 'password', name: 'Password Security', icon: Key, color: 'indigo', desc: 'Create strong, unique passwords', questions: 12 },
+    { id: 'social', name: 'Social Engineering', icon: Users, color: 'purple', desc: 'Recognize manipulation tactics', questions: 12 },
+    { id: 'wifi', name: 'Public WiFi Safety', icon: Wifi, color: 'cyan', desc: 'Stay safe on public networks', questions: 10 },
+    { id: 'physical', name: 'Physical Security', icon: DoorOpen, color: 'orange', desc: 'Protect devices and data', questions: 10 },
+    { id: 'mfa', name: 'Multi-Factor Authentication', icon: Smartphone, color: 'emerald', desc: 'Enable 2FA everywhere', questions: 10 },
+    { id: 'bullying', name: 'Cyberbullying', icon: Heart, color: 'pink', desc: 'Identify and report bullying', questions: 15 }
   ];
 
   // Calculate real progress based on completed modules
@@ -101,6 +158,85 @@ const CyberQuest = () => {
       progress: completed ? 100 : 0
     };
   });
+
+  // Update player state and immediately save to Firestore
+  const updatePlayer = (updates) => {
+    setPlayer(prevPlayer => {
+      const updatedPlayer = { ...prevPlayer, ...updates };
+      if (auth.currentUser) {
+        savePlayerStats(updatedPlayer);
+      }
+      return updatedPlayer;
+    });
+  };
+
+  const completeModule = (moduleId, correctAnswers, totalQuestions) => {
+    // Update completedModules, totalQuestions, correctAnswers
+    const updatedModules = { ...player.completedModules, [moduleId]: true };
+    const newTotalQuestions = player.totalQuestions + totalQuestions;
+    const newCorrectAnswers = player.correctAnswers + correctAnswers;
+
+    // Optional: increase streak or level
+    const newStreak = player.streak + 1;
+    const newXP = player.xp + totalQuestions * 10; // example XP per question
+
+    // Check for new level
+    let newLevel = player.level;
+    const xpForNextLevel = player.level * 500;
+    if (newXP >= xpForNextLevel) {
+      newLevel = player.level + 1;
+    }
+
+    updatePlayer({
+      completedModules: updatedModules,
+      totalQuestions: newTotalQuestions,
+      correctAnswers: newCorrectAnswers,
+      streak: newStreak,
+      xp: newXP,
+      level: newLevel
+    });
+
+    // Check for first blood badge
+    if (Object.keys(updatedModules).length === 1) {
+      earnBadge('first-blood');
+    }
+
+    // Check for specific module badges
+    if (correctAnswers === totalQuestions) {
+      if (moduleId === 'phishing') earnBadge('phishing-pro');
+      if (moduleId === 'password') earnBadge('password-pro');
+      if (moduleId === 'social') earnBadge('social-master');
+      if (moduleId === 'wifi') earnBadge('wifi-warrior');
+      if (moduleId === 'physical') earnBadge('guardian');
+      if (moduleId === 'mfa') earnBadge('mfa-champ');
+      if (moduleId === 'bullying') earnBadge('upstander');
+    }
+
+    addNotification(`Module completed! +${totalQuestions * 10} XP`, 'success');
+  };
+
+  const earnBadge = (badgeId) => {
+    if (!player.badges.includes(badgeId)) {
+      const updatedBadges = [...player.badges, badgeId];
+      
+      // Check for streak master badge
+      if (badgeId === 'streak-master' || player.streak >= 10) {
+        if (!updatedBadges.includes('streak-master')) {
+          updatedBadges.push('streak-master');
+          addNotification(`Badge earned: Streak Master!`, 'success');
+        }
+      }
+
+      // Check for legend badge (level 10)
+      if (player.level >= 10 && !updatedBadges.includes('legend')) {
+        updatedBadges.push('legend');
+        addNotification(`Badge earned: Legend!`, 'success');
+      }
+
+      updatePlayer({ badges: updatedBadges });
+      addNotification(`Badge earned: ${badgeId}`, 'success');
+    }
+  };
 
   const badges = [
     { id: 'first-blood', name: 'First Blood', icon: Target, desc: 'Complete first module', earned: player.badges.includes('first-blood'), color: 'blue' },
@@ -127,20 +263,30 @@ const CyberQuest = () => {
   const claimDailyChallenge = () => {
     if (!dailyChallenge.completed && completedCount > 0) {
       const today = new Date().toDateString();
-      setPlayer({
-        ...player,
-        xp: player.xp + dailyChallenge.xpReward
+      
+      // Update XP
+      const newXP = player.xp + dailyChallenge.xpReward;
+      
+      // Check for new level
+      let newLevel = player.level;
+      const xpForNextLevel = player.level * 500;
+      if (newXP >= xpForNextLevel) {
+        newLevel = player.level + 1;
+      }
+
+      updatePlayer({
+        xp: newXP,
+        level: newLevel
       });
-      setDailyChallenge({
+
+      const updatedChallenge = {
         completed: true,
         lastClaimed: today,
         xpReward: 100
-      });
-      localStorage.setItem('dailyChallenge', JSON.stringify({
-        completed: true,
-        lastClaimed: today,
-        xpReward: 100
-      }));
+      };
+      setDailyChallenge(updatedChallenge);
+      localStorage.setItem('dailyChallenge', JSON.stringify(updatedChallenge));
+
       addNotification(`Daily Challenge Complete! +${dailyChallenge.xpReward} XP`, 'success');
     }
   };
@@ -162,6 +308,31 @@ const CyberQuest = () => {
     }
   }, [dailyChallenge.lastClaimed]);
 
+  // Check for streak master badge
+  useEffect(() => {
+    if (player.streak >= 10 && !player.badges.includes('streak-master')) {
+      earnBadge('streak-master');
+    }
+  }, [player.streak]);
+
+  // Check for legend badge
+  useEffect(() => {
+    if (player.level >= 10 && !player.badges.includes('legend')) {
+      earnBadge('legend');
+    }
+  }, [player.level]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading your profile...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
       <Navbar />
@@ -173,7 +344,6 @@ const CyberQuest = () => {
           <div className="mb-8">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div className="flex items-center gap-3">
-           
                 <div>
                   <h1 className="text-2xl font-bold text-gray-900">CyberQuest Academy</h1>
                   <p className="text-sm text-gray-500">Master cybersecurity through interactive training</p>
@@ -361,11 +531,14 @@ const CyberQuest = () => {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {modules.slice(0, 3).map((module) => {
                       const Icon = module.icon;
+                      const isCompleted = player.completedModules[module.id];
                       return (
                         <motion.div
                           key={module.id}
                           whileHover={{ y: -2 }}
-                          className="p-4 bg-gradient-to-br from-blue-50 to-white rounded-xl border border-blue-100 cursor-pointer"
+                          className={`p-4 bg-gradient-to-br from-blue-50 to-white rounded-xl border cursor-pointer ${
+                            isCompleted ? 'border-green-200' : 'border-blue-100'
+                          }`}
                           onClick={() => setSelectedMode('modules')}
                         >
                           <div className="flex items-center gap-3 mb-2">
@@ -379,8 +552,20 @@ const CyberQuest = () => {
                           </div>
                           <p className="text-xs text-gray-600 mb-3">{module.desc}</p>
                           <div className="flex items-center justify-between text-xs">
-                            <span className="text-gray-500">Not started</span>
-                            <span className="text-blue-600 font-medium">Start →</span>
+                            {isCompleted ? (
+                              <>
+                                <span className="text-green-600 flex items-center gap-1">
+                                  <CheckCircle className="w-3 h-3" />
+                                  Completed
+                                </span>
+                                <span className="text-green-600">✓</span>
+                              </>
+                            ) : (
+                              <>
+                                <span className="text-gray-500">Not started</span>
+                                <span className="text-blue-600 font-medium">Start →</span>
+                              </>
+                            )}
                           </div>
                         </motion.div>
                       );
@@ -472,6 +657,8 @@ const CyberQuest = () => {
                   player={player}
                   setPlayer={setPlayer}
                   addNotification={addNotification}
+                  completeModule={completeModule}
+                  earnBadge={earnBadge}
                 />
               </motion.div>
             )}
@@ -514,6 +701,7 @@ const CyberQuest = () => {
                   <div className="space-y-4">
                     {moduleProgress.map((module) => {
                       const Icon = module.icon;
+                      const isCompleted = player.completedModules[module.id];
                       return (
                         <div key={module.id}>
                           <div className="flex items-center justify-between mb-1">
@@ -522,6 +710,9 @@ const CyberQuest = () => {
                                 <Icon className={`w-4 h-4 text-${module.color}-600`} />
                               </div>
                               <span className="text-sm text-gray-700">{module.name}</span>
+                              {isCompleted && (
+                                <CheckCircle className="w-4 h-4 text-green-500" />
+                              )}
                             </div>
                             <span className="text-sm font-medium text-blue-600">{module.progress}%</span>
                           </div>
