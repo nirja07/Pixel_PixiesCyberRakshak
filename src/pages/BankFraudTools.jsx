@@ -288,7 +288,7 @@ function BankFraudTools() {
           </div>
 
           {/* Tabs */}
-          <div className="flex justify-center mb-8">
+          {/* <div className="flex justify-center mb-8">
             <div className="bg-white p-1 rounded-2xl border border-gray-200 shadow-sm">
               <button
                 onClick={() => setActiveTab("micro")}
@@ -313,7 +313,7 @@ function BankFraudTools() {
                 UPI Fraud Checker
               </button>
             </div>
-          </div>
+          </div> */}
 
           {/* Main Content Card */}
           <div className="bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden">

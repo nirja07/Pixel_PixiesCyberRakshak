@@ -12,7 +12,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Community from './pages/Community';
 
 import BankFraudTools from './pages/BankFraudTools';
-import Community from './pages/Community';
+
 function App() {
   return (
     <Router>

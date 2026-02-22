@@ -56,7 +56,7 @@ import {
   ChevronRight
 } from "lucide-react";
 
-function CommunityIntel() {
+function Community() {
   const [activeTab, setActiveTab] = useState("report");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
