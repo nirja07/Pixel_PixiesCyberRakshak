@@ -13,6 +13,7 @@ import Community from './pages/Community';
 
 import BankFraudTools from './pages/BankFraudTools';
 
+import LandingPage from './pages/LandingPage';
 function App() {
   return (
     <Router>
@@ -21,10 +22,10 @@ function App() {
   {/* Public routes */}
   <Route path="/login" element={<Login />} />
   <Route path="/signup" element={<Signup />} />
-
+    <Route path="/"element={<LandingPage/>}/>
   {/* Protected routes */}
   <Route
-    path="/"
+    path="/homepage"
     element={
       <ProtectedRoute>
         <HomePage />

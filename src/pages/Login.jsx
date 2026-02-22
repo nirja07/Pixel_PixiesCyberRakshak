@@ -32,7 +32,7 @@ const Login = () => {
       
       // ✅ Wait a tiny moment to let Firebase update auth state
       setTimeout(() => {
-        navigate("/");
+        navigate("/homepage");
       }, 100);
     } catch (err) {
       setError(getErrorMessage(err.code));
