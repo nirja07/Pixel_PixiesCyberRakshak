@@ -35,7 +35,8 @@ import {
   Fingerprint,
   BellRing,
   ShieldAlert,
-  Star
+  Star,
+  Landmark
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -375,7 +376,7 @@ const LandingPage = () => {
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             
-            <button
+            {/* <button
               onClick={() => setIsPlaying(!isPlaying)}
               className="group bg-white/80 backdrop-blur-sm text-gray-700 px-8 py-4 rounded-full text-lg font-medium hover:bg-white hover:shadow-xl transition-all duration-300 flex items-center space-x-3 border border-gray-200"
             >
@@ -385,7 +386,7 @@ const LandingPage = () => {
                 <Play className="w-5 h-5 text-blue-600 group-hover:scale-110 transition-transform" />
               )}
               <span>{isPlaying ? 'Pause Demo' : 'Watch Demo'}</span>
-            </button>
+            </button> */}
           </div>
 
           {/* Stats */}
@@ -496,6 +497,14 @@ const LandingPage = () => {
                 link: "/awareness",
                 color: "from-green-500 to-green-600",
                 stats: "100+ modules"
+              },
+              {
+                icon: <Landmark className="w-8 h-8" />,
+                title: "Bank Crack",
+                description: "Master secure banking practices and financial protection",
+                link: "/bankfraudtools",
+                color: "from-amber-500 to-yellow-500",
+                stats: "8 scenarios",
               }
             ].map((feature, index) => (
               <Link
@@ -507,6 +516,13 @@ const LandingPage = () => {
               >
                 {/* Background on hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
+                
+                {/* Badge */}
+                {feature.badge && (
+                  <span className="absolute top-4 left-4 px-2 py-1 bg-red-500 text-white text-xs font-bold rounded-full animate-pulse z-10">
+                    {feature.badge}
+                  </span>
+                )}
                 
                 {/* Icon */}
                 <div className={`w-16 h-16 bg-gradient-to-br ${feature.color} rounded-xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-all duration-300`}>
@@ -789,6 +805,7 @@ const LandingPage = () => {
                 <li><Link to="/community" className="hover:text-white transition-colors">Community Intel</Link></li>
                 <li><Link to="/riskengine" className="hover:text-white transition-colors">Risk Engine</Link></li>
                 <li><Link to="/news" className="hover:text-white transition-colors">Cyber News</Link></li>
+                <li><Link to="/bank-crack" className="hover:text-white transition-colors">Bank Crack</Link></li>
               </ul>
             </div>
             
