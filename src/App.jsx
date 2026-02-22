@@ -22,7 +22,7 @@ function App() {
     <Route path="/"element={<LandingPage/>}/>
   {/* Protected routes */}
   <Route
-    path="/"
+    path="/homepage"
     element={
       <ProtectedRoute>
         <HomePage />
