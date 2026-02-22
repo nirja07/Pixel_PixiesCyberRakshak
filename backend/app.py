@@ -1,4 +1,9 @@
 import os
+import re
+import json
+import socket
+import logging
+import requests
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -6,7 +11,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime, timezone
 import whois
 import dns.resolver
-import google.generativeai as genai
+from google import genai
 
 # Load .env
 load_dotenv()
@@ -15,6 +20,9 @@ load_dotenv()
 from risk_engine.engine import analyze_text
 from utils.qr_decoder import decode_qr
 
+# Configure Logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 CORS(app)
@@ -22,8 +30,7 @@ CORS(app)
 # ─────────────────────────────────────────────
 # Gemini client (reads GEMINI_API_KEY from .env)
 # ─────────────────────────────────────────────
-genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
-gemini_model = genai.GenerativeModel("gemini-2.5-flash")
+gemini_client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
 
 # ════════════════════════════════════════════════════════════
@@ -32,44 +39,44 @@ gemini_model = genai.GenerativeModel("gemini-2.5-flash")
 
 @app.route("/")
 def home():
-    return jsonify({
-        "message": "CyberRakshak Risk Engine Running 🚀"
-    })
+    return jsonify({"message": "CyberRakshak Running 🚀"})
 
-
-# =========================
-# 2️⃣ Analyze Text Endpoint
-# =========================
 
 @app.route("/analyze-text", methods=["POST"])
 def analyze_text_api():
-
+    logger.info("Request received: /analyze-text")
     data = request.get_json()
 
-    if not data or "message" not in data:
-        return jsonify({"error": "Message field required"}), 400
+    if not data or "text" not in data:
+        logger.warning("No text provided in request body")
+        return jsonify({"error": "No text provided"}), 400
 
-    text = data["message"]
+    try:
+        result = analyze_text(data["text"])
 
-    result = analyze_text(text)
+        level = result.get("risk_level", "Safe")
+        result["risk_color"] = {
+            "Safe": "green",
+            "Medium": "orange",
+            "High": "red",
+            "Error": "black"
+        }.get(level, "black")
 
-    return jsonify(result)
+        return jsonify(result)
+    except Exception as e:
+        logger.error(f"Error in /analyze-text: {e}")
+        return jsonify({"error": "Internal Server Error", "details": str(e)}), 500
 
-
-# =========================
-# 3️⃣ Analyze QR Endpoint
-# =========================
 
 @app.route("/analyze-qr", methods=["POST"])
 def analyze_qr_api():
+    logger.info("Request received: /analyze-qr")
     if "file" not in request.files:
         logger.warning("No file uploaded in /analyze-qr")
         return jsonify({"error": "No file uploaded"}), 400
+
     try:
         file = request.files["file"]
-
-    
-
         decoded_text = decode_qr(file)
 
         if not decoded_text:
@@ -248,9 +255,9 @@ def get_whois_info(domain: str) -> dict:
         def first_date(val):
             return val[0] if isinstance(val, list) else val
 
-        creation = first_date(w.creation_date)
+        creation   = first_date(w.creation_date)
         expiration = first_date(w.expiration_date)
-        updated = first_date(w.updated_date)
+        updated    = first_date(w.updated_date)
 
         if creation:
             info["creation_date"] = str(creation)
@@ -306,7 +313,7 @@ def get_dns_info(domain: str) -> dict:
 
 
 def assess_risk_with_ai(url_features: dict, scrape_data: dict, whois_data: dict, dns_data: dict) -> dict:
-    """Send all gathered intel to Claude for holistic risk scoring."""
+    """Send all gathered intel to Gemini for holistic risk scoring."""
     url = url_features.get("domain", "")
 
     prompt = f"""
@@ -346,31 +353,34 @@ MX Records: {dns_data.get('mx_records')}
 
 Respond ONLY with a valid JSON object (no markdown, no text outside it):
 {{
-  "risk_level": "High" | "Medium" | "Low",
-  "risk_score": <integer 0-100>,
-  "summary": "<2-3 sentence plain-English summary>",
-  "threat_indicators": ["<indicator 1>", ...],
+  "risk_level": "High or Medium or Low",
+  "risk_score": 0,
+  "summary": "2-3 sentence plain-English summary",
+  "threat_indicators": [],
   "registrar_info": {{
-    "registrar": "<name or Unknown>",
-    "org": "<org or Unknown>",
-    "country": "<country or Unknown>",
-    "creation_date": "<date or Unknown>",
-    "expiration_date": "<date or Unknown>",
-    "domain_age_days": <number or null>,
-    "name_servers": [...]
+    "registrar": "name or Unknown",
+    "org": "org or Unknown",
+    "country": "country or Unknown",
+    "creation_date": "date or Unknown",
+    "expiration_date": "date or Unknown",
+    "domain_age_days": null,
+    "name_servers": []
   }},
   "dns_info": {{
-    "ip_address": "<ip or null>",
-    "a_records": [...],
-    "mx_records": [...]
+    "ip_address": null,
+    "a_records": [],
+    "mx_records": []
   }},
-  "recommendations": ["<action 1>", ...],
+  "recommendations": [],
   "detected_urls": ["{url}"]
 }}
 """
 
     try:
-        response = gemini_model.generate_content(prompt)
+        response = gemini_client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt,
+        )
         raw = response.text.strip()
 
         # Strip markdown fences if Gemini adds them
@@ -383,29 +393,73 @@ Respond ONLY with a valid JSON object (no markdown, no text outside it):
         return {
             "risk_level": "Unknown",
             "risk_score": 0,
-            "risk_level": "Safe",
-            "ml_probability": 0,
-            "matched_rules": [],
+            "summary": f"AI analysis failed: {str(e)}",
+            "threat_indicators": [],
+            "registrar_info": {},
+            "dns_info": {},
+            "recommendations": ["Please retry the analysis."],
             "detected_urls": [],
-            "decoded_content": None,
-            "message": "QR code could not be decoded"
-        }), 200
-
-    result = analyze_text(decoded_text)
-
-    # Extra safety
-    if result is None:
-        return jsonify({"error": "Risk engine failed"}), 500
-
-    result["decoded_content"] = decoded_text
-
-    return jsonify(result)
+        }
 
 
-# =========================
-# Run Server
-# =========================
+# ════════════════════════════════════════════════════════════
+# New Route: /analyze-url
+# ════════════════════════════════════════════════════════════
 
+@app.route("/analyze-url", methods=["POST"])
+def analyze_url_api():
+    logger.info("Request received: /analyze-url")
+    data = request.get_json()
+
+    if not data or "url" not in data:
+        logger.warning("No URL provided in request body")
+        return jsonify({"error": "No URL provided"}), 400
+
+    url = data["url"].strip()
+    if not url.startswith(("http://", "https://")):
+        url = "https://" + url
+
+    domain = extract_domain(url)
+    logger.info(f"Analyzing URL: {url} | Domain: {domain}")
+
+    try:
+        url_features = analyze_url_features(url)
+        scrape_data  = scrape_url(url)
+        whois_data   = get_whois_info(domain)
+        dns_data     = get_dns_info(domain)
+
+        result = assess_risk_with_ai(url_features, scrape_data, whois_data, dns_data)
+
+        level = result.get("risk_level", "Unknown")
+        result["risk_color"] = {
+            "Low":    "green",
+            "Medium": "orange",
+            "High":   "red",
+        }.get(level, "black")
+
+        result["raw"] = {
+            "url_features": url_features,
+            "scrape": {
+                "status_code":          scrape_data.get("status_code"),
+                "final_url":            scrape_data.get("final_url"),
+                "redirected":           scrape_data.get("redirected"),
+                "title":                scrape_data.get("title"),
+                "password_fields":      scrape_data.get("password_fields"),
+                "suspicious_keywords":  scrape_data.get("suspicious_keywords"),
+                "forms_count":          len(scrape_data.get("forms", [])),
+                "external_links_count": len(scrape_data.get("external_links", [])),
+                "error":                scrape_data.get("error"),
+            },
+        }
+
+        return jsonify(result)
+
+    except Exception as e:
+        logger.error(f"Error in /analyze-url: {e}")
+        return jsonify({"error": "URL Analysis failed", "details": str(e)}), 500
+
+
+# ════════════════════════════════════════════════════════════
 if __name__ == "__main__":
     logger.info("Starting Flask Server on http://127.0.0.1:5000")
     app.run(debug=True, port=5000)
