@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { 
-  Shield, 
-  Menu, 
-  X, 
+import {
+  Shield,
+  Menu,
+  X,
   ArrowRight,
   Home,
   Scale,
@@ -119,6 +119,13 @@ function Navbar() {
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
             </a>
             
+            <a 
+              href="/bankfraudtools" 
+              className="px-3 py-1.5 text-sm text-gray-700 hover:text-blue-600 transition-colors font-medium relative group whitespace-nowrap"
+            >
+              Bank Fraud Tool
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
+            </a>
             <a 
               href="/awareness" 
               className="px-3 py-1.5 text-sm text-gray-700 hover:text-blue-600 transition-colors font-medium relative group whitespace-nowrap"
@@ -274,6 +281,8 @@ function Navbar() {
                 </div>
                 <span className="text-[10px] bg-red-100 text-red-600 px-1.5 py-0.5 rounded-full animate-pulse">New</span>
               </a>
+
+              
               
               <a 
                 href="/awareness" 
