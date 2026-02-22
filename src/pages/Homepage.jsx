@@ -1017,7 +1017,7 @@ function HomePage() {
           </div>
           
           <div className="mt-12 pt-8 border-t border-gray-200 text-center text-sm text-gray-500">
-            <p>&copy; {new Date().getFullYear()} CyberRakshak. All rights reserved. Made with ❤️ for digital safety in India.</p>
+            <p>&copy; {new Date().getFullYear()} CyberRakshak. All rights reserved. Made for digital safety in India.</p>
           </div>
         </div>
       </footer>

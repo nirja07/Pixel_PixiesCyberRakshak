@@ -45,7 +45,7 @@ function Navbar() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.error("Error logging out:", error);
     }
@@ -58,7 +58,7 @@ function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between">
           {/* Logo and Brand */}
-          <a href="/" className="flex items-center space-x-3 group">
+          <a href="/homepage" className="flex items-center space-x-3 group">
             <div className="relative">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-lg flex items-center justify-center shadow-md shadow-blue-200 group-hover:scale-105 transition-transform">
                 <Shield className="w-5 h-5 text-white" />
@@ -127,12 +127,12 @@ function Navbar() {
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
             </a>
             
-            <a 
-              href="/analyze" 
-              className="ml-1 px-4 py-1.5 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-full hover:shadow-md hover:shadow-blue-200 transition-all hover:scale-105 text-sm font-medium flex items-center space-x-1 whitespace-nowrap"
+           <a 
+              href="/awareness" 
+              className="px-3 py-1.5 text-sm text-gray-700 hover:text-blue-600 transition-colors font-medium relative group whitespace-nowrap"
             >
-              <span>Analyze Now</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              LearnMore
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
             </a>
 
             {/* User Menu - Desktop */}
