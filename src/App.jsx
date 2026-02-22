@@ -10,7 +10,7 @@ import Login from './pages/LogIn';
 import Signup from './pages/SignUp';
 import ProtectedRoute from './components/ProtectedRoute';
 import Community from './pages/Community';
-
+import LandingPage from './pages/LandingPage';
 function App() {
   return (
     <Router>
@@ -19,7 +19,7 @@ function App() {
   {/* Public routes */}
   <Route path="/login" element={<Login />} />
   <Route path="/signup" element={<Signup />} />
-
+    <Route path="/"element={<LandingPage/>}/>
   {/* Protected routes */}
   <Route
     path="/"
