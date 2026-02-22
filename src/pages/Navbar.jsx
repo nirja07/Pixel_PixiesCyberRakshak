@@ -45,7 +45,7 @@ function Navbar() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.error("Error logging out:", error);
     }
@@ -58,7 +58,7 @@ function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between">
           {/* Logo and Brand */}
-          <a href="/" className="flex items-center space-x-3 group">
+          <a href="/homepage" className="flex items-center space-x-3 group">
             <div className="relative">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-lg flex items-center justify-center shadow-md shadow-blue-200 group-hover:scale-105 transition-transform">
                 <Shield className="w-5 h-5 text-white" />
