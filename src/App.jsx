@@ -82,6 +82,14 @@ function App() {
             }
           />
           <Route
+            path="/bankfraudtools"
+            element={
+              <ProtectedRoute>
+                <BankFraudTools />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/riskengine"
             element={
               <ProtectedRoute>
