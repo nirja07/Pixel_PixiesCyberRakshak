@@ -127,12 +127,12 @@ function Navbar() {
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
             </a>
             
-            <a 
-              href="/analyze" 
-              className="ml-1 px-4 py-1.5 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-full hover:shadow-md hover:shadow-blue-200 transition-all hover:scale-105 text-sm font-medium flex items-center space-x-1 whitespace-nowrap"
+           <a 
+              href="/awareness" 
+              className="px-3 py-1.5 text-sm text-gray-700 hover:text-blue-600 transition-colors font-medium relative group whitespace-nowrap"
             >
-              <span>Analyze Now</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              LearnMore
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
             </a>
 
             {/* User Menu - Desktop */}
