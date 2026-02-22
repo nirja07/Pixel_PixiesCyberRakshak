@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PhishGuard</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0c10;
+      --surface: #111318;
+      --surface2: #181c24;
+      --border: #1e2330;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --safe: #22c55e;
+      --safe-bg: #052e16;
+      --warn: #f97316;
+      --warn-bg: #431407;
+      --danger: #ef4444;
+      --danger-bg: #450a0a;
+      --accent: #6366f1;
+      --info: #38bdf8;
+      --info-bg: #0c2a3a;
+    }
+
+    body {
+      width: 400px;
+      min-height: 500px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+    }
+
+    /* ── Header ── */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .logo {
+      width: 28px; height: 28px;
+      background: var(--accent);
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; flex-shrink: 0;
+    }
+    .header-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+    .header-sub { font-size: 10px; color: var(--muted); margin-top: 1px; }
+    .rescan-btn {
+      margin-left: auto;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 6px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 11px;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .rescan-btn:hover { border-color: var(--accent); color: var(--text); }
+
+    /* ── Loading ── */
+    #loading {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      height: 220px; gap: 14px; color: var(--muted);
+      font-size: 12px;
+    }
+    .spinner {
+      width: 30px; height: 30px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Result ── */
+    #result { display: none; }
+
+    /* ── Score + Verdict ── */
+    .score-section {
+      padding: 16px;
+      display: flex; align-items: center; gap: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .score-ring { position: relative; width: 84px; height: 84px; flex-shrink: 0; }
+    .score-ring svg { width: 84px; height: 84px; transform: rotate(-90deg); }
+    .score-ring circle { fill: none; stroke-width: 5; stroke-linecap: round; }
+    .score-ring .track { stroke: var(--border); }
+    .score-ring .fill {
+      stroke-dasharray: 232;
+      stroke-dashoffset: 232;
+      transition: stroke-dashoffset 1s cubic-bezier(0.4,0,0.2,1), stroke 0.4s;
+    }
+    .score-center {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    .score-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 22px; font-weight: 700; line-height: 1;
+    }
+    .score-lbl { font-size: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+    .verdict-box { flex: 1; }
+    .verdict-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 10px; border-radius: 999px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+    .verdict-pill.safe { background: var(--safe-bg); color: var(--safe); }
+    .verdict-pill.suspicious { background: var(--warn-bg); color: var(--warn); }
+    .verdict-pill.dangerous { background: var(--danger-bg); color: var(--danger); }
+    .verdict-domain { font-size: 11px; color: var(--muted); word-break: break-all; line-height: 1.4; }
+    .verdict-desc { margin-top: 5px; font-size: 12px; color: var(--text); line-height: 1.5; }
+
+    /* ── Info Strip ── */
+    .info-strip {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .info-cell {
+      background: var(--surface); padding: 9px 6px; text-align: center;
+    }
+    .info-val {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px; font-weight: 700; line-height: 1;
+    }
+    .info-lbl { font-size: 9px; color: var(--muted); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* ── Tabs ── */
+    .tabs {
+      display: flex; border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .tab-btn {
+      flex: 1; padding: 9px 4px;
+      background: none; border: none;
+      color: var(--muted); font-size: 11px;
+      cursor: pointer; border-bottom: 2px solid transparent;
+      transition: all 0.15s; font-family: 'DM Sans', sans-serif;
+    }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab-btn:hover:not(.active) { color: var(--text); }
+
+    .tab-panel { display: none; padding: 14px 16px; }
+    .tab-panel.active { display: block; }
+
+    /* ── Check Items ── */
+    .check-list { display: flex; flex-direction: column; gap: 2px; }
+    .check-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 9px 0; border-bottom: 1px solid var(--border);
+    }
+    .check-item:last-child { border-bottom: none; }
+    .check-icon {
+      width: 20px; height: 20px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+    }
+    .ci-ok { background: var(--safe-bg); color: var(--safe); }
+    .ci-warn { background: var(--warn-bg); color: var(--warn); }
+    .ci-bad { background: var(--danger-bg); color: var(--danger); }
+    .ci-skip { background: var(--surface2); color: var(--muted); }
+    .ci-info { background: var(--info-bg); color: var(--info); }
+    .check-name { font-size: 12px; font-weight: 600; }
+    .check-detail { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+    .check-tag {
+      display: inline-block; font-size: 9px;
+      padding: 1px 5px; border-radius: 3px; margin-left: 5px;
+      font-family: 'Space Mono', monospace; vertical-align: middle;
+    }
+    .tag-free { background: var(--info-bg); color: var(--info); }
+    .tag-api { background: var(--surface2); color: var(--muted); }
+
+    /* ── Flags ── */
+    .flag-item {
+      display: flex; align-items: flex-start; gap: 9px;
+      padding: 8px 0; border-bottom: 1px solid var(--border);
+    }
+    .flag-item:last-child { border-bottom: none; }
+    .flag-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      flex-shrink: 0; margin-top: 4px;
+    }
+    .dot-high { background: var(--danger); }
+    .dot-medium { background: var(--warn); }
+    .dot-low { background: var(--muted); }
+    .flag-text { font-size: 11px; color: var(--text); line-height: 1.45; }
+    .sev {
+      display: inline-block; font-size: 9px;
+      padding: 1px 5px; border-radius: 3px; margin-left: 4px;
+      font-family: 'Space Mono', monospace; vertical-align: middle;
+    }
+    .sev-high { background: var(--danger-bg); color: var(--danger); }
+    .sev-med  { background: var(--warn-bg);   color: var(--warn); }
+    .sev-low  { background: var(--surface2);  color: var(--muted); }
+
+    .empty-msg { color: var(--muted); font-size: 12px; text-align: center; padding: 14px 0; }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 9px 16px; font-size: 10px; color: var(--muted);
+      border-top: 1px solid var(--border); text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">🛡</div>
+  <div>
+    <div class="header-title">PHISHGUARD</div>
+    <div class="header-sub">Real-time threat detection</div>
+  </div>
+  <button class="rescan-btn" id="rescanBtn">↻ Rescan</button>
+</div>
+
+<div id="loading">
+  <div class="spinner"></div>
+  <div>Analyzing site security...</div>
+</div>
+
+<div id="result">
+
+  <!-- Score + Verdict -->
+  <div class="score-section">
+    <div class="score-ring">
+      <svg viewBox="0 0 84 84">
+        <circle class="track" cx="42" cy="42" r="37"/>
+        <circle class="fill" id="scoreCircle" cx="42" cy="42" r="37"/>
+      </svg>
+      <div class="score-center">
+        <div class="score-num" id="scoreNum">0</div>
+        <div class="score-lbl">Risk</div>
+      </div>
+    </div>
+    <div class="verdict-box">
+      <div class="verdict-pill" id="verdictPill">
+        <span id="verdictIcon">✓</span>
+        <span id="verdictText">SAFE</span>
+      </div>
+      <div class="verdict-domain" id="verdictDomain"></div>
+      <div class="verdict-desc" id="verdictDesc"></div>
+    </div>
+  </div>
+
+  <!-- Info Strip -->
+  <div class="info-strip">
+    <div class="info-cell">
+      <div class="info-val" id="cellHTTPS">—</div>
+      <div class="info-lbl">HTTPS</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-val" id="cellForms">—</div>
+      <div class="info-lbl">Forms</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-val" id="cellLinks">—</div>
+      <div class="info-lbl">Ext. Links</div>
+    </div>
+    <div class="info-cell">
+      <div class="info-val" id="cellIframes">—</div>
+      <div class="info-lbl">iFrames</div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="checks">API Checks</button>
+    <button class="tab-btn" data-tab="flags">Issues</button>
+    <button class="tab-btn" data-tab="info">Page Info</button>
+  </div>
+
+  <!-- Tab: API Checks -->
+  <div class="tab-panel active" id="tab-checks">
+    <div class="check-list" id="checksList"></div>
+  </div>
+
+  <!-- Tab: Heuristic Flags -->
+  <div class="tab-panel" id="tab-flags">
+    <div id="flagsList"></div>
+  </div>
+
+  <!-- Tab: Page Info -->
+  <div class="tab-panel" id="tab-info">
+    <div id="pageInfoList"></div>
+  </div>
+
+  <div class="footer" id="footer"></div>
+
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>
