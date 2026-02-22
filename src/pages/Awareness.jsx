@@ -1,5 +1,52 @@
+// src/pages/Awareness.jsx
 import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
+import { 
+  Shield,
+  TrendingUp,
+  AlertTriangle,
+  Wallet,
+  Users,
+  Eye,
+  Skull,
+  Share2,
+  Lock,
+  Globe2,
+  Phone,
+  PhoneCall,
+  Smartphone,
+  ShieldAlert,
+  FileText,
+  Newspaper,
+  BookOpen,
+  ExternalLink,
+  BarChart3,
+  MapPin,
+  DollarSign,
+  Clock,
+  CheckCircle,
+  Target,
+  Zap,
+  UserCheck,
+  Fingerprint,
+  Hash,
+  MailWarning,
+  CreditCard,
+  Database,
+  AlertCircle,
+  BellRing,
+  Menu,
+  X,
+  Home,
+  Scale,
+  Globe,
+  BarChart,
+  Book,
+  ArrowRight,
+  ChevronRight,
+  Star,
+  Award
+} from "lucide-react";
 
 function Awareness() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -61,7 +108,7 @@ function Awareness() {
       id: "online-fraud",
       title: "Online Financial Fraud",
       description: "UPI scams, credit card fraud, phishing emails, fake shopping websites.",
-      icon: "💰",
+      icon: <CreditCard className="w-6 h-6" />,
       tips: [
         "Never share OTP or bank details",
         "Use secure websites (https://)",
@@ -73,7 +120,7 @@ function Awareness() {
       id: "identity-theft",
       title: "Identity Theft",
       description: "Aadhaar misuse, fake social profiles, impersonation for fraud.",
-      icon: "🆔",
+      icon: <Fingerprint className="w-6 h-6" />,
       tips: [
         "Do not share documents online",
         "Use virtual IDs for Aadhaar",
@@ -85,7 +132,7 @@ function Awareness() {
       id: "cyber-stalking",
       title: "Cyber Stalking & Harassment",
       description: "Online stalking, doxxing, revenge porn, trolling.",
-      icon: "👁️",
+      icon: <Eye className="w-6 h-6" />,
       tips: [
         "Adjust privacy settings",
         "Block and report harassers",
@@ -97,7 +144,7 @@ function Awareness() {
       id: "ransomware",
       title: "Ransomware & Malware",
       description: "Ransomware attacks, virus infections, data kidnapping.",
-      icon: "🦠",
+      icon: <Skull className="w-6 h-6" />,
       tips: [
         "Regularly backup data",
         "Use updated antivirus",
@@ -109,7 +156,7 @@ function Awareness() {
       id: "social-media",
       title: "Social Media Crimes",
       description: "Fake profiles, morphed images, defamation, cyber bullying.",
-      icon: "📱",
+      icon: <Share2 className="w-6 h-6" />,
       tips: [
         "Report fake profiles",
         "Use strong passwords",
@@ -121,7 +168,7 @@ function Awareness() {
       id: "data-breach",
       title: "Data Breach",
       description: "Leak of personal data from companies, dark web trading.",
-      icon: "🔓",
+      icon: <Database className="w-6 h-6" />,
       tips: [
         "Use unique passwords per site",
         "Monitor accounts for unusual activity",
@@ -140,7 +187,7 @@ function Awareness() {
           {/* Header */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-2xl mb-6 shadow-lg shadow-blue-200">
-              <span className="text-4xl">🌐</span>
+              <Shield className="w-10 h-10 text-white" />
             </div>
             <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
               Cyber Crime Awareness
@@ -155,33 +202,37 @@ function Awareness() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
               <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 text-2xl">
-                    📊
+                  <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600">
+                    <BarChart3 className="w-6 h-6" />
                   </div>
                   <span className="text-sm text-gray-500">NCRB 2024</span>
                 </div>
                 <h3 className="text-3xl font-bold text-gray-800">{stats.totalCases.toLocaleString()}</h3>
                 <p className="text-gray-600">Total Cases (YTD)</p>
                 <div className="mt-2 flex items-center text-sm text-green-600">
+                  <TrendingUp className="w-4 h-4 mr-1" />
                   <span>↑ {stats.growthRate}% from last year</span>
                 </div>
               </div>
 
               <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center text-red-600 text-2xl">
-                    ⚡
+                  <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center text-red-600">
+                    <Zap className="w-6 h-6" />
                   </div>
                 </div>
                 <h3 className="text-3xl font-bold text-gray-800">{stats.dailyAverage}</h3>
                 <p className="text-gray-600">Daily Average Incidents</p>
-                <p className="mt-2 text-sm text-gray-500">approx. 1 every 10 minutes</p>
+                <p className="mt-2 flex items-center text-sm text-gray-500">
+                  <Clock className="w-4 h-4 mr-1" />
+                  approx. 1 every 10 minutes
+                </p>
               </div>
 
               <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center text-yellow-600 text-2xl">
-                    🏛️
+                  <div className="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center text-yellow-600">
+                    <MapPin className="w-6 h-6" />
                   </div>
                 </div>
                 <h3 className="text-3xl font-bold text-gray-800">{stats.topState}</h3>
@@ -191,8 +242,8 @@ function Awareness() {
 
               <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-green-600 text-2xl">
-                    💰
+                  <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-green-600">
+                    <DollarSign className="w-6 h-6" />
                   </div>
                 </div>
                 <h3 className="text-3xl font-bold text-gray-800">{stats.financialLoss}</h3>
@@ -230,43 +281,47 @@ function Awareness() {
           <div className="flex border-b border-gray-200 mb-8 overflow-x-auto">
             <button
               onClick={() => setActiveTab("overview")}
-              className={`px-6 py-3 font-medium text-sm whitespace-nowrap ${
+              className={`px-6 py-3 font-medium text-sm whitespace-nowrap flex items-center space-x-2 ${
                 activeTab === "overview"
                   ? "text-blue-600 border-b-2 border-blue-600"
                   : "text-gray-500 hover:text-gray-700"
               }`}
             >
-              Overview
+              <Globe2 className="w-4 h-4" />
+              <span>Overview</span>
             </button>
             <button
               onClick={() => setActiveTab("prevention")}
-              className={`px-6 py-3 font-medium text-sm whitespace-nowrap ${
+              className={`px-6 py-3 font-medium text-sm whitespace-nowrap flex items-center space-x-2 ${
                 activeTab === "prevention"
                   ? "text-blue-600 border-b-2 border-blue-600"
                   : "text-gray-500 hover:text-gray-700"
               }`}
             >
-              Prevention Tips
+              <Shield className="w-4 h-4" />
+              <span>Prevention Tips</span>
             </button>
             <button
               onClick={() => setActiveTab("news")}
-              className={`px-6 py-3 font-medium text-sm whitespace-nowrap ${
+              className={`px-6 py-3 font-medium text-sm whitespace-nowrap flex items-center space-x-2 ${
                 activeTab === "news"
                   ? "text-blue-600 border-b-2 border-blue-600"
                   : "text-gray-500 hover:text-gray-700"
               }`}
             >
-              Latest News
+              <Newspaper className="w-4 h-4" />
+              <span>Latest News</span>
             </button>
             <button
               onClick={() => setActiveTab("resources")}
-              className={`px-6 py-3 font-medium text-sm whitespace-nowrap ${
+              className={`px-6 py-3 font-medium text-sm whitespace-nowrap flex items-center space-x-2 ${
                 activeTab === "resources"
                   ? "text-blue-600 border-b-2 border-blue-600"
                   : "text-gray-500 hover:text-gray-700"
               }`}
             >
-              Resources
+              <BookOpen className="w-4 h-4" />
+              <span>Resources</span>
             </button>
           </div>
 
@@ -292,7 +347,8 @@ function Awareness() {
                   <li>Online sextortion and blackmail</li>
                   <li>Fake customer care numbers and refund scams</li>
                 </ul>
-                <div className="bg-blue-50 p-4 rounded-xl border border-blue-100 mt-4">
+                <div className="bg-blue-50 p-4 rounded-xl border border-blue-100 mt-4 flex items-start space-x-3">
+                  <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
                   <p className="text-blue-800 text-sm">
                     <strong>Did you know?</strong> The Cyber Crime Helpline 1930 has received over 1.5 lakh calls in 2024, helping victims block fraudulent transactions worth ₹100+ crore.
                   </p>
@@ -307,14 +363,16 @@ function Awareness() {
                   {categories.map((cat, idx) => (
                     <div key={idx} className="bg-gray-50 rounded-xl p-6 border border-gray-200">
                       <div className="flex items-center space-x-3 mb-4">
-                        <span className="text-3xl">{cat.icon}</span>
+                        <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-lg flex items-center justify-center text-white">
+                          {cat.icon}
+                        </div>
                         <h3 className="text-lg font-semibold text-gray-800">{cat.title}</h3>
                       </div>
                       <p className="text-sm text-gray-600 mb-3">{cat.description}</p>
                       <ul className="space-y-2">
                         {cat.tips.map((tip, i) => (
                           <li key={i} className="flex items-start text-sm">
-                            <span className="text-green-500 mr-2">✓</span>
+                            <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
                             <span className="text-gray-700">{tip}</span>
                           </li>
                         ))}
@@ -323,16 +381,19 @@ function Awareness() {
                   ))}
                 </div>
                 <div className="bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl p-6 text-white">
-                  <h3 className="text-lg font-semibold mb-2">🛡️ General Safety Checklist</h3>
+                  <h3 className="text-lg font-semibold mb-2 flex items-center">
+                    <Shield className="w-5 h-5 mr-2" />
+                    General Safety Checklist
+                  </h3>
                   <ul className="grid md:grid-cols-2 gap-2 text-sm">
-                    <li className="flex items-center"><span className="mr-2">•</span> Use strong, unique passwords</li>
-                    <li className="flex items-center"><span className="mr-2">•</span> Enable 2-factor authentication</li>
-                    <li className="flex items-center"><span className="mr-2">•</span> Keep software updated</li>
-                    <li className="flex items-center"><span className="mr-2">•</span> Be cautious of unsolicited calls/emails</li>
-                    <li className="flex items-center"><span className="mr-2">•</span> Use antivirus and firewall</li>
-                    <li className="flex items-center"><span className="mr-2">•</span> Regularly backup data</li>
-                    <li className="flex items-center"><span className="mr-2">•</span> Verify website URLs before paying</li>
-                    <li className="flex items-center"><span className="mr-2">•</span> Report incidents immediately</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" /> Use strong, unique passwords</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" /> Enable 2-factor authentication</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" /> Keep software updated</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" /> Be cautious of unsolicited calls/emails</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" /> Use antivirus and firewall</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" /> Regularly backup data</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" /> Verify website URLs before paying</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" /> Report incidents immediately</li>
                   </ul>
                 </div>
               </div>
@@ -340,69 +401,123 @@ function Awareness() {
 
             {activeTab === "news" && (
               <div className="space-y-6">
-                <h2 className="text-2xl font-bold text-gray-800 mb-4">Latest Cyber Crime News</h2>
+                <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                  <Newspaper className="w-6 h-6 mr-2 text-blue-600" />
+                  Latest Cyber Crime News
+                </h2>
                 <div className="space-y-4">
                   {news.map((item) => (
                     <a
                       key={item.id}
                       href={item.url}
-                      className="block p-4 border border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-md transition-all"
+                      className="block p-4 border border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-md transition-all group"
                     >
                       <div className="flex items-start justify-between">
                         <div>
-                          <h3 className="font-semibold text-gray-800 mb-1">{item.title}</h3>
+                          <h3 className="font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors">{item.title}</h3>
                           <p className="text-sm text-gray-500">{item.source} • {item.date}</p>
                         </div>
-                        <span className="text-blue-600">→</span>
+                        <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors" />
                       </div>
                     </a>
                   ))}
                 </div>
-                <p className="text-center text-gray-500 text-sm">For official updates, visit <a href="https://cybercrime.gov.in" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">cybercrime.gov.in</a></p>
+                <p className="text-center text-gray-500 text-sm flex items-center justify-center">
+                  For official updates, visit 
+                  <a href="https://cybercrime.gov.in" className="text-blue-600 hover:underline ml-1 flex items-center" target="_blank" rel="noopener noreferrer">
+                    cybercrime.gov.in
+                    <ExternalLink className="w-3 h-3 ml-1" />
+                  </a>
+                </p>
               </div>
             )}
 
             {activeTab === "resources" && (
               <div className="space-y-8">
-                <h2 className="text-2xl font-bold text-gray-800 mb-4">Helpful Resources</h2>
+                <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                  <BookOpen className="w-6 h-6 mr-2 text-blue-600" />
+                  Helpful Resources
+                </h2>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="bg-blue-50 rounded-xl p-6 border border-blue-100">
                     <h3 className="font-semibold text-blue-800 mb-3 flex items-center">
-                      <span className="text-xl mr-2">📞</span> Helplines
+                      <Phone className="w-5 h-5 mr-2" />
+                      Helplines
                     </h3>
                     <ul className="space-y-2 text-gray-700">
-                      <li><strong>Cyber Crime Helpline:</strong> 1930</li>
-                      <li><strong>Police Emergency:</strong> 112</li>
-                      <li><strong>Women Helpline:</strong> 181</li>
-                      <li><strong>Child Helpline:</strong> 1098</li>
+                      <li className="flex items-center">
+                        <PhoneCall className="w-4 h-4 mr-2 text-blue-600" />
+                        <strong>Cyber Crime Helpline:</strong> 1930
+                      </li>
+                      <li className="flex items-center">
+                        <PhoneCall className="w-4 h-4 mr-2 text-blue-600" />
+                        <strong>Police Emergency:</strong> 112
+                      </li>
+                      <li className="flex items-center">
+                        <Users className="w-4 h-4 mr-2 text-blue-600" />
+                        <strong>Women Helpline:</strong> 181
+                      </li>
+                      <li className="flex items-center">
+                        <Users className="w-4 h-4 mr-2 text-blue-600" />
+                        <strong>Child Helpline:</strong> 1098
+                      </li>
                     </ul>
                   </div>
                   <div className="bg-green-50 rounded-xl p-6 border border-green-100">
                     <h3 className="font-semibold text-green-800 mb-3 flex items-center">
-                      <span className="text-xl mr-2">🌐</span> Websites
+                      <Globe2 className="w-5 h-5 mr-2" />
+                      Websites
                     </h3>
                     <ul className="space-y-2 text-gray-700">
-                      <li><a href="https://cybercrime.gov.in" className="text-blue-600 hover:underline" target="_blank">cybercrime.gov.in</a> - File complaint</li>
-                      <li><a href="https://cert-in.org.in" className="text-blue-600 hover:underline" target="_blank">cert-in.org.in</a> - Security alerts</li>
-                      <li><a href="https://i4c.mha.gov.in" className="text-blue-600 hover:underline" target="_blank">I4C portal</a> - Indian Cyber Crime Coordination Centre</li>
+                      <li>
+                        <a href="https://cybercrime.gov.in" className="text-blue-600 hover:underline flex items-center" target="_blank" rel="noopener noreferrer">
+                          cybercrime.gov.in
+                          <ExternalLink className="w-3 h-3 ml-1" />
+                        </a>
+                        <span className="text-sm text-gray-500"> - File complaint</span>
+                      </li>
+                      <li>
+                        <a href="https://cert-in.org.in" className="text-blue-600 hover:underline flex items-center" target="_blank" rel="noopener noreferrer">
+                          cert-in.org.in
+                          <ExternalLink className="w-3 h-3 ml-1" />
+                        </a>
+                        <span className="text-sm text-gray-500"> - Security alerts</span>
+                      </li>
+                      <li>
+                        <a href="https://i4c.mha.gov.in" className="text-blue-600 hover:underline flex items-center" target="_blank" rel="noopener noreferrer">
+                          I4C portal
+                          <ExternalLink className="w-3 h-3 ml-1" />
+                        </a>
+                        <span className="text-sm text-gray-500"> - Indian Cyber Crime Coordination Centre</span>
+                      </li>
                     </ul>
                   </div>
                   <div className="bg-purple-50 rounded-xl p-6 border border-purple-100 md:col-span-2">
                     <h3 className="font-semibold text-purple-800 mb-3 flex items-center">
-                      <span className="text-xl mr-2">📱</span> Mobile Apps
+                      <Smartphone className="w-5 h-5 mr-2" />
+                      Mobile Apps
                     </h3>
                     <div className="grid md:grid-cols-3 gap-4">
-                      <div>
-                        <p className="font-medium">Cyber Dost</p>
-                        <p className="text-sm text-gray-600">Awareness app by MHA</p>
+                      <div className="flex items-start space-x-2">
+                        <Smartphone className="w-4 h-4 text-purple-600 mt-1" />
+                        <div>
+                          <p className="font-medium">Cyber Dost</p>
+                          <p className="text-sm text-gray-600">Awareness app by MHA</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-medium">mAadhaar</p>
-                        <p className="text-sm text-gray-600">Secure Aadhaar management</p>
+                      <div className="flex items-start space-x-2">
+                        <Fingerprint className="w-4 h-4 text-purple-600 mt-1" />
+                        <div>
+                          <p className="font-medium">mAadhaar</p>
+                          <p className="text-sm text-gray-600">Secure Aadhaar management</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-medium">UMANG</p>
-                        <p className="text-sm text-gray-600">Government services</p>
+                      <div className="flex items-start space-x-2">
+                        <Globe2 className="w-4 h-4 text-purple-600 mt-1" />
+                        <div>
+                          <p className="font-medium">UMANG</p>
+                          <p className="text-sm text-gray-600">Government services</p>
+                        </div>
                       </div>
                     </div>
                   </div>

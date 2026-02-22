@@ -11,6 +11,7 @@ import Signup from './pages/SignUp';
 import ProtectedRoute from './components/ProtectedRoute';
 import Community from './pages/Community';
 import LandingPage from './pages/LandingPage';
+import Awareness from './pages/Awareness';
 function App() {
   return (
     <Router>
@@ -50,6 +51,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <LawBot />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/learnmore"
+            element={
+              <ProtectedRoute>
+                <Awareness />
               </ProtectedRoute>
             }
           />
