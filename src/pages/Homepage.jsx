@@ -360,7 +360,7 @@ function HomePage() {
               Everything You Need in One Platform
             </h2>
             <p className="text-xl text-slate-600">
-              Six powerful tools designed to protect you in the digital space
+              Eight powerful tools designed to protect you in the digital space
             </p>
           </div>
 
