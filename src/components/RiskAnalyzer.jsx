@@ -26,9 +26,32 @@ import {
   MessageSquare,
   ExternalLink,
   FileWarning,
-  FileSearch
+  FileSearch,
+  Sparkles,
+  Brain,
+  Gauge,
+  Search,
+  Flag,
+  Ban,
+  Phone,
+  Mail,
+  Globe,
+  Fingerprint,
+  Ghost,
+  Skull,
+  CreditCard,
+  Flame,
+  Crown,
+  Award,
+  Star,
+  ThumbsUp,
+  ThumbsDown,
+  HelpCircle,
+  BarChart3,
+  PieChart
 } from "lucide-react";
 import Navbar from "../pages/Navbar";
+
 function RiskAnalyzer() {
   const [message, setMessage] = useState("");
   const [file, setFile] = useState(null);
@@ -38,6 +61,7 @@ function RiskAnalyzer() {
   const [progress, setProgress] = useState(0);
   const [hoveredCard, setHoveredCard] = useState(null);
   const [particles, setParticles] = useState([]);
+  const [urlInput, setUrlInput] = useState("");
 
   // Sophisticated particle animation for background
   useEffect(() => {
@@ -115,6 +139,26 @@ function RiskAnalyzer() {
     }
   };
 
+  const analyzeURL = async () => {
+    if (!urlInput.trim()) return;
+    setLoading(true);
+    setResult(null);
+
+    try {
+      const response = await fetch("http://127.0.0.1:5000/analyze-url", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: urlInput }),
+      });
+      const data = await response.json();
+      setResult(data);
+    } catch (error) {
+      console.error("URL analysis error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const getRiskIcon = (level) => {
     switch(level?.toLowerCase()) {
       case 'high': return <AlertTriangle className="w-8 h-8" />;
@@ -126,18 +170,27 @@ function RiskAnalyzer() {
 
   const getRiskColor = (level) => {
     switch(level?.toLowerCase()) {
-      case 'high': return 'text-rose-600';
-      case 'medium': return 'text-amber-600';
-      case 'low': return 'text-emerald-600';
+      case 'high': return 'text-red-600';
+      case 'medium': return 'text-orange-600';
+      case 'low': return 'text-green-600';
       default: return 'text-blue-600';
+    }
+  };
+
+  const getRiskBg = (level) => {
+    switch(level?.toLowerCase()) {
+      case 'high': return 'bg-red-50 border-red-200';
+      case 'medium': return 'bg-orange-50 border-orange-200';
+      case 'low': return 'bg-green-50 border-green-200';
+      default: return 'bg-blue-50 border-blue-200';
     }
   };
 
   const getRiskGradient = (level) => {
     switch(level?.toLowerCase()) {
-      case 'high': return 'from-rose-500 to-orange-500';
-      case 'medium': return 'from-amber-500 to-yellow-500';
-      case 'low': return 'from-emerald-500 to-teal-500';
+      case 'high': return 'from-red-600 to-orange-500';
+      case 'medium': return 'from-orange-500 to-yellow-500';
+      case 'low': return 'from-green-500 to-emerald-500';
       default: return 'from-blue-500 to-cyan-500';
     }
   };
@@ -185,641 +238,510 @@ function RiskAnalyzer() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-white relative overflow-hidden">
-      {/* Animated Background Particles */}
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-white">
       <Navbar />
       
-    <div className="pt-24 pb-16">
-      <div className="absolute inset-0 pointer-events-none">
-        {particles.map((particle, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full bg-blue-400/10"
-            style={{
-              left: `${particle.x}%`,
-              top: `${particle.y}%`,
-              width: particle.size * 4,
-              height: particle.size * 4,
-              opacity: particle.opacity,
-            }}
-            animate={{
-              y: [0, -30, 0],
-              x: [0, 15, 0],
-            }}
-            transition={{
-              duration: 8 + i,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 0.2,
-            }}
-          />
-        ))}
-      </div>
-      
-      <div className="relative pt-24 pb-16 z-10">
-        <div className="max-w-6xl mx-auto px-6">
-          {/* Header with Glass Effect */}
-          <motion.div
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, type: "spring" }}
-            className="text-center mb-16"
-          >
-            <motion.div
-              animate={floatAnimation}
-              className="inline-block mb-6"
-            >
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-3xl blur-2xl opacity-30"></div>
-                <div className="relative w-24 h-24 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-3xl flex items-center justify-center shadow-2xl shadow-blue-200">
-                  <Shield className="w-12 h-12 text-white" />
-                </div>
-              </div>
-            </motion.div>
-            
-            <motion.h1 
-              className="text-5xl lg:text-6xl font-bold text-gray-900 mb-4"
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.5 }}
-            >
+      <div className="pt-24 pb-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* Header with Stats */}
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-2xl mb-6 shadow-lg shadow-blue-200">
+              <Shield className="w-10 h-10 text-white" />
+            </div>
+            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
               Risk Analysis
-              <span className="block text-2xl lg:text-3xl text-blue-600 font-light mt-2">Intelligent Threat Detection</span>
-            </motion.h1>
-            
-            <motion.p 
-              className="text-xl text-gray-500 max-w-2xl mx-auto font-light"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-            >
-              Advanced AI-powered analysis for messages and QR codes
-            </motion.p>
-          </motion.div>
+            </h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Advanced threat detection for messages, URLs, and QR codes
+            </p>
+          </div>
 
-          {/* Main Analysis Card with Glass Morphism */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="relative mb-8"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-cyan-500/5 rounded-3xl blur-3xl"></div>
-            
-            <div className="relative bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50 overflow-hidden">
-              {/* Decorative Header Line */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500"></div>
-              
-              {/* Tab Selector with Elegant Design */}
-              <div className="flex p-2 bg-slate-50/80 border-b border-slate-200/50">
-                {[
-                  { 
-                    id: "text", 
-                    icon: MessageSquare, 
-                    label: "Text Analysis", 
-                    desc: "Analyze messages, emails, SMS" 
-                  },
-                  { 
-                    id: "qr", 
-                    icon: ScanLine, 
-                    label: "QR Analysis", 
-                    desc: "Scan and analyze QR codes" 
-                  }
-                ].map((tab) => (
-                  <motion.button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`flex-1 relative px-6 py-4 rounded-2xl transition-all ${
-                      activeTab === tab.id
-                        ? "text-blue-600"
-                        : "text-gray-500 hover:text-gray-700"
-                    }`}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onHoverStart={() => setHoveredCard(tab.id)}
-                    onHoverEnd={() => setHoveredCard(null)}
-                  >
-                    {activeTab === tab.id && (
-                      <motion.div
-                        layoutId="activeTabBackground"
-                        className="absolute inset-0 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl"
-                        initial={false}
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          {/* Stats Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto mb-8">
+            <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-gray-700">Messages Analyzed</span>
+                <MessageSquare className="w-4 h-4 text-blue-600" />
+              </div>
+              <div className="text-2xl font-bold text-gray-900 mt-2">1,234</div>
+            </div>
+            <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-gray-700">QR Codes Scanned</span>
+                <QrCode className="w-4 h-4 text-cyan-600" />
+              </div>
+              <div className="text-2xl font-bold text-gray-900 mt-2">856</div>
+            </div>
+            <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-gray-700">URLs Checked</span>
+                <LinkIcon className="w-4 h-4 text-purple-600" />
+              </div>
+              <div className="text-2xl font-bold text-gray-900 mt-2">2,543</div>
+            </div>
+          </div>
+
+          {/* Main Analysis Card */}
+          <div className="bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden mb-8">
+            {/* Tab Selector */}
+            <div className="flex p-1 bg-gray-50 border-b border-gray-200">
+              {[
+                { id: "text", icon: MessageSquare, label: "Text Analysis", desc: "Analyze messages and emails" },
+                { id: "qr", icon: ScanLine, label: "QR Analysis", desc: "Scan and analyze QR codes" },
+                { id: "url", icon: LinkIcon, label: "URL Analysis", desc: "Scan websites for phishing" }
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex-1 relative px-4 py-3 rounded-xl transition-all ${
+                    activeTab === tab.id
+                      ? "bg-white text-blue-600 shadow-sm"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
+                  }`}
+                >
+                  <div className="flex items-center justify-center space-x-2">
+                    <tab.icon className="w-5 h-5" />
+                    <div className="text-left">
+                      <div className="font-medium text-sm">{tab.label}</div>
+                      <div className="text-xs text-gray-500">{tab.desc}</div>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {/* Content Area */}
+            <div className="p-6 md:p-8">
+              <AnimatePresence mode="wait">
+                {activeTab === "text" && (
+                  <div key="text" className="space-y-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Message or Text Content
+                      </label>
+                      <textarea
+                        placeholder="Paste suspicious message, email, or SMS content here..."
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        rows="6"
+                        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all resize-none text-gray-900 placeholder-gray-400"
                       />
-                    )}
-                    
-                    <div className="relative flex items-center justify-center space-x-3">
-                      <tab.icon className="w-6 h-6" />
-                      <div className="text-left">
-                        <div className="font-semibold">{tab.label}</div>
-                        <div className="text-xs text-gray-400 font-normal">{tab.desc}</div>
+                      <div className="mt-2 text-xs text-gray-500 text-right">
+                        {message.length} characters
                       </div>
                     </div>
 
-                    {/* Animated underline on hover */}
-                    <AnimatePresence>
-                      {hoveredCard === tab.id && activeTab !== tab.id && (
-                        <motion.div
-                          initial={{ width: 0, opacity: 0 }}
-                          animate={{ width: "80%", opacity: 1 }}
-                          exit={{ width: 0, opacity: 0 }}
-                          className="absolute bottom-2 left-1/2 transform -translate-x-1/2 h-0.5 bg-gradient-to-r from-blue-400/50 to-cyan-400/50 rounded-full"
-                        />
+                    <button
+                      onClick={analyzeText}
+                      disabled={!message.trim() || loading}
+                      className={`w-full py-4 rounded-xl font-semibold text-white transition-all flex items-center justify-center ${
+                        message.trim() && !loading
+                          ? "bg-gradient-to-r from-blue-600 to-cyan-600 hover:shadow-lg hover:shadow-blue-200"
+                          : "bg-gray-400 cursor-not-allowed"
+                      }`}
+                    >
+                      {loading ? (
+                        <>
+                          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                          Analyzing...
+                        </>
+                      ) : (
+                        <>
+                          <FileSearch className="w-5 h-5 mr-2" />
+                          Analyze Message
+                        </>
                       )}
-                    </AnimatePresence>
-                  </motion.button>
-                ))}
-              </div>
+                    </button>
+                  </div>
+                )}
 
-              {/* Content Area with Elegant Transitions */}
-              <div className="p-8">
-                <AnimatePresence mode="wait">
-                  {activeTab === "text" ? (
-                    <motion.div
-                      key="text"
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 20 }}
-                      transition={{ duration: 0.3 }}
-                      className="space-y-6"
-                    >
-                      <div className="relative">
-                        <motion.label 
-                          className="block text-sm font-medium text-gray-600 mb-2 ml-1 flex items-center space-x-2"
-                          animate={{ x: message ? 5 : 0 }}
-                        >
-                          <FileText className="w-4 h-4" />
-                          <span>Suspicious Message / Text</span>
-                        </motion.label>
-                        <div className="relative">
-                          <textarea
-                            placeholder="Paste suspicious message, email, or SMS content here..."
-                            value={message}
-                            onChange={(e) => setMessage(e.target.value)}
-                            rows="6"
-                            className="w-full px-5 py-4 rounded-2xl border border-slate-200 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 transition-all resize-none text-gray-700 placeholder-gray-400"
-                          />
-                          <motion.div
-                            className="absolute bottom-3 right-3 text-xs text-gray-400 bg-white/80 px-2 py-1 rounded-full"
-                            animate={{ opacity: message ? 1 : 0 }}
-                          >
-                            {message.length} characters
-                          </motion.div>
-                        </div>
-                      </div>
-
-                      <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={analyzeText}
-                        disabled={!message.trim() || loading}
-                        className={`relative w-full py-5 rounded-2xl font-semibold text-white overflow-hidden group ${
-                          message.trim() && !loading
-                            ? "cursor-pointer"
-                            : "cursor-not-allowed opacity-50"
-                        }`}
+                {activeTab === "qr" && (
+                  <div key="qr" className="space-y-6">
+                    <div className="relative">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setFile(e.target.files[0])}
+                        className="hidden"
+                        id="qr-upload"
+                      />
+                      <label 
+                        htmlFor="qr-upload" 
+                        className="block cursor-pointer"
                       >
-                        <div className={`absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-600 ${
-                          message.trim() && !loading ? "group-hover:scale-105" : ""
-                        } transition-transform duration-300`}></div>
-                        <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-cyan-400/20 blur-xl group-hover:opacity-100 opacity-0 transition-opacity"></div>
-                        <span className="relative flex items-center justify-center space-x-2">
-                          <FileSearch className="w-5 h-5" />
-                          <span>{loading ? "Analyzing..." : "Analyze Message"}</span>
-                          {!loading && <ArrowRight className="w-4 h-4 opacity-70" />}
-                        </span>
-                      </motion.button>
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="qr"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      transition={{ duration: 0.3 }}
-                      className="space-y-6"
-                    >
-                      <motion.div
-                        className="relative group"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => setFile(e.target.files[0])}
-                          className="hidden"
-                          id="qr-upload"
-                        />
-                        <label 
-                          htmlFor="qr-upload" 
-                          className="block cursor-pointer"
-                        >
-                          <div className={`border-2 border-dashed rounded-2xl p-12 text-center transition-all ${
-                            file 
-                              ? "border-blue-400 bg-blue-50/30" 
-                              : "border-slate-200 hover:border-blue-300 bg-slate-50/30"
-                          }`}>
-                            <motion.div
-                              animate={!file ? floatAnimation : {}}
-                              className="mb-4"
-                            >
-                              {file ? (
-                                <FileCheck className="w-16 h-16 mx-auto text-blue-500" />
-                              ) : (
-                                <QrCode className="w-16 h-16 mx-auto text-gray-400" />
-                              )}
-                            </motion.div>
-                            <p className="text-gray-700 mb-2 font-medium">
-                              {file ? file.name : "Click to upload QR code image"}
-                            </p>
-                            <p className="text-sm text-gray-400">
-                              Supports: JPG, PNG, GIF (Max 10MB)
-                            </p>
-                          </div>
-                        </label>
-                      </motion.div>
-
-                      {file && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className="flex items-center justify-between bg-gradient-to-r from-blue-50 to-cyan-50 p-4 rounded-xl"
-                        >
-                          <div className="flex items-center space-x-3">
-                            <Upload className="w-5 h-5 text-blue-500" />
-                            <div>
-                              <p className="text-sm font-medium text-gray-700">{file.name}</p>
-                              <p className="text-xs text-gray-500">
-                                {(file.size / 1024).toFixed(2)} KB • {(file.type)}
+                        <div className={`border-2 border-dashed rounded-xl p-8 text-center transition-all ${
+                          file 
+                            ? "border-blue-400 bg-blue-50" 
+                            : "border-gray-300 hover:border-blue-400 hover:bg-gray-50"
+                        }`}>
+                          {file ? (
+                            <>
+                              <FileCheck className="w-12 h-12 mx-auto text-blue-600 mb-3" />
+                              <p className="text-gray-900 font-medium mb-1">{file.name}</p>
+                              <p className="text-sm text-gray-500">
+                                {(file.size / 1024).toFixed(2)} KB
                               </p>
-                            </div>
-                          </div>
-                          <motion.button
-                            whileHover={{ scale: 1.1, rotate: 90 }}
-                            whileTap={{ scale: 0.9 }}
-                            onClick={() => setFile(null)}
-                            className="w-8 h-8 rounded-full bg-white/50 hover:bg-white flex items-center justify-center text-gray-400 hover:text-red-500 transition-all"
-                          >
-                            <X className="w-4 h-4" />
-                          </motion.button>
-                        </motion.div>
+                            </>
+                          ) : (
+                            <>
+                              <QrCode className="w-12 h-12 mx-auto text-gray-400 mb-3" />
+                              <p className="text-gray-900 font-medium mb-1">Click to upload QR code</p>
+                              <p className="text-sm text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                            </>
+                          )}
+                        </div>
+                      </label>
+                    </div>
+
+                    {file && (
+                      <div className="flex items-center justify-between bg-gray-50 p-3 rounded-xl">
+                        <div className="flex items-center space-x-3">
+                          <Upload className="w-5 h-5 text-blue-600" />
+                          <span className="text-sm text-gray-700">{file.name}</span>
+                        </div>
+                        <button
+                          onClick={() => setFile(null)}
+                          className="p-1 hover:bg-gray-200 rounded-lg transition-colors"
+                        >
+                          <X className="w-4 h-4 text-gray-500" />
+                        </button>
+                      </div>
+                    )}
+
+                    <button
+                      onClick={analyzeQR}
+                      disabled={!file || loading}
+                      className={`w-full py-4 rounded-xl font-semibold text-white transition-all flex items-center justify-center ${
+                        file && !loading
+                          ? "bg-gradient-to-r from-blue-600 to-cyan-600 hover:shadow-lg hover:shadow-blue-200"
+                          : "bg-gray-400 cursor-not-allowed"
+                      }`}
+                    >
+                      {loading ? (
+                        <>
+                          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                          Analyzing QR...
+                        </>
+                      ) : (
+                        <>
+                          <ScanLine className="w-5 h-5 mr-2" />
+                          Analyze QR Code
+                        </>
                       )}
+                    </button>
+                  </div>
+                )}
 
-                      <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={analyzeQR}
-                        disabled={!file || loading}
-                        className={`relative w-full py-5 rounded-2xl font-semibold text-white overflow-hidden group ${
-                          file && !loading
-                            ? "cursor-pointer"
-                            : "cursor-not-allowed opacity-50"
-                        }`}
-                      >
-                        <div className={`absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-600 ${
-                          file && !loading ? "group-hover:scale-105" : ""
-                        } transition-transform duration-300`}></div>
-                        <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-cyan-400/20 blur-xl group-hover:opacity-100 opacity-0 transition-opacity"></div>
-                        <span className="relative flex items-center justify-center space-x-2">
-                          <ScanLine className="w-5 h-5" />
-                          <span>{loading ? "Analyzing QR..." : "Analyze QR Code"}</span>
-                          {!loading && <ArrowRight className="w-4 h-4 opacity-70" />}
-                        </span>
-                      </motion.button>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+                {activeTab === "url" && (
+                  <div key="url" className="space-y-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Website URL
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="https://example.com/suspicious-page"
+                        value={urlInput}
+                        onChange={(e) => setUrlInput(e.target.value)}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all text-gray-900 placeholder-gray-400"
+                      />
+                    </div>
+
+                    <button
+                      onClick={analyzeURL}
+                      disabled={!urlInput.trim() || loading}
+                      className={`w-full py-4 rounded-xl font-semibold text-white transition-all flex items-center justify-center ${
+                        urlInput.trim() && !loading
+                          ? "bg-gradient-to-r from-blue-600 to-cyan-600 hover:shadow-lg hover:shadow-blue-200"
+                          : "bg-gray-400 cursor-not-allowed"
+                      }`}
+                    >
+                      {loading ? (
+                        <>
+                          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                          Analyzing URL...
+                        </>
+                      ) : (
+                        <>
+                          <LinkIcon className="w-5 h-5 mr-2" />
+                          Analyze Website
+                        </>
+                      )}
+                    </button>
+                  </div>
+                )}
+              </AnimatePresence>
             </div>
-          </motion.div>
+          </div>
 
-          {/* Elegant Loading Indicator */}
+          {/* Loading Indicator */}
           <AnimatePresence>
             {loading && (
-              <motion.div
-                initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                transition={{ type: "spring" }}
-                className="relative mb-8"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-2xl blur-xl"></div>
-                <div className="relative bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl p-6 border border-white/50">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-3">
-                      <div className="relative">
-                        <div className="w-4 h-4 bg-blue-500 rounded-full animate-ping absolute"></div>
-                        <div className="w-4 h-4 bg-blue-500 rounded-full relative"></div>
-                      </div>
-                      <span className="font-medium text-gray-700">AI Analysis in Progress</span>
-                    </div>
-                    <span className="text-sm font-light text-gray-400">{Math.round(progress)}%</span>
+              <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-8">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></div>
+                    <span className="font-medium text-gray-700">Analyzing</span>
                   </div>
-                  
-                  <div className="relative h-2 bg-slate-100 rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${progress}%` }}
-                      className="absolute inset-y-0 left-0 bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-500 rounded-full"
-                      style={{
-                        boxShadow: "0 0 10px rgba(59, 130, 246, 0.5)",
-                      }}
-                    />
-                  </div>
-
-                  <div className="flex justify-between mt-3 text-xs text-gray-400">
-                    <span>Analyzing patterns</span>
-                    <span>Scanning threats</span>
-                    <span>Calculating risk</span>
-                  </div>
+                  <span className="text-sm text-gray-500">{Math.round(progress)}%</span>
                 </div>
-              </motion.div>
+                <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-gradient-to-r from-blue-600 to-cyan-600 transition-all duration-300"
+                    style={{ width: `${progress}%` }}
+                  ></div>
+                </div>
+              </div>
             )}
           </AnimatePresence>
 
-          {/* Sophisticated Results Display */}
-          <AnimatePresence mode="wait">
+          {/* Results Display - WITH CIRCULAR PROGRESS BAR */}
+          <AnimatePresence>
             {result && (
               <motion.div
-                key="results"
-                initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -30, scale: 0.95 }}
-                transition={{ type: "spring", duration: 0.6 }}
-                className="relative"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden"
               >
-                {/* Background Glow */}
-                <div className={`absolute inset-0 bg-gradient-to-r ${getRiskGradient(result.risk_level)} opacity-5 rounded-3xl blur-3xl`}></div>
-                
-                {/* Main Results Card */}
-                <div className="relative bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50 overflow-hidden">
-                  {/* Decorative Header with Risk Color */}
-                  <div className={`h-2 bg-gradient-to-r ${getRiskGradient(result.risk_level)}`}></div>
-                  
-                  <div className="p-8">
-                    {/* Header with Risk Indicator */}
-                    <div className="flex flex-col md:flex-row items-center gap-8 mb-10">
-                      {/* 3D Risk Meter */}
+                {/* Risk Header with Circular Progress */}
+                <div className={`p-6 border-b ${getRiskBg(result.risk_level)}`}>
+                  <div className="flex flex-col md:flex-row items-center gap-8">
+                    {/* 3D Risk Meter - Circular Progress Bar */}
+                    <motion.div 
+                      className="relative w-40 h-40 flex-shrink-0"
+                      initial={{ rotate: -90 }}
+                      animate={{ rotate: 0 }}
+                      transition={{ duration: 1, type: "spring" }}
+                    >
+                      {/* Outer Ring */}
+                      <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                        {/* Background track */}
+                        <circle
+                          cx="50"
+                          cy="50"
+                          r="45"
+                          fill="none"
+                          stroke="#e2e8f0"
+                          strokeWidth="8"
+                          strokeLinecap="round"
+                        />
+                        
+                        {/* Progress ring with gradient */}
+                        <motion.circle
+                          cx="50"
+                          cy="50"
+                          r="45"
+                          fill="none"
+                          stroke={`url(#riskGradient-${result.risk_level})`}
+                          strokeWidth="8"
+                          strokeLinecap="round"
+                          initial={{ strokeDasharray: "0 283" }}
+                          animate={{ strokeDasharray: `${(getRiskScore() / 100) * 283} 283` }}
+                          transition={{ duration: 1.5, ease: "easeOut" }}
+                        />
+                        
+                        <defs>
+                          <linearGradient id={`riskGradient-${result.risk_level}`} x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stopColor={
+                              result.risk_level === 'High' ? '#f43f5e' :
+                              result.risk_level === 'Medium' ? '#f59e0b' :
+                              '#10b981'
+                            } />
+                            <stop offset="100%" stopColor={
+                              result.risk_level === 'High' ? '#f97316' :
+                              result.risk_level === 'Medium' ? '#eab308' :
+                              '#14b8a6'
+                            } />
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                      
+                      {/* Center content */}
                       <motion.div 
-                        className="relative w-48 h-48"
-                        initial={{ rotate: -90 }}
-                        animate={{ rotate: 0 }}
-                        transition={{ duration: 1, type: "spring" }}
+                        className="absolute inset-0 flex flex-col items-center justify-center"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ delay: 0.5, type: "spring" }}
                       >
-                        {/* Outer Ring */}
-                        <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                          {/* Background track */}
-                          <circle
-                            cx="50"
-                            cy="50"
-                            r="45"
-                            fill="none"
-                            stroke="#e2e8f0"
-                            strokeWidth="6"
-                            strokeLinecap="round"
-                          />
-                          
-                          {/* Progress ring with gradient */}
-                          <motion.circle
-                            cx="50"
-                            cy="50"
-                            r="45"
-                            fill="none"
-                            stroke={`url(#riskGradient-${result.risk_level})`}
-                            strokeWidth="6"
-                            strokeLinecap="round"
-                            initial={{ strokeDasharray: "0 283" }}
-                            animate={{ strokeDasharray: `${(getRiskScore() / 100) * 283} 283` }}
-                            transition={{ duration: 1.5, ease: "easeOut" }}
-                          />
-                          
-                          <defs>
-                            <linearGradient id={`riskGradient-${result.risk_level}`} x1="0%" y1="0%" x2="100%" y2="0%">
-                              <stop offset="0%" className={`stop-color: ${
-                                result.risk_level === 'High' ? '#f43f5e' :
-                                result.risk_level === 'Medium' ? '#f59e0b' :
-                                '#10b981'
-                              }`} />
-                              <stop offset="100%" className={`stop-color: ${
-                                result.risk_level === 'High' ? '#f97316' :
-                                result.risk_level === 'Medium' ? '#eab308' :
-                                '#14b8a6'
-                              }`} />
-                            </linearGradient>
-                          </defs>
-                        </svg>
-                        
-                        {/* Center content */}
-                        <motion.div 
-                          className="absolute inset-0 flex flex-col items-center justify-center"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ delay: 0.5, type: "spring" }}
-                        >
-                          <div className={`mb-2 ${getRiskColor(result.risk_level)}`}>
-                            {getRiskIcon(result.risk_level)}
-                          </div>
-                          <span className="text-3xl font-bold" style={{
-                            color: result.risk_level === 'High' ? '#f43f5e' :
-                                   result.risk_level === 'Medium' ? '#f59e0b' :
-                                   '#10b981'
-                          }}>
-                            {getRiskScore()}%
-                          </span>
-                          <span className="text-xs text-gray-400">Risk Score</span>
-                        </motion.div>
+                        <div className={`mb-1 ${getRiskColor(result.risk_level)}`}>
+                          {getRiskIcon(result.risk_level)}
+                        </div>
+                        <span className="text-2xl font-bold" style={{
+                          color: result.risk_level === 'High' ? '#f43f5e' :
+                                 result.risk_level === 'Medium' ? '#f59e0b' :
+                                 '#10b981'
+                        }}>
+                          {getRiskScore()}%
+                        </span>
+                        <span className="text-[10px] text-gray-400">Risk Score</span>
                       </motion.div>
+                    </motion.div>
 
-                      {/* Risk Summary */}
-                      <div className="flex-1 text-center md:text-left">
-                        <motion.div 
-                          className="inline-flex items-center px-5 py-2 rounded-full bg-white shadow-lg border border-slate-100 mb-4"
-                          initial={{ x: -20, opacity: 0 }}
-                          animate={{ x: 0, opacity: 1 }}
-                          transition={{ delay: 0.3 }}
-                        >
-                          <span className={`w-3 h-3 rounded-full mr-2 animate-pulse ${
-                            result.risk_level === 'High' ? 'bg-rose-500' :
-                            result.risk_level === 'Medium' ? 'bg-amber-500' :
-                            'bg-emerald-500'
-                          }`}></span>
-                          <span className={`font-semibold ${getRiskColor(result.risk_level)}`}>
-                            {result.risk_level} RISK LEVEL
+                    {/* Risk Summary */}
+                    <div className="flex-1 text-center md:text-left">
+                      <div className="flex items-center justify-center md:justify-start space-x-2 mb-2">
+                        <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                          result.risk_level === 'High' ? 'bg-red-100 text-red-700' :
+                          result.risk_level === 'Medium' ? 'bg-orange-100 text-orange-700' :
+                          'bg-green-100 text-green-700'
+                        }`}>
+                          {result.risk_level} RISK
+                        </span>
+                        {result.risk_level === 'High' && (
+                          <span className="px-2 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium flex items-center">
+                            <Flame className="w-3 h-3 mr-1" />
+                            Critical
                           </span>
-                        </motion.div>
-                        
-                        <motion.h3 
-                          className="text-3xl font-light text-gray-800 mb-3"
-                          initial={{ y: 20, opacity: 0 }}
-                          animate={{ y: 0, opacity: 1 }}
-                          transition={{ delay: 0.4 }}
-                        >
-                          Analysis Complete
-                        </motion.h3>
-                        
-                        {result.summary && (
-                          <motion.p 
-                            className="text-gray-500 leading-relaxed text-lg"
-                            initial={{ y: 20, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.5 }}
-                          >
-                            {result.summary}
-                          </motion.p>
                         )}
                       </div>
+                      <h3 className="text-2xl font-bold text-gray-800 mb-2">Analysis Complete</h3>
+                      <p className="text-gray-600">{result.summary || 'Threat analysis completed successfully'}</p>
                     </div>
-
-                    {/* Decoded Content (if QR) */}
-                    {result.decoded_content && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.6 }}
-                        className="mb-8 p-5 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl border border-blue-100"
-                      >
-                        <div className="flex items-start space-x-3">
-                          <Eye className="w-5 h-5 text-blue-500 mt-1" />
-                          <div>
-                            <p className="text-sm font-medium text-gray-600 mb-1">Decoded QR Content</p>
-                            <p className="text-gray-800 font-mono text-sm break-all">{result.decoded_content}</p>
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-
-                    {/* Detected URLs with Animation */}
-                    {result.detected_urls?.length > 0 && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.7 }}
-                        className="mb-8"
-                      >
-                        <h4 className="text-sm font-medium text-gray-500 mb-4 flex items-center">
-                          <span className="w-1 h-1 bg-blue-500 rounded-full mr-2"></span>
-                          DETECTED URLS
-                        </h4>
-                        <div className="space-y-3">
-                          {result.detected_urls.map((url, index) => (
-                            <motion.div
-                              key={index}
-                              initial={{ x: -20, opacity: 0 }}
-                              animate={{ x: 0, opacity: 1 }}
-                              transition={{ delay: 0.7 + index * 0.1 }}
-                              className="flex items-center p-4 bg-slate-50 rounded-xl hover:bg-slate-100 transition-colors group"
-                            >
-                              <LinkIcon className="w-5 h-5 text-blue-500 mr-3" />
-                              <span className="text-sm text-gray-600 break-all flex-1">{url}</span>
-                              <motion.a
-                                href={url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="opacity-0 group-hover:opacity-100 transition-opacity"
-                                whileHover={{ scale: 1.1 }}
-                              >
-                                <ExternalLink className="w-4 h-4 text-blue-500" />
-                              </motion.a>
-                            </motion.div>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-
-                    {/* Recommendations with Elegant Cards */}
-                    {result.recommendations?.length > 0 && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.8 }}
-                      >
-                        <h4 className="text-sm font-medium text-gray-500 mb-4 flex items-center">
-                          <span className="w-1 h-1 bg-emerald-500 rounded-full mr-2"></span>
-                          RECOMMENDATIONS
-                        </h4>
-                        <div className="grid gap-3">
-                          {result.recommendations.map((rec, index) => (
-                            <motion.div
-                              key={index}
-                              initial={{ scale: 0.95, opacity: 0 }}
-                              animate={{ scale: 1, opacity: 1 }}
-                              transition={{ delay: 0.8 + index * 0.1 }}
-                              whileHover={{ scale: 1.02, x: 5 }}
-                              className="flex items-start p-4 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl border border-emerald-100"
-                            >
-                              <CheckCircle className="w-5 h-5 text-emerald-500 mr-3 flex-shrink-0 mt-0.5" />
-                              <span className="text-gray-700">{rec}</span>
-                            </motion.div>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-
-                    {/* New Analysis Button */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 1 }}
-                      className="mt-8 text-center"
-                    >
-                      <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => {
-                          setResult(null);
-                          setMessage("");
-                          setFile(null);
-                        }}
-                        className="px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-2xl font-medium shadow-lg shadow-blue-200 hover:shadow-xl transition-all inline-flex items-center space-x-2"
-                      >
-                        <RefreshCw className="w-5 h-5" />
-                        <span>Analyze New Item</span>
-                      </motion.button>
-                    </motion.div>
                   </div>
                 </div>
-                
+
+                <div className="p-6 space-y-6">
+                  {/* Decoded Content */}
+                  {result.decoded_content && (
+                    <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                      <h4 className="text-sm font-medium text-gray-700 mb-2 flex items-center">
+                        <Eye className="w-4 h-4 mr-2 text-gray-500" />
+                        Decoded Content
+                      </h4>
+                      <p className="text-gray-900 font-mono text-sm break-all">{result.decoded_content}</p>
+                    </div>
+                  )}
+
+                  {/* Detected URLs */}
+                  {result.detected_urls?.length > 0 && (
+                    <div>
+                      <h4 className="text-sm font-medium text-gray-700 mb-3 flex items-center">
+                        <LinkIcon className="w-4 h-4 mr-2 text-gray-500" />
+                        Detected URLs ({result.detected_urls.length})
+                      </h4>
+                      <div className="space-y-2">
+                        {result.detected_urls.map((url, index) => (
+                          <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200">
+                            <span className="text-sm text-gray-700 break-all flex-1">{url}</span>
+                            <a
+                              href={url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="ml-3 p-1 hover:bg-gray-200 rounded-lg transition-colors"
+                            >
+                              <ExternalLink className="w-4 h-4 text-gray-500" />
+                            </a>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Threat Categories */}
+                  {result.threat_categories?.length > 0 && (
+                    <div>
+                      <h4 className="text-sm font-medium text-gray-700 mb-3 flex items-center">
+                        <AlertTriangle className="w-4 h-4 mr-2 text-gray-500" />
+                        Threat Categories
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {result.threat_categories.map((cat, index) => (
+                          <span key={index} className="px-3 py-1 bg-red-50 text-red-700 rounded-full text-xs font-medium">
+                            {cat}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Recommendations */}
+                  {result.recommendations?.length > 0 && (
+                    <div>
+                      <h4 className="text-sm font-medium text-gray-700 mb-3 flex items-center">
+                        <Shield className="w-4 h-4 mr-2 text-gray-500" />
+                        Recommendations
+                      </h4>
+                      <div className="space-y-2">
+                        {result.recommendations.map((rec, index) => (
+                          <div key={index} className="flex items-start p-3 bg-green-50 rounded-lg border border-green-200">
+                            <CheckCircle className="w-4 h-4 text-green-600 mr-2 flex-shrink-0 mt-0.5" />
+                            <span className="text-sm text-gray-700">{rec}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Action Buttons */}
+                  <div className="flex space-x-3 pt-4 border-t border-gray-200">
+                    <button
+                      onClick={() => {
+                        setResult(null);
+                        setMessage("");
+                        setFile(null);
+                        setUrlInput("");
+                      }}
+                      className="flex-1 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium transition-all flex items-center justify-center"
+                    >
+                      <RefreshCw className="w-4 h-4 mr-2" />
+                      New Analysis
+                    </button>
+                    <button className="px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium transition-all flex items-center justify-center">
+                      <Download className="w-4 h-4 mr-2" />
+                      Export Report
+                    </button>
+                  </div>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
 
-          {/* Elegant Feature Cards */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12"
-          >
-            {[
-              { icon: Target, title: "Precision Analysis", desc: "Advanced AI algorithms detect subtle threats", color: "from-blue-500 to-cyan-500" },
-              { icon: Zap, title: "Real-time Processing", desc: "Instant results with detailed insights", color: "from-indigo-500 to-blue-500" },
-              { icon: Lock, title: "Privacy First", desc: "Your data never leaves your device", color: "from-purple-500 to-pink-500" }
-            ].map((feature, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                className="relative group"
-              >
-                <div className={`absolute inset-0 bg-gradient-to-r ${feature.color} opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity`}></div>
-                <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-100 hover:border-slate-200 transition-all shadow-sm hover:shadow-xl">
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${feature.color} bg-opacity-10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                    <feature.icon className={`w-6 h-6 ${
-                      index === 0 ? 'text-blue-600' :
-                      index === 1 ? 'text-indigo-600' :
-                      'text-purple-600'
-                    }`} />
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2">{feature.title}</h3>
-                  <p className="text-sm text-gray-500">{feature.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+          {/* Feature Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+            <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-all">
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <Brain className="w-6 h-6 text-blue-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">AI-Powered Analysis</h3>
+              <p className="text-gray-600 text-sm">Advanced machine learning detects sophisticated scams and phishing attempts</p>
+            </div>
+
+            <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-all">
+              <div className="w-12 h-12 bg-cyan-100 rounded-lg flex items-center justify-center mb-4">
+                <Gauge className="w-6 h-6 text-cyan-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Real-time Scanning</h3>
+              <p className="text-gray-600 text-sm">Instant analysis with detailed risk assessment and actionable insights</p>
+            </div>
+
+            <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-all">
+              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                <Lock className="w-6 h-6 text-purple-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Privacy Guaranteed</h3>
+              <p className="text-gray-600 text-sm">Your data stays private - all analysis happens locally in your browser</p>
+            </div>
+          </div>
+
+          {/* Trust Indicators */}
+          <div className="flex flex-wrap items-center justify-center gap-6 mt-8 pt-6 border-t border-gray-200">
+            <div className="flex items-center space-x-2 text-sm text-gray-600">
+              <CheckCircle className="w-4 h-4 text-green-600" />
+              <span>Enterprise-grade security</span>
+            </div>
+            <div className="flex items-center space-x-2 text-sm text-gray-600">
+              <CheckCircle className="w-4 h-4 text-green-600" />
+              <span>GDPR compliant</span>
+            </div>
+            <div className="flex items-center space-x-2 text-sm text-gray-600">
+              <CheckCircle className="w-4 h-4 text-green-600" />
+              <span>24/7 threat monitoring</span>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }

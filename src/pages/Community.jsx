@@ -608,4 +608,4 @@ function CommunityIntel() {
   );
 }
 
-export default CommunityIntel;
+export default Community;
