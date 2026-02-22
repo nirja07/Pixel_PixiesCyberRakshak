@@ -39,9 +39,10 @@ import {
   Heart,
   Mail,
   Key,
-  RefreshCw,  // Add this line
+  RefreshCw,
   Database,
-  XCircle
+  XCircle,
+  Landmark
 } from "lucide-react";
 
 function HomePage() {
@@ -85,14 +86,14 @@ function HomePage() {
 
   // Threat map data
   const threatStates = [
-    { name: "Maharashtra", incidents: 12450, severity: "high", growth: "+12%", coordinates: "19.7515° N, 75.7139° E", trend: "up" },
-    { name: "Karnataka", incidents: 9870, severity: "high", growth: "+8%", coordinates: "15.3173° N, 75.7139° E", trend: "up" },
-    { name: "Delhi NCR", incidents: 8760, severity: "high", growth: "+15%", coordinates: "28.7041° N, 77.1025° E", trend: "up" },
-    { name: "Telangana", incidents: 6540, severity: "medium", growth: "+5%", coordinates: "17.1232° N, 79.2083° E", trend: "stable" },
-    { name: "Tamil Nadu", incidents: 5430, severity: "medium", growth: "+3%", coordinates: "11.1271° N, 78.6569° E", trend: "stable" },
-    { name: "West Bengal", incidents: 4320, severity: "medium", growth: "-2%", coordinates: "22.9868° N, 87.8550° E", trend: "down" },
-    { name: "Uttar Pradesh", incidents: 3980, severity: "low", growth: "+1%", coordinates: "26.8467° N, 80.9462° E", trend: "stable" },
-    { name: "Gujarat", incidents: 3210, severity: "low", growth: "-5%", coordinates: "22.2587° N, 71.1924° E", trend: "down" },
+    { name: "Maharashtra", incidents: 12450, severity: "high", growth: "+12%", coordinates: "19.7515 N, 75.7139 E", trend: "up" },
+    { name: "Karnataka", incidents: 9870, severity: "high", growth: "+8%", coordinates: "15.3173 N, 75.7139 E", trend: "up" },
+    { name: "Delhi NCR", incidents: 8760, severity: "high", growth: "+15%", coordinates: "28.7041 N, 77.1025 E", trend: "up" },
+    { name: "Telangana", incidents: 6540, severity: "medium", growth: "+5%", coordinates: "17.1232 N, 79.2083 E", trend: "stable" },
+    { name: "Tamil Nadu", incidents: 5430, severity: "medium", growth: "+3%", coordinates: "11.1271 N, 78.6569 E", trend: "stable" },
+    { name: "West Bengal", incidents: 4320, severity: "medium", growth: "-2%", coordinates: "22.9868 N, 87.8550 E", trend: "down" },
+    { name: "Uttar Pradesh", incidents: 3980, severity: "low", growth: "+1%", coordinates: "26.8467 N, 80.9462 E", trend: "stable" },
+    { name: "Gujarat", incidents: 3210, severity: "low", growth: "-5%", coordinates: "22.2587 N, 71.1924 E", trend: "down" },
   ];
 
   // All Features
@@ -119,7 +120,7 @@ function HomePage() {
       icon: Globe,
       title: "Community Intel",
       description: "Real-time threat intelligence from community reports",
-      link: "/community-intel",
+      link: "/community",
       color: "from-purple-600 to-pink-600",
       stats: "Live Feed",
       features: ["Trend Analysis", "Heat Maps", "Alerts", "Report Scams", "Threat Leaderboard"]
@@ -128,7 +129,7 @@ function HomePage() {
       icon: BarChart3,
       title: "Risk Engine",
       description: "Advanced risk assessment for organizations and individuals",
-      link: "/risk-engine",
+      link: "/riskengine",
       color: "from-orange-600 to-red-600",
       stats: "Enterprise Grade",
       features: ["Risk Scoring", "Compliance Check", "Audit Trail", "URL Scanning", "QR Analysis"]
@@ -147,10 +148,19 @@ function HomePage() {
       icon: Gamepad2,
       title: "Awareness Game",
       description: "Interactive cybersecurity training through gaming",
-      link: "/cyberquest",
+      link: "/awareness",
       color: "from-cyan-600 to-blue-600",
       stats: "Play & Learn",
       features: ["Phishing Quiz", "Password Lab", "Social Engineering", "MFA Training", "Earn Badges"]
+    },
+    {
+      icon: Landmark,
+      title: "Bank Crack",
+      description: "Master the art of secure banking and financial protection in the digital age",
+      link: "/bankfraudtools",
+      color: "from-amber-500 to-yellow-500",
+      stats: "8 Scenarios",
+      features: ["Secure Transactions", "Fraud Detection", "Banking App Security", "Payment Protection", "ATM Safety"]
     }
   ];
 
@@ -360,7 +370,7 @@ function HomePage() {
               Everything You Need in One Platform
             </h2>
             <p className="text-xl text-slate-600">
-              Six powerful tools designed to protect you in the digital space
+              Eight powerful tools designed to protect you in the digital space
             </p>
           </div>
 
@@ -424,170 +434,172 @@ function HomePage() {
           </div>
         </div>
       </section>
-{/* PhishGuard Extension Section */}
-<section className="py-24 bg-gradient-to-br from-blue-50 via-white to-blue-50 relative overflow-hidden">
-  <div className="relative max-w-7xl mx-auto px-6">
-    <div className="grid lg:grid-cols-2 gap-12 items-center">
-      {/* Left Column - Info */}
-      <div className="space-y-6">
-        {/* Badge */}
-        <div className="inline-flex items-center space-x-2 bg-blue-50 px-4 py-2 rounded-full border border-blue-200">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
-          </span>
-          <span className="text-sm font-medium text-blue-700">Free Browser Extension</span>
-        </div>
 
-        {/* Title */}
-        <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
-          Introducing{' '}
-          <span className="bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-            PhishGuard
-          </span>
-        </h2>
+      {/* PhishGuard Extension Section */}
+      <section className="py-24 bg-gradient-to-br from-blue-50 via-white to-blue-50 relative overflow-hidden">
+        <div className="relative max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Column - Info */}
+            <div className="space-y-6">
+              {/* Badge */}
+              <div className="inline-flex items-center space-x-2 bg-blue-50 px-4 py-2 rounded-full border border-blue-200">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
+                </span>
+                <span className="text-sm font-medium text-blue-700">Free Browser Extension</span>
+              </div>
 
-        {/* Description */}
-        <p className="text-lg text-gray-600 leading-relaxed">
-          Automatically scans every website you visit and tells you whether it's safe, suspicious, or dangerous — before you enter any personal information.
-        </p>
+              {/* Title */}
+              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+                Introducing{' '}
+                <span className="bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+                  PhishGuard
+                </span>
+              </h2>
 
-        {/* Feature Tags */}
-        <div className="flex flex-wrap gap-2">
-          {[
-            "Real-time scanning", 
-            "Silent operation", 
-            "SSL check", 
-            "Domain analysis", 
-            "Phishing detection", 
-            "Malware protection"
-          ].map((feature, i) => (
-            <span key={i} className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs border border-blue-200">
-              {feature}
-            </span>
-          ))}
-        </div>
+              {/* Description */}
+              <p className="text-lg text-gray-600 leading-relaxed">
+                Automatically scans every website you visit and tells you whether it's safe, suspicious, or dangerous — before you enter any personal information.
+              </p>
 
-        {/* CTA Button */}
-        <div className="pt-4">
-          <a
-            href="/phishguard"
-            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-xl font-semibold shadow-lg shadow-blue-200 hover:shadow-xl hover:shadow-blue-300 transition-all duration-300 hover:scale-105"
-          >
-            <Zap className="w-5 h-5 mr-2" />
-            Add PhishGuard to Browser
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </a>
-          <p className="text-gray-400 text-xs mt-2">Free • Chrome • Firefox • Edge • Brave</p>
-        </div>
-      </div>
+              {/* Feature Tags */}
+              <div className="flex flex-wrap gap-2">
+                {[
+                  "Real-time scanning", 
+                  "Silent operation", 
+                  "SSL check", 
+                  "Domain analysis", 
+                  "Phishing detection", 
+                  "Malware protection"
+                ].map((feature, i) => (
+                  <span key={i} className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs border border-blue-200">
+                    {feature}
+                  </span>
+                ))}
+              </div>
 
-      {/* Right Column - Simple Preview Card */}
-      <div className="relative flex justify-center">
-        <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden max-w-[300px]">
-          {/* Browser Chrome */}
-          <div className="bg-gray-100 px-4 py-3 flex items-center border-b border-gray-200">
-            <div className="flex space-x-1.5">
-              <div className="w-3 h-3 bg-red-400 rounded-full"></div>
-              <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-              <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+              {/* CTA Button */}
+              <div className="pt-4">
+                <a
+                  href="/phishguard"
+                  className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-xl font-semibold shadow-lg shadow-blue-200 hover:shadow-xl hover:shadow-blue-300 transition-all duration-300 hover:scale-105"
+                >
+                  <Zap className="w-5 h-5 mr-2" />
+                  Add PhishGuard to Browser
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </a>
+                <p className="text-gray-400 text-xs mt-2">Free • Chrome • Firefox • Edge • Brave</p>
+              </div>
             </div>
-            <div className="flex-1 mx-3 bg-white border border-gray-200 rounded-md px-3 py-1.5 flex items-center text-xs">
-              <Lock className="w-3.5 h-3.5 text-gray-400 mr-1.5" />
-              <span className="text-gray-600 font-medium truncate">testphp.vulnweb.com</span>
+
+            {/* Right Column - Simple Preview Card */}
+            <div className="relative flex justify-center">
+              <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden max-w-[300px]">
+                {/* Browser Chrome */}
+                <div className="bg-gray-100 px-4 py-3 flex items-center border-b border-gray-200">
+                  <div className="flex space-x-1.5">
+                    <div className="w-3 h-3 bg-red-400 rounded-full"></div>
+                    <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                    <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                  </div>
+                  <div className="flex-1 mx-3 bg-white border border-gray-200 rounded-md px-3 py-1.5 flex items-center text-xs">
+                    <Lock className="w-3.5 h-3.5 text-gray-400 mr-1.5" />
+                    <span className="text-gray-600 font-medium truncate">testphp.vulnweb.com</span>
+                  </div>
+                  <Shield className="w-5 h-5 text-blue-600" />
+                </div>
+
+                {/* Extension Preview - Simple Version */}
+                <div className="p-5">
+                  {/* Header */}
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center space-x-2">
+                      <Shield className="w-5 h-5 text-blue-600" />
+                      <span className="text-sm font-bold text-gray-800">PHISHGUARD</span>
+                    </div>
+                    <span className="text-xs text-gray-500">v1.0</span>
+                  </div>
+
+                  {/* URL with Score */}
+                  <div className="bg-gray-50 rounded-lg p-3 mb-3">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs text-gray-500 truncate">testphp.vulnweb.com</span>
+                      <span className="text-sm font-bold text-orange-600">42/100</span>
+                    </div>
+                    <div className="flex items-center text-xs text-orange-700 bg-orange-50 px-2 py-1 rounded">
+                      <AlertTriangle className="w-3.5 h-3.5 mr-1" />
+                      <span className="font-medium">SUSPICIOUS</span>
+                      <span className="ml-1 text-orange-600">— Do not enter sensitive info</span>
+                    </div>
+                  </div>
+
+                  {/* Quick Stats */}
+                  <div className="grid grid-cols-4 gap-2 mb-3">
+                    <div className="text-center">
+                      <div className="text-[10px] text-gray-500">HTTPS</div>
+                      <div className="text-xs font-bold text-red-600">None</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-[10px] text-gray-500">FORMS</div>
+                      <div className="text-xs font-bold text-green-600">0</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-[10px] text-gray-500">LINKS</div>
+                      <div className="text-xs font-bold text-orange-600">7</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-[10px] text-gray-500">IFRAMES</div>
+                      <div className="text-xs font-bold text-green-600">0</div>
+                    </div>
+                  </div>
+
+                  {/* Database Status */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-xs">
+                      <div className="flex items-center">
+                        <Shield className="w-3.5 h-3.5 text-red-500 mr-1.5" />
+                        <span>URLhaus Malware</span>
+                      </div>
+                      <span className="text-green-600 text-[10px] bg-green-50 px-1.5 py-0.5 rounded">✓ Clean</span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <div className="flex items-center">
+                        <Globe className="w-3.5 h-3.5 text-orange-500 mr-1.5" />
+                        <span>OpenPhish</span>
+                      </div>
+                      <span className="text-green-600 text-[10px] bg-green-50 px-1.5 py-0.5 rounded">✓ Not found</span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <div className="flex items-center">
+                        <Lock className="w-3.5 h-3.5 text-emerald-500 mr-1.5" />
+                        <span>SSL Certificate</span>
+                      </div>
+                      <span className="text-red-600 text-[10px] bg-red-50 px-1.5 py-0.5 rounded">✗ Missing</span>
+                    </div>
+                  </div>
+
+                  {/* Rescan Button */}
+                  <div className="mt-4 pt-3 border-t border-gray-100 flex justify-end">
+                    <button className="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-lg flex items-center hover:bg-blue-700 transition-colors">
+                      <RefreshCw className="w-3 h-3 mr-1" />
+                      Rescan
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Browser Compatibility */}
+              <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 flex items-center space-x-3 bg-white px-4 py-2 rounded-full shadow-md border border-gray-200">
+                {["Chrome", "Firefox", "Edge", "Brave"].map((browser, i) => (
+                  <span key={i} className="text-xs text-gray-600">{browser}</span>
+                ))}
+              </div>
             </div>
-            <Shield className="w-5 h-5 text-blue-600" />
           </div>
-
-          {/* Extension Preview - Simple Version */}
-          <div className="p-5">
-            {/* Header */}
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center space-x-2">
-                <Shield className="w-5 h-5 text-blue-600" />
-                <span className="text-sm font-bold text-gray-800">PHISHGUARD</span>
-              </div>
-              <span className="text-xs text-gray-500">v1.0</span>
-            </div>
-
-            {/* URL with Score */}
-            <div className="bg-gray-50 rounded-lg p-3 mb-3">
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-xs text-gray-500 truncate">testphp.vulnweb.com</span>
-                <span className="text-sm font-bold text-orange-600">42/100</span>
-              </div>
-              <div className="flex items-center text-xs text-orange-700 bg-orange-50 px-2 py-1 rounded">
-                <AlertTriangle className="w-3.5 h-3.5 mr-1" />
-                <span className="font-medium">SUSPICIOUS</span>
-                <span className="ml-1 text-orange-600">— Do not enter sensitive info</span>
-              </div>
-            </div>
-
-            {/* Quick Stats */}
-            <div className="grid grid-cols-4 gap-2 mb-3">
-              <div className="text-center">
-                <div className="text-[10px] text-gray-500">HTTPS</div>
-                <div className="text-xs font-bold text-red-600">None</div>
-              </div>
-              <div className="text-center">
-                <div className="text-[10px] text-gray-500">FORMS</div>
-                <div className="text-xs font-bold text-green-600">0</div>
-              </div>
-              <div className="text-center">
-                <div className="text-[10px] text-gray-500">LINKS</div>
-                <div className="text-xs font-bold text-orange-600">7</div>
-              </div>
-              <div className="text-center">
-                <div className="text-[10px] text-gray-500">IFRAMES</div>
-                <div className="text-xs font-bold text-green-600">0</div>
-              </div>
-            </div>
-
-            {/* Database Status */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-xs">
-                <div className="flex items-center">
-                  <Shield className="w-3.5 h-3.5 text-red-500 mr-1.5" />
-                  <span>URLhaus Malware</span>
-                </div>
-                <span className="text-green-600 text-[10px] bg-green-50 px-1.5 py-0.5 rounded">✓ Clean</span>
-              </div>
-              <div className="flex items-center justify-between text-xs">
-                <div className="flex items-center">
-                  <Globe className="w-3.5 h-3.5 text-orange-500 mr-1.5" />
-                  <span>OpenPhish</span>
-                </div>
-                <span className="text-green-600 text-[10px] bg-green-50 px-1.5 py-0.5 rounded">✓ Not found</span>
-              </div>
-              <div className="flex items-center justify-between text-xs">
-                <div className="flex items-center">
-                  <Lock className="w-3.5 h-3.5 text-emerald-500 mr-1.5" />
-                  <span>SSL Certificate</span>
-                </div>
-                <span className="text-red-600 text-[10px] bg-red-50 px-1.5 py-0.5 rounded">✗ Missing</span>
-              </div>
-            </div>
-
-            {/* Rescan Button */}
-            <div className="mt-4 pt-3 border-t border-gray-100 flex justify-end">
-              <button className="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-lg flex items-center hover:bg-blue-700 transition-colors">
-                <RefreshCw className="w-3 h-3 mr-1" />
-                Rescan
-              </button>
-            </div>
-          </div>
         </div>
+      </section>
 
-        {/* Browser Compatibility */}
-        <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 flex items-center space-x-3 bg-white px-4 py-2 rounded-full shadow-md border border-gray-200">
-          {["Chrome", "Firefox", "Edge", "Brave"].map((browser, i) => (
-            <span key={i} className="text-xs text-gray-600">{browser}</span>
-          ))}
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
       {/* Training Modules Preview */}
       <section className="py-20 bg-gradient-to-b from-slate-50 to-white">
         <div className="max-w-7xl mx-auto px-6">
@@ -821,7 +833,7 @@ function HomePage() {
           <div className="text-center max-w-3xl mx-auto mb-20">
             <span className="text-blue-600 font-semibold text-sm tracking-wider uppercase">Knowledge Base</span>
             <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mt-4 mb-6">
-              Legal Resources & Guides
+              Legal Resources and Guides
             </h2>
             <p className="text-xl text-slate-600">
               Comprehensive information to help you understand cyber laws
