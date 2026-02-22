@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { 
-  Shield, 
-  Menu, 
-  X, 
+import {
+  Shield,
+  Menu,
+  X,
   ArrowRight,
   Home,
   Scale,
@@ -70,30 +70,33 @@ function Navbar() {
               Community Intel
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
             </a>
-            
-            <a 
-              href="/riskengine" 
+
+            <a
+              href="/riskengine"
               className="px-4 py-2 text-gray-700 hover:text-blue-600 transition-colors font-medium relative group"
             >
               Risk Engine
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
             </a>
-            
-            <a 
-              href="/awareness" 
+            <a href="/bankfraudtools" className="px-4 py-2 text-gray-700 hover:text-blue-600 transition-colors font-medium relative group">
+              Bank Fraud
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
+            </a>
+            <a
+              href="/awareness"
               className="px-4 py-2 text-gray-700 hover:text-blue-600 transition-colors font-medium relative group"
             >
               Awareness
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
             </a>
-            
-            <a 
-              href="/analyze" 
+
+            {/* <a
+              href="/analyze"
               className="ml-2 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-full hover:shadow-lg hover:shadow-blue-200 transition-all hover:scale-105 font-medium flex items-center space-x-2"
             >
               <span>Analyze Now</span>
               <ArrowRight className="w-4 h-4" />
-            </a>
+            </a> */}
           </div>
 
           {/* Mobile Menu Button */}
@@ -114,8 +117,8 @@ function Navbar() {
         {mobileMenuOpen && (
           <div className="md:hidden mt-4 py-4 border-t border-gray-200 animate-fadeIn">
             <div className="flex flex-col space-y-2">
-              <a 
-                href="/" 
+              <a
+                href="/"
                 className="px-4 py-3 text-gray-700 hover:bg-blue-50 rounded-lg transition-colors font-medium flex items-center"
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -170,19 +173,19 @@ function Navbar() {
                 </div>
                 <span className="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">Analysis</span>
               </a>
-              
-              <a 
-                href="/awareness" 
+
+              <a
+                href="/awareness"
                 className="px-4 py-3 text-gray-700 hover:bg-blue-50 rounded-lg transition-colors font-medium flex items-center"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <BookOpen className="w-4 h-4 mr-3 text-blue-600" />
                 Awareness
               </a>
-              
+
               <div className="pt-2 mt-2 border-t border-gray-100">
-                <a 
-                  href="/analyze" 
+                <a
+                  href="/analyze"
                   className="block px-4 py-3 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-lg text-center font-medium flex items-center justify-center"
                   onClick={() => setMobileMenuOpen(false)}
                 >

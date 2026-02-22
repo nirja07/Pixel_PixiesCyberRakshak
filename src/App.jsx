@@ -5,6 +5,8 @@ import HomePage from './pages/Homepage';
 import LawBot from './pages/LawBot';
 import ComplaintGen from './pages/ComplaintGen';
 import CyberQuest from './pages/CyberQuest';
+import BankFraudTools from './pages/BankFraudTools';
+import Community from './pages/Community';
 function App() {
   return (
     <Router>
@@ -23,12 +25,13 @@ function App() {
           <Route path="/assistant" element={<LawBot />} />
           <Route path="/riskengine" element={<RiskAnalyzer/>} />
     
-          <Route path="/complaint" element={<ComplaintGen />} />
-          <Route path="/complaintgen" element={<ComplaintGen />} />
           
+          <Route path="/complaintgen" element={<ComplaintGen />} />
+          <Route path="/community" element={<Community />} />
           {/* Redirect any /analyze to chat (for backward compatibility) */}
           <Route path="/analyze" element={<LawBot />} />
           <Route path="/awareness" element={<CyberQuest/>}/>
+          <Route path="/bankfraudtools" element={<BankFraudTools />} />
          
           <Route path="*" element={
             <div className="min-h-screen bg-black flex items-center justify-center">
